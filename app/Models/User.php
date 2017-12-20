@@ -9,10 +9,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Model
 {
-    protected $table = 't_user_info';
-
+    use SoftDeletes;
+    protected $table = 'users';
     public $timestamps = true;
+    protected $dates=['deleted_at'];
+
 }

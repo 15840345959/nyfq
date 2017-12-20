@@ -77,7 +77,7 @@ class UserManager
         $account_type = $data['account_type'];
         // 判断小程序，按照类型查询
         if ($account_type === 'xcx') {
-            $user = self::getUserByXCXOpenId($data['xcx_openid']);
+            $user = self::getUserByXCXOpenId($data['open_id']);
             //存在用户即返回用户信息
             if ($user != null) {
                 return $user;
@@ -100,32 +100,41 @@ class UserManager
         if (array_key_exists('nick_name', $data)) {
             $user->nick_name = array_get($data, 'nick_name');
         }
+        if (array_key_exists('password', $data)) {
+            $user->password = array_get($data, 'password');
+        }
         if (array_key_exists('avatar', $data)) {
             $user->avatar = array_get($data, 'avatar');
         }
-        if (array_key_exists('phonenum', $data)) {
-            $user->phonenum = array_get($data, 'phonenum');
+        if (array_key_exists('telephone', $data)) {
+            $user->telephone = array_get($data, 'telephone');
         }
-        if (array_key_exists('xcx_openid', $data)) {
-            $user->xcx_openid = array_get($data, 'xcx_openid');
-        }
-        if (array_key_exists('unionid', $data)) {
-            $user->unionid = array_get($data, 'unionid');
+        if (array_key_exists('open_id', $data)) {
+            $user->open_id = array_get($data, 'open_id');
         }
         if (array_key_exists('gender', $data)) {
             $user->gender = array_get($data, 'gender');
         }
-        if (array_key_exists('status', $data)) {
-            $user->status = array_get($data, 'status');
+        if (array_key_exists('admin', $data)) {
+            $user->admin = array_get($data, 'admin');
         }
-        if (array_key_exists('type', $data)) {
-            $user->type = array_get($data, 'type');
+        if (array_key_exists('organization_id', $data)) {
+            $user->organization_id = array_get($data, 'organization_id');
         }
-        if (array_key_exists('province', $data)) {
-            $user->province = array_get($data, 'province');
+        if (array_key_exists('share_user', $data)) {
+            $user->share_user = array_get($data, 'share_user');
         }
-        if (array_key_exists('city', $data)) {
-            $user->city = array_get($data, 'city');
+        if (array_key_exists('email', $data)) {
+            $user->email = array_get($data, 'email');
+        }
+        if (array_key_exists('passport', $data)) {
+            $user->passport = array_get($data, 'passport');
+        }
+        if (array_key_exists('sign', $data)) {
+            $user->sign = array_get($data, 'sign');
+        }
+        if (array_key_exists('background', $data)) {
+            $user->background = array_get($data, 'background');
         }
         return $user;
     }
@@ -182,7 +191,7 @@ class UserManager
      */
     public static function getUserByXCXOpenId($openid)
     {
-        $user = User::where('xcx_openid', '=', $openid)->first();
+        $user = User::where('open_id', '=', $openid)->first();
         return $user;
     }
 

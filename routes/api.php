@@ -39,4 +39,6 @@ Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
     //解密encryptedData
     Route::post('user/encryptedData', 'API\UserController@encryptedData');
 
+    //新建用户
+    Route::get('user/createUser', 'API\UserController@createUser');
 });

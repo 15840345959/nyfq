@@ -14,6 +14,7 @@ use App\Http\Controllers\ApiResponse;
 use App\Http\Controllers\Controller;
 use App\Libs\wxDecode\ErrorCode;
 use App\Libs\wxDecode\WXBizDataCrypt;
+use App\Models\User;
 use App\Models\ViewModels\HomeView;
 use Illuminate\Http\Request;
 use App\Components\RequestValidator;
@@ -22,8 +23,11 @@ use Qiniu\Auth;
 class UserController extends Controller
 {
 
-    const APPID = "wxd3a3b21f912b6c89";
-    const APPSECRET = "23e85428d04d7507377a5a01960d074e";
+    const APPID = "wx84ba56e72f32fae2";    //微信小程序APPID
+    const APPSECRET = "afea8911393009247eac345d244a8a99";    //微信小程序APPSECRET
+    const QN_ACCESSKEY="JXanCoTnAoyJd4WclS-zPhA8JmWooPTqvK5RCHXb";  //七牛accessKey
+    const QN_SECRETKEY="ouc-dLEY42KijHeUaTzTBzFeM2Q1mKk_M_3vNpmT";  //七牛secretKey
+    const QN_BUCKET="dsyy"; //七牛图片上传空间
 
     /**
      * @param Request $request
@@ -31,17 +35,42 @@ class UserController extends Controller
      */
     public function getQiniuToken(Request $request)
     {
-        $accessKey = 'JXanCoTnAoyJd4WclS-zPhA8JmWooPTqvK5RCHXb';
-        $secretKey = 'ouc-dLEY42KijHeUaTzTBzFeM2Q1mKk_M_3vNpmT';
+//        $accessKey = 'JXanCoTnAoyJd4WclS-zPhA8JmWooPTqvK5RCHXb';
+//        $secretKey = 'ouc-dLEY42KijHeUaTzTBzFeM2Q1mKk_M_3vNpmT';
+        $accessKey = QN_ACCESSKEY;
+        $secretKey = QN_SECRETKEY;
 
         $auth = new Auth($accessKey, $secretKey);
 
-        $bucket = 'dsyy';
+//        $bucket = 'dsyy';
+        $bucket = QN_BUCKET;
         $upToken = $auth->uploadToken($bucket);
 
         return ApiResponse::makeResponse(true, $upToken, ApiResponse::SUCCESS_CODE);
     }
 
+    /*
+     * 新建用户信息
+     *
+     * By TerryQi
+     *
+     * 2017-12-19
+     *
+     *
+     */
+    public function createUser(Request $request)
+    {
+        $data = $request->all();
+//        dd($data);
+        $user = new User();
+        if(array_key_exists('id',$data)){
+            $user = UserManager::getUserInfoById($data['id']);
+        }
+        $user=UserManager::setUser($user,$data);
+        $user->save();
+        return ApiResponse::makeResponse(true, $user, ApiResponse::SUCCESS_CODE);
+
+    }
 
     /*
      * 通过code换取open_id和session_key
@@ -93,7 +122,7 @@ class UserController extends Controller
         if ($data['account_type'] == 'xcx') {
             //合规校验account_type
             $requestValidationResult = RequestValidator::validator($request->all(), [
-                'xcx_openid' => 'required',
+                'open_id' => 'required',
             ]);
             if ($requestValidationResult !== true) {
                 return ApiResponse::makeResponse(false, $requestValidationResult, ApiResponse::MISSING_PARAM);
