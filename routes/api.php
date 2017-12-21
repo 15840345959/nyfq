@@ -38,7 +38,9 @@ Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
     Route::post('user/updateById', 'API\UserController@updateUserById')->middleware('CheckToken');
     //解密encryptedData
     Route::post('user/encryptedData', 'API\UserController@encryptedData');
-
     //新建用户
     Route::get('user/createUser', 'API\UserController@createUser');
+
+    //获取首页Banner
+    Route::get('index/getBanners', 'API\IndexController@getBanners');
 });
