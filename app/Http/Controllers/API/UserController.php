@@ -151,7 +151,7 @@ class UserController extends Controller
     public function updateUserById(Request $request)
     {
         $requestValidationResult = RequestValidator::validator($request->all(), [
-            'user_id' => 'required',
+            'id' => 'required',
         ]);
         if ($requestValidationResult !== true) {
             return ApiResponse::makeResponse(false, $requestValidationResult, ApiResponse::MISSING_PARAM);
