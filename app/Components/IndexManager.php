@@ -40,6 +40,7 @@ class IndexManager
         $banner = Banner::where('id','=',$id)->first();
         $banner_details=BannerDetail::where('banner_id','=',$id)
             ->orderBy('id','asc')->get();
-        return $banner_details;
+        $banner["details"]=$banner_details;
+        return $banner;
     }
 }
