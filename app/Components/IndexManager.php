@@ -78,7 +78,7 @@ class IndexManager
             'hot'=>1
         );
         $menus=TourCategorie::where($where)
-            ->orderBy('id','desc')->offset(0)->limit(3)->get();
+            ->orderBy('sort','desc')->offset(0)->limit(3)->get();
         return $menus;
     }
 
