@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Components\HomeManager;
+use App\Components\OrganizationManager;
 use App\Components\UserManager;
 use App\Http\Controllers\ApiResponse;
 use App\Http\Controllers\Controller;
@@ -130,6 +131,7 @@ class UserController extends Controller
             //进行注册
             $user = UserManager::login($data);
         }
+        $user['organization_id'] = OrganizationManager::getOrganizationInfo($user['organization_id']);
         //如果注册失败，返回失败
         if ($user == null) {
             return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::REGISTER_FAILED], ApiResponse::REGISTER_FAILED);
