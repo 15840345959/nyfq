@@ -24,10 +24,6 @@ class IndexManager
     public static function getBannnerLists()
     {
         $banners = Banner::orderBy('sort','desc')->get();
-        if ($banners) {
-            return ApiResponse::makeResponse(true, $banners, ApiResponse::SUCCESS_CODE);
-        } else {
-            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::NO_USER], ApiResponse::NO_USER);
-        }
+        return $banners;
     }
 }
