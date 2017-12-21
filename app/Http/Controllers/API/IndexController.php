@@ -16,6 +16,9 @@ use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
+    /*
+     * 获取首页Banners
+     */
     public function getBanners(){
         $banners=IndexManager::getBannnerLists();
         if ($banners) {
@@ -24,6 +27,9 @@ class IndexController extends Controller
             return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::NO_USER], ApiResponse::NO_USER);
         }
     }
+    /*
+     * 获取Banner详情
+     */
     public function getBannerDetail(Request $request){
         $data = $request->all();
         $id=$data['id'];
@@ -34,6 +40,20 @@ class IndexController extends Controller
             return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::NO_USER], ApiResponse::NO_USER);
         }
     }
+    /*
+     * 获取首页的动态栏目
+     */
+    public function getIndexMenus(){
+        $menus=IndexManager::getIndexMenuLists(0);
+        if ($menus) {
+            return ApiResponse::makeResponse(true, $menus, ApiResponse::SUCCESS_CODE);
+        } else {
+            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::NO_USER], ApiResponse::NO_USER);
+        }
+    }
+    /*
+     * 获取首页最新产品
+     */
     public function getNewGoods(Request $request){
         $data = $request->all();
         $tour_goodses=IndexManager::getNewTourGoodes($data);

@@ -45,6 +45,8 @@ Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
     Route::get('index/getBanners', 'API\IndexController@getBanners');
     //获取Banner的详细信息
     Route::get('index/getBannerDetail', 'API\IndexController@getBannerDetail');
+    //获取首页的动态栏目
+    Route::get('index/getIndexMenus', 'API\IndexController@getIndexMenus');
     //获取最新
     Route::get('index/getNewGoods', 'API\IndexController@getNewGoods');
 });

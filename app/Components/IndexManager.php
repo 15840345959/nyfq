@@ -39,8 +39,8 @@ class IndexManager
      */
     public static function getBannnerById($id)
     {
-        $banner = Banner::where('id','=',$id)->first();
-        $banner_details=BannerDetail::where('banner_id','=',$id)
+        $banner = Banner::where('id',$id)->first();
+        $banner_details=BannerDetail::where('banner_id',$id)
             ->orderBy('id','asc')->get();
         $banner["details"]=$banner_details;
         return $banner;
@@ -66,6 +66,23 @@ class IndexManager
     }
 
     /*
+     * 获取首页动态目录
+     *
+     * By zm
+     *
+     * 2017-12-21
+     */
+    public static function getIndexMenuLists($type){
+        $where=array(
+            'type'=>$type,
+            'hot'=>1
+        );
+        $menus=TourCategorie::where($where)
+            ->orderBy('id','desc')->offset(0)->limit(3)->get();
+        return $menus;
+    }
+
+    /*
      * 获取旅游产品的目的地信息
      *
      * By zm
@@ -74,7 +91,7 @@ class IndexManager
      */
     public static function getNewTourCategorie($id)
     {
-        $tour_categorie=TourCategorie::where('id','=',$id)->first();
+        $tour_categorie=TourCategorie::where('id',$id)->first();
         if($tour_categorie){
             $type=$tour_categorie['type'];
             if($type==0){
