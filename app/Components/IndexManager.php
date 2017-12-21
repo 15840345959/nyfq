@@ -9,6 +9,7 @@
 namespace App\Components;
 
 use App\Models\Banner;
+use App\Models\BannerDetail;
 
 
 class IndexManager
@@ -25,5 +26,20 @@ class IndexManager
     {
         $banners = Banner::orderBy('sort','desc')->get();
         return $banners;
+    }
+
+    /*
+     * 获取Banners的详情
+     *
+     * By zm
+     *
+     * 2017-12-21
+     */
+    public static function getBannnerById($id)
+    {
+        $banner = Banner::where('id','=',$id)->first();
+        $banner_details=BannerDetail::where('banner_id','=',$id)
+            ->orderBy('id','asc')->get();
+        return $banner_details;
     }
 }
