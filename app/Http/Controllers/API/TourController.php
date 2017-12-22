@@ -29,4 +29,16 @@ class TourController extends Controller
             return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::NO_USER], ApiResponse::NO_USER);
         }
     }
+    /*
+     * 获取旅游产品列表
+     */
+    public function getTourGoodsLists(Request $request){
+        $data = $request->all();
+        $tour_goodses=TourCategorieManager::getTourGoodsLists($data);
+        if ($tour_goodses) {
+            return ApiResponse::makeResponse(true, $tour_goodses, ApiResponse::SUCCESS_CODE);
+        } else {
+            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::NO_USER], ApiResponse::NO_USER);
+        }
+    }
 }

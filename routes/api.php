@@ -52,4 +52,6 @@ Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
 
     //获取旅游产品的目的地
     Route::get('tour/getTourCategories', 'API\TourController@getTourCategories');
+    //获取旅游产品列表
+    Route::get('tour/getTourGoodsLists', 'API\TourController@getTourGoodsLists');
 });
