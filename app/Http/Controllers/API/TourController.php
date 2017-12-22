@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Components\TourCategorieManager;
+use App\Components\TourGoodsManager;
 use App\Http\Controllers\ApiResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -37,6 +38,18 @@ class TourController extends Controller
         $tour_goodses=TourCategorieManager::getTourGoodsLists($data);
         if ($tour_goodses) {
             return ApiResponse::makeResponse(true, $tour_goodses, ApiResponse::SUCCESS_CODE);
+        } else {
+            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::NO_USER], ApiResponse::NO_USER);
+        }
+    }
+    /*
+     * 获取旅游产品的详细信息
+     */
+    public function getTourGoodsDetail(Request $request){
+        $data = $request->all();
+        $tour_goods=TourGoodsManager::getTourGoodsDetail($data);
+        if ($tour_goods) {
+            return ApiResponse::makeResponse(true, $tour_goods, ApiResponse::SUCCESS_CODE);
         } else {
             return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::NO_USER], ApiResponse::NO_USER);
         }

@@ -57,7 +57,7 @@ class IndexManager
     {
         $offset=$data["offset"];
         $page=$data["page"];
-        $tour_goodses=TourGoods::orderBy('id','desc')
+        $tour_goodses=TourGoods::orderBy('sort','desc')
             ->offset($offset)->limit($page)->get();
         foreach ($tour_goodses as $tour_goods){
             $tour_goods['categorie']=self::getNewTourCategorie($tour_goods['tour_category_id']);

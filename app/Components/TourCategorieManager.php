@@ -52,12 +52,11 @@ class TourCategorieManager
         $offset=$data["offset"];
         $page=$data["page"];
         $tour_category_id=$data["tour_category_id"];
-        $tour_goodses=TourGoods::where('tour_category_id',$tour_category_id)->orderBy('id','desc')
+        $tour_goodses=TourGoods::where('tour_category_id',$tour_category_id)->orderBy('sort','desc')
             ->offset($offset)->limit($page)->get();
         foreach ($tour_goodses as $tour_goods){
             $tour_goods['categorie']=self::getTourCategorieById($tour_goods['tour_category_id']);
         }
         return $tour_goodses;
     }
-
 }
