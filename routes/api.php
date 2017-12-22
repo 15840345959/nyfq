@@ -49,4 +49,7 @@ Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
     Route::get('index/getIndexMenus', 'API\IndexController@getIndexMenus');
     //获取最新
     Route::get('index/getNewGoods', 'API\IndexController@getNewGoods');
+
+    //获取旅游产品的目的地
+    Route::get('tour/getTourCategories', 'API\TourController@getTourCategories');
 });
