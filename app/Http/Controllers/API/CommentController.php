@@ -30,7 +30,7 @@ class CommentController extends Controller
         }
     }
     /*
-     * 获取产品的评论详情
+     * 获取所有评论的详情
      */
     public function getAllCommentLists(){
         $comments['count']=CommentManager::getGoodsCommentListsCount();
