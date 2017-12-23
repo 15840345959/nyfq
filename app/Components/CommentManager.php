@@ -9,9 +9,11 @@
 namespace App\Components;
 
 use App\Http\Controllers\ApiResponse;
+use App\Models\CarGoods;
 use App\Models\Comment;
 use App\Models\CommentImage;
 use App\Models\CommentReplie;
+use App\Models\TourGoods;
 
 class CommentManager
 {
@@ -24,13 +26,18 @@ class CommentManager
      * 2017-12-22
      *
      */
-    public static function getGoodsCommentListsCount($data){
-        $where=array(
-            'goods_id'=>$data['goods_id'],
-            'goods_type'=>$data['goods_type'],
-            'examine'=>1
-        );
-        $count=Comment::where($where)->count();
+    public static function getGoodsCommentListsCount($data=null){
+        if($data){
+            $where=array(
+                'goods_id'=>$data['goods_id'],
+                'goods_type'=>$data['goods_type'],
+                'examine'=>1
+            );
+            $count=Comment::where($where)->count();
+        }
+        else{
+            $count=Comment::where('examine',1)->count();
+        }
         return $count;
     }
     /*
@@ -41,13 +48,46 @@ class CommentManager
      * 2017-12-22
      *
      */
-    public static function getGoodsCommentLists($data){
-        $where=array(
-            'goods_id'=>$data['goods_id'],
-            'goods_type'=>$data['goods_type'],
-            'examine'=>1
-        );
-        $comments=Comment::where($where)->orderBy('id','desc')->get();
+    public static function getGoodsCommentLists($data=null){
+        if($data){
+            $where=array(
+                'goods_id'=>$data['goods_id'],
+                'goods_type'=>$data['goods_type'],
+                'examine'=>1
+            );
+            $comments=Comment::where($where)->orderBy('id','desc')->get();
+        }
+        else{
+            $comments=Comment::where('examine',1)->orderBy('id','desc')->get();
+            foreach ($comments as $comment){
+                if($comment['goods_id']&&$comment['goods_type']){
+                    $goods_id=$comment['goods_id'];
+                    $goods_type=$comment['goods_type'];
+                    if($goods_type==1){
+                        $comment['goods']=TourGoodsManager::getTourGoodsById($goods_id);
+                        $comment['goods']['tour_category_id']=IndexManager::getNewTourCategorie($comment['goods']['tour_category_id']);
+                    }
+                    else if($goods_type==2){
+                        $comment['goods']=HotelGoodsManager::getHotelGoodsById($goods_id);
+                    }
+                    else if($goods_type==3){
+                        $comment['goods']=PlanGoodsManager::getPlanGoodsById($goods_id);
+                    }
+                    else if($goods_type==4){
+                        $comment['goods']=CarGoodsManager::getCarGoodsById($goods_id);
+                    }
+                    else if($goods_type==5){
+                        $comment['goods']=TicketGoodsManager::getTicketGoodsById($goods_id);
+                    }
+                    else{
+                        $comment['goods']=[];
+                    }
+                }
+                else{
+                    $comment['goods']=[];
+                }
+            }
+        }
         foreach ($comments as $comment){
             //获取评论用户信息
             $comment['user_id']=UserManager::getUserInfoByIdWithToken($comment['user_id']);

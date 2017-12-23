@@ -96,4 +96,19 @@ class TourGoodsManager
             ->orderBy('id','asc')->get();
         return $tour_goods_contents;
     }
+
+
+    /*
+     * 根据Id获取旅游产品信息
+     *
+     * by zm
+     *
+     * 2017-12-22
+     *
+     */
+    public static function getTourGoodsById($id){
+        //基本信息
+        $tour_goods=TourGoods::where('id',$id)->first();
+        return $tour_goods;
+    }
 }

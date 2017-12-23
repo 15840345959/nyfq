@@ -29,4 +29,16 @@ class CommentController extends Controller
             return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::NO_USER], ApiResponse::NO_USER);
         }
     }
+    /*
+     * 获取产品的评论详情
+     */
+    public function getAllCommentLists(){
+        $comments['count']=CommentManager::getGoodsCommentListsCount();
+        $comments['lists']=CommentManager::getGoodsCommentLists();
+        if ($comments) {
+            return ApiResponse::makeResponse(true, $comments, ApiResponse::SUCCESS_CODE);
+        } else {
+            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::NO_USER], ApiResponse::NO_USER);
+        }
+    }
 }

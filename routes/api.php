@@ -59,5 +59,7 @@ Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
 
     //获取产品的评论详情
     Route::get('comment/getGoodsCommentLists', 'API\CommentController@getGoodsCommentLists');
+    //获取的评论详情
+    Route::get('comment/getAllCommentLists', 'API\CommentController@getAllCommentLists');
 
 });
