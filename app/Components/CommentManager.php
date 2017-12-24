@@ -11,6 +11,7 @@ namespace App\Components;
 use App\Http\Controllers\ApiResponse;
 use App\Models\CarGoods;
 use App\Models\Comment;
+use App\Models\CommentConsent;
 use App\Models\CommentImage;
 use App\Models\CommentReplie;
 use App\Models\TourGoods;
@@ -93,6 +94,8 @@ class CommentManager
             }
         }
         foreach ($comments as $comment){
+            //判断此用户是否点过赞
+            $comment['consent_user_id']=self::getGoodsCommentConsentByUser($comment['id'],$data['user_id']);
             //获取评论用户信息
             $comment['user_id']=UserManager::getUserInfoByIdWithToken($comment['user_id']);
             //获取评论的多媒体信息
@@ -131,5 +134,22 @@ class CommentManager
     public static function getGoodsCommentReplies($comment_id){
         $replies=CommentReplie::where('comment_id',$comment_id)->orderBy('id','asc')->get();
         return $replies;
+    }
+    /*
+     * 判断此用户是否点过赞
+     *
+     * by zm
+     *
+     * 2017-12-24
+     *
+     */
+    public static function getGoodsCommentConsentByUser($comment_id,$user_id){
+        $where=array(
+          'comment_id'=>$comment_id,
+          'user_id'=>$user_id
+        );
+        $consent=CommentConsent::where($where)->first();
+        $consent=$consent?true:false;
+        return $consent;
     }
 }
