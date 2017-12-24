@@ -94,8 +94,10 @@ class CommentManager
             }
         }
         foreach ($comments as $comment){
-            //判断此用户是否点过赞
-            $comment['consent_user_id']=self::getGoodsCommentConsentByUser($comment['id'],$data['user_id']);
+            //判断此用户的点赞状态
+            $comment['consent_status']=self::getGoodsCommentConsentByUser($comment['id'],$data['user_id']);
+            //获取此条评论的有效点赞数
+            $comment['consent_count']=self::countConsents($comment['id']);
             //获取评论用户信息
             $comment['user_id']=UserManager::getUserInfoByIdWithToken($comment['user_id']);
             //获取评论的多媒体信息
@@ -136,7 +138,7 @@ class CommentManager
         return $replies;
     }
     /*
-     * 判断此用户是否点过赞
+     * 判断此用户是否为点过赞状态
      *
      * by zm
      *
@@ -145,11 +147,114 @@ class CommentManager
      */
     public static function getGoodsCommentConsentByUser($comment_id,$user_id){
         $where=array(
+            'comment_id'=>$comment_id,
+            'user_id'=>$user_id
+        );
+        $consent=CommentConsent::where($where)->first();
+        if($consent){
+            if($consent['status']==1){
+                return 1;
+            }
+            else{
+                return 0;
+            }
+        }
+        else{
+            return 0;
+        }
+    }
+    /*
+     * 判断此用户是否有点赞记录
+     *
+     * by zm
+     *
+     * 2017-12-24
+     *
+     */
+    public static function getGoodsCommentConsentWithUser($comment_id,$user_id){
+        $where=array(
           'comment_id'=>$comment_id,
           'user_id'=>$user_id
         );
         $consent=CommentConsent::where($where)->first();
-        $consent=$consent?1:0;
         return $consent;
+    }
+    /*
+     * 用户对评论进行点赞（用于点赞和取消点赞）
+     *
+     * by zm
+     *
+     * 2017-12-24
+     *
+     */
+    public static function addConsentWithUser($data){
+        $comment_consent = self::getGoodsCommentConsentWithUser($data['comment_id'],$data['user_id']);
+        if(!$comment_consent){
+            //创建点赞
+            $comment_consent = new CommentConsent();
+        }
+        else{
+            //点赞或取消点赞
+            if($comment_consent['status']==0){
+                $data['status']=1;
+            }
+            else{
+                $data['status']=0;
+            }
+        }
+        $comment_consent = self::setCommentConsent($comment_consent, $data);
+        $comment_consent->save();
+        $comment_consent = self::addConsentById($comment_consent->id);
+
+        return $comment_consent;
+    }
+
+    /*
+     * 配置用户对评论进行点赞信息的参数（用于点赞和取消点赞）
+     *
+     * By zm
+     *
+     * 2017-12-24
+     *
+     */
+    public static function setCommentConsent($comment_consent,$data){
+        if (array_key_exists('comment_id', $data)) {
+            $comment_consent->comment_id = array_get($data, 'comment_id');
+        }
+        if (array_key_exists('user_id', $data)) {
+            $comment_consent->user_id = array_get($data, 'user_id');
+        }
+        if (array_key_exists('status', $data)) {
+            $comment_consent->status = array_get($data, 'status');
+        }
+        return $comment_consent;
+    }
+
+    /*
+     * 根据id获取用户的点赞信息
+     *
+     * By zm
+     *
+     * 2017-12-24
+     */
+    public static function addConsentById($id){
+        $comment_consent = CommentConsent::where('id', $id)->first();
+        return $comment_consent;
+    }
+
+    /*
+     * 根据comment_id统计有效的点赞记录总数
+     *
+     * By zm
+     *
+     * 2017-12-24
+     */
+    public static function countConsents($comment_id){
+        $where=array(
+            'comment_id'=>$comment_id,
+            'status'=>1
+        );
+        $count=CommentConsent::where($where)->count();
+        return $count;
     }
 }

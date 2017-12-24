@@ -61,5 +61,7 @@ Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
     Route::get('comment/getGoodsCommentLists', 'API\CommentController@getGoodsCommentLists');
     //获取所有评论的详情
     Route::get('comment/getAllCommentLists', 'API\CommentController@getAllCommentLists');
+    //用户对评论进行点赞
+    Route::post('comment/addConsent', 'API\CommentController@addConsent');
 
 });

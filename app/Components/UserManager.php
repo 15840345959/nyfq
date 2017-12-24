@@ -80,14 +80,6 @@ class UserManager
             $user = self::getUserByXCXOpenId($data['open_id']);
             //存在用户即返回用户信息
             if ($user != null) {
-                //////////////////
-//                if($user['organization_id']==0){
-//                    $user['organization_id']="南洋风情";
-//                }
-//                else{
-//                    $user['organization_id']="罗马假日旅行社";
-//                }
-                /////////////////////
                 return $user;
             }
         }

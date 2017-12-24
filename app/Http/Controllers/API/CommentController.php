@@ -26,7 +26,7 @@ class CommentController extends Controller
         if ($comments) {
             return ApiResponse::makeResponse(true, $comments, ApiResponse::SUCCESS_CODE);
         } else {
-            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::NO_USER], ApiResponse::NO_USER);
+            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM], ApiResponse::MISSING_PARAM);
         }
     }
     /*
@@ -39,7 +39,19 @@ class CommentController extends Controller
         if ($comments) {
             return ApiResponse::makeResponse(true, $comments, ApiResponse::SUCCESS_CODE);
         } else {
-            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::NO_USER], ApiResponse::NO_USER);
+            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM], ApiResponse::MISSING_PARAM);
+        }
+    }
+    /*
+     * 用户对评论进行点赞
+     */
+    public function addConsent(Request $request){
+        $data = $request->all();
+        $consents=CommentManager::addConsentWithUser($data);
+        if ($consents) {
+            return ApiResponse::makeResponse(true, $consents, ApiResponse::SUCCESS_CODE);
+        } else {
+            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM], ApiResponse::MISSING_PARAM);
         }
     }
 }

@@ -27,7 +27,7 @@ class TourController extends Controller
         if ($categories) {
             return ApiResponse::makeResponse(true, $categories, ApiResponse::SUCCESS_CODE);
         } else {
-            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::NO_USER], ApiResponse::NO_USER);
+            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM], ApiResponse::MISSING_PARAM);
         }
     }
     /*
@@ -39,7 +39,7 @@ class TourController extends Controller
         if ($tour_goodses) {
             return ApiResponse::makeResponse(true, $tour_goodses, ApiResponse::SUCCESS_CODE);
         } else {
-            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::NO_USER], ApiResponse::NO_USER);
+            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM], ApiResponse::MISSING_PARAM);
         }
     }
     /*
@@ -51,7 +51,7 @@ class TourController extends Controller
         if ($tour_goods) {
             return ApiResponse::makeResponse(true, $tour_goods, ApiResponse::SUCCESS_CODE);
         } else {
-            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::NO_USER], ApiResponse::NO_USER);
+            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM], ApiResponse::MISSING_PARAM);
         }
     }
 }

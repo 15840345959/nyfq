@@ -24,7 +24,7 @@ class IndexController extends Controller
         if ($banners) {
             return ApiResponse::makeResponse(true, $banners, ApiResponse::SUCCESS_CODE);
         } else {
-            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::NO_USER], ApiResponse::NO_USER);
+            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM], ApiResponse::MISSING_PARAM);
         }
     }
     /*
@@ -37,7 +37,7 @@ class IndexController extends Controller
         if ($banner) {
             return ApiResponse::makeResponse(true, $banner, ApiResponse::SUCCESS_CODE);
         } else {
-            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::NO_USER], ApiResponse::NO_USER);
+            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM], ApiResponse::MISSING_PARAM);
         }
     }
     /*
@@ -48,7 +48,7 @@ class IndexController extends Controller
         if ($menus) {
             return ApiResponse::makeResponse(true, $menus, ApiResponse::SUCCESS_CODE);
         } else {
-            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::NO_USER], ApiResponse::NO_USER);
+            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM], ApiResponse::MISSING_PARAM);
         }
     }
     /*
@@ -60,7 +60,7 @@ class IndexController extends Controller
         if ($tour_goodses) {
             return ApiResponse::makeResponse(true, $tour_goodses, ApiResponse::SUCCESS_CODE);
         } else {
-            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::NO_USER], ApiResponse::NO_USER);
+            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM], ApiResponse::MISSING_PARAM);
         }
     }
 }
