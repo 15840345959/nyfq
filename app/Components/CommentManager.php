@@ -149,7 +149,7 @@ class CommentManager
           'user_id'=>$user_id
         );
         $consent=CommentConsent::where($where)->first();
-        $consent=$consent?true:false;
+        $consent=$consent?1:0;
         return $consent;
     }
 }
