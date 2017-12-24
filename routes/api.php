@@ -65,5 +65,7 @@ Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
     Route::post('comment/addConsent', 'API\CommentController@addConsent');
     //添加评论
     Route::post('comment/addComment', 'API\CommentController@addComment');
+    //添加评论回复
+    Route::post('comment/addCommentReplie', 'API\CommentController@addCommentReplie');
 
 });

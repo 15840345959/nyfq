@@ -275,7 +275,6 @@ class CommentManager
             //添加多媒体
             $comment[0]['media']=self::addCommentMedia($data['media'],$comment_id);
         }
-//        dd($comment);
         return $comment;
     }
 
@@ -326,7 +325,6 @@ class CommentManager
      * 2017-12-24
      */
     public static function addCommentMedia($datas,$comment_id){
-//        $comment_images=array();
        foreach ($datas as $data){
            $data['comment_id']=$comment_id;
            $comment_image=new CommentImage();
@@ -334,7 +332,6 @@ class CommentManager
            $comment_image->save();
            $comment_image = self::getCommentImageById($comment_id);
            $data=$comment_image;
-//           $comment_images=array_push($comment_images,$comment_image);
        }
        return $datas;
     }
@@ -370,5 +367,53 @@ class CommentManager
     public static function getCommentImageById($id){
         $comment_image=CommentImage::where('id',$id)->get();
         return $comment_image;
+    }
+
+    /*
+     * 添加评论回复
+     *
+     * By zm
+     *
+     * 2017-12-24
+     */
+    public static function addCommentReplie($data){
+        $comment_replie=new CommentReplie();
+        $comment_replie = self::setCommentReplie($comment_replie, $data);
+        $comment_replie->save();
+        $comment_replie = self::getCommentReplieById($comment_replie['id']);
+        return $comment_replie;
+    }
+
+    /*
+     * 配置回复评论的参数
+     *
+     * By zm
+     *
+     * 2017-12-24
+     *
+     */
+    public static function setCommentReplie($comment_replie,$data){
+        if (array_key_exists('content', $data)) {
+            $comment_replie->content = array_get($data, 'content');
+        }
+        if (array_key_exists('user_id', $data)) {
+            $comment_replie->user_id = array_get($data, 'user_id');
+        }
+        if (array_key_exists('comment_id', $data)) {
+            $comment_replie->comment_id = array_get($data, 'comment_id');
+        }
+        return $comment_replie;
+    }
+
+    /*
+     * 根据id获取回复的评论信息
+     *
+     * By zm
+     *
+     * 2017-12-24
+     */
+    public static function getCommentReplieById($id){
+        $comment_replie=CommentReplie::where('id',$id)->get();
+        return $comment_replie;
     }
 }
