@@ -273,8 +273,9 @@ class CommentManager
         $comment = self::getCommentById($comment_id);
         if (array_key_exists('media', $data)) {
             //添加多媒体
-            $comment['media']=self::addCommentMedia($data['media'],$comment_id);
+            $comment[0]['media']=self::addCommentMedia($data['media'],$comment_id);
         }
+//        dd($comment);
         return $comment;
     }
 
@@ -325,6 +326,7 @@ class CommentManager
      * 2017-12-24
      */
     public static function addCommentMedia($datas,$comment_id){
+//        $comment_images=array();
        foreach ($datas as $data){
            $data['comment_id']=$comment_id;
            $comment_image=new CommentImage();
@@ -332,6 +334,7 @@ class CommentManager
            $comment_image->save();
            $comment_image = self::getCommentImageById($comment_id);
            $data=$comment_image;
+//           $comment_images=array_push($comment_images,$comment_image);
        }
        return $datas;
     }
