@@ -204,7 +204,7 @@ class CommentManager
         }
         $comment_consent = self::setCommentConsent($comment_consent, $data);
         $comment_consent->save();
-        $comment_consent = self::addConsentById($comment_consent->id);
+        $comment_consent = self::getConsentById($comment_consent->id);
 
         return $comment_consent;
     }
@@ -237,7 +237,7 @@ class CommentManager
      *
      * 2017-12-24
      */
-    public static function addConsentById($id){
+    public static function getConsentById($id){
         $comment_consent = CommentConsent::where('id', $id)->first();
         return $comment_consent;
     }
@@ -256,5 +256,116 @@ class CommentManager
         );
         $count=CommentConsent::where($where)->count();
         return $count;
+    }
+
+    /*
+     * 添加评论
+     *
+     * By zm
+     *
+     * 2017-12-24
+     */
+    public static function addComment($data){
+        $comment=new Comment();
+        $comment = self::setComment($comment, $data);
+        $comment->save();
+        $comment_id=$comment['id'];
+        $comment = self::getCommentById($comment_id);
+        if (array_key_exists('media', $data)) {
+            //添加多媒体
+            $comment['media']=self::addCommentMedia($data['media'],$comment_id);
+        }
+        return $comment;
+    }
+
+    /*
+     * 配置添加评论的参数
+     *
+     * By zm
+     *
+     * 2017-12-24
+     *
+     */
+    public static function setComment($comment,$data){
+        if (array_key_exists('goods_id', $data)) {
+            $comment->goods_id = array_get($data, 'goods_id');
+        }
+        if (array_key_exists('goods_type', $data)) {
+            $comment->goods_type = array_get($data, 'goods_type');
+        }
+        if (array_key_exists('content', $data)) {
+            $comment->content = array_get($data, 'content');
+        }
+        if (array_key_exists('user_id', $data)) {
+            $comment->user_id = array_get($data, 'user_id');
+        }
+        if (array_key_exists('user_id', $data)) {
+            $comment->user_id = array_get($data, 'user_id');
+        }
+        return $comment;
+    }
+
+    /*
+     * 根据id获取评论信息
+     *
+     * By zm
+     *
+     * 2017-12-24
+     */
+    public static function getCommentById($id){
+        $comment=Comment::where('id',$id)->get();
+        return $comment;
+    }
+
+    /*
+     * 添加评论图片或视频
+     *
+     * By zm
+     *
+     * 2017-12-24
+     */
+    public static function addCommentMedia($datas,$comment_id){
+       foreach ($datas as $data){
+           $data['comment_id']=$comment_id;
+           $comment_image=new CommentImage();
+           $comment_image = self::setCommentImage($comment_image, $data);
+           $comment_image->save();
+           $comment_image = self::getCommentImageById($comment_id);
+           $data=$comment_image;
+       }
+       return $datas;
+    }
+
+    /*
+     * 配置添加评论多媒体的参数
+     *
+     * By zm
+     *
+     * 2017-12-24
+     *
+     */
+    public static function setCommentImage($comment_image,$data){
+        if (array_key_exists('content', $data)) {
+            $comment_image->content = array_get($data, 'content');
+        }
+        if (array_key_exists('type', $data)) {
+            $comment_image->type = array_get($data, 'type');
+        }
+        if (array_key_exists('comment_id', $data)) {
+            $comment_image->comment_id = array_get($data, 'comment_id');
+        }
+        return $comment_image;
+    }
+
+    /*
+     * 根据id获取评论多媒体信息
+     *
+     * By zm
+     *
+     * 2017-12-24
+     */
+    public static function getCommentImageById($id){
+        $comment_image=CommentImage::where('id',$id)->get();
+        return $comment_image;
     }
 }

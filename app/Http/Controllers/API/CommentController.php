@@ -54,4 +54,16 @@ class CommentController extends Controller
             return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM], ApiResponse::MISSING_PARAM);
         }
     }
+    /*
+     * 添加评论
+     */
+    public function addComment(Request $request){
+        $data = $request->all();
+        $comment=CommentManager::addComment($data);
+        if ($comment) {
+            return ApiResponse::makeResponse(true, $comment, ApiResponse::SUCCESS_CODE);
+        } else {
+            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM], ApiResponse::MISSING_PARAM);
+        }
+    }
 }
