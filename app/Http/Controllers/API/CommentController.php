@@ -32,9 +32,10 @@ class CommentController extends Controller
     /*
      * 获取所有评论的详情
      */
-    public function getAllCommentLists(){
+    public function getAllCommentLists(Request $request){
+        $data = $request->all();
         $comments['count']=CommentManager::getGoodsCommentListsCount();
-        $comments['lists']=CommentManager::getGoodsCommentLists();
+        $comments['lists']=CommentManager::getGoodsCommentLists($data);
         if ($comments) {
             return ApiResponse::makeResponse(true, $comments, ApiResponse::SUCCESS_CODE);
         } else {

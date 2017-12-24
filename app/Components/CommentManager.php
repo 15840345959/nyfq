@@ -48,17 +48,21 @@ class CommentManager
      * 2017-12-22
      *
      */
-    public static function getGoodsCommentLists($data=null){
-        if($data){
+    public static function getGoodsCommentLists($data){
+        $offset=$data["offset"];
+        $page=$data["page"];
+        if(array_key_exists('goods_id', $data)&&array_key_exists('goods_type', $data)){
             $where=array(
                 'goods_id'=>$data['goods_id'],
                 'goods_type'=>$data['goods_type'],
                 'examine'=>1
             );
-            $comments=Comment::where($where)->orderBy('id','desc')->get();
+            $comments=Comment::where($where)->orderBy('id','desc')
+                ->offset($offset)->limit($page)->get();
         }
         else{
-            $comments=Comment::where('examine',1)->orderBy('id','desc')->get();
+            $comments=Comment::where('examine',1)->orderBy('id','desc')
+                ->offset($offset)->limit($page)->get();
             foreach ($comments as $comment){
                 if($comment['goods_id']&&$comment['goods_type']){
                     $goods_id=$comment['goods_id'];
