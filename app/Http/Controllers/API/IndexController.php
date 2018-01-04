@@ -44,7 +44,7 @@ class IndexController extends Controller
      * 获取首页的动态栏目
      */
     public function getIndexMenus(){
-        $menus=IndexManager::getIndexMenuLists(0);
+        $menus=IndexManager::getIndexMenuLists(1);
         if ($menus) {
             return ApiResponse::makeResponse(true, $menus, ApiResponse::SUCCESS_CODE);
         } else {
