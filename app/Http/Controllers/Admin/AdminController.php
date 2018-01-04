@@ -21,7 +21,6 @@ use Illuminate\Support\Facades\Redirect;
 
 class AdminController
 {
-
     //首页
     public function index(Request $request)
     {

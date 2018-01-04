@@ -74,11 +74,10 @@ class IndexManager
      */
     public static function getIndexMenuLists($type){
         $where=array(
-            'type'=>$type,
-            'hot'=>1
+            'type'=>$type
         );
         $menus=TourCategorie::where($where)
-            ->orderBy('sort','desc')->offset(0)->limit(3)->get();
+            ->orderBy('sort','desc')->get();
         return $menus;
     }
 

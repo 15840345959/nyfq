@@ -10,8 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-
+//测试
+Route::get('/test/index', 'Admin\TestController@index');        //测试
 //登录
 
 Route::get('/admin/login', 'Admin\LoginController@login');        //登录
