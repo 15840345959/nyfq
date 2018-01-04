@@ -77,7 +77,7 @@ class IndexManager
             'type'=>$type
         );
         $menus=TourCategorie::where($where)
-            ->orderBy('sort','desc')->get();
+            ->orderBy('sort','asc')->get();
         return $menus;
     }
 
