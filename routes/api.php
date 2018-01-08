@@ -70,4 +70,8 @@ Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
     //添加评论回复
     Route::post('comment/addCommentReplie', 'API\CommentController@addCommentReplie');
 
+    //查看收藏夹
+    Route::get('center/getCollectionLists', 'API\CenterController@getCollectionLists');
+
+
 });
