@@ -47,8 +47,10 @@ Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
     Route::get('index/getBannerDetail', 'API\IndexController@getBannerDetail');
     //获取首页的动态栏目
     Route::get('index/getIndexMenus', 'API\IndexController@getIndexMenus');
-    //获取最新
+    //获取最新产品
     Route::get('index/getNewGoods', 'API\IndexController@getNewGoods');
+    //获取特价产品
+    Route::get('index/getSpecialGoods', 'API\IndexController@getSpecialGoods');
 
     //获取旅游产品的目的地
     Route::get('tour/getTourCategories', 'API\TourController@getTourCategories');

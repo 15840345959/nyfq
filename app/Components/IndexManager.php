@@ -10,6 +10,7 @@ namespace App\Components;
 
 use App\Models\Banner;
 use App\Models\BannerDetail;
+use App\Models\Goods;
 use App\Models\TourCategorie;
 use App\Models\TourGoods;
 
@@ -104,6 +105,36 @@ class IndexManager
             }
         }
         return $tour_categorie;
+    }
+
+    /*
+     * 获取首页特价产品
+     *
+     * By zm
+     *
+     * 2018-01-08
+     */
+    public static function getIndexSpecialGoodes($data)
+    {
+        $offset=$data["offset"];
+        $page=$data["page"];
+        $goodses=Goods::orderBy('id','desc')
+            ->offset($offset)->limit($page)->get();
+        foreach ($goodses as $goods){
+            if($goods['goods_type']==1){
+                $goods['goods_id']=TourGoodsManager::getTourGoodsById($goods['goods_id']);
+            }
+            else if($goods['goods_type']==2){
+                $goods['goods_id']=HotelGoodsManager::getHotelGoodsById($goods['goods_id']);
+            }
+            else if($goods['goods_type']==3){
+                $goods['goods_id']=PlanGoodsManager::getPlanGoodsById($goods['goods_id']);
+            }
+            else if($goods['goods_type']==4){
+                $goods['goods_id']=CarGoodsManager::getCarGoodsById($goods['goods_id']);
+            }
+        }
+        return $goodses;
     }
 
 }

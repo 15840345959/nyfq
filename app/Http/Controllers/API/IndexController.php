@@ -63,4 +63,16 @@ class IndexController extends Controller
             return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM], ApiResponse::MISSING_PARAM);
         }
     }
+    /*
+     * 获取首页特价产品
+     */
+    public function getSpecialGoods(Request $request){
+        $data = $request->all();
+        $special_goodses=IndexManager::getIndexSpecialGoodes($data);
+        if ($special_goodses) {
+            return ApiResponse::makeResponse(true, $special_goodses, ApiResponse::SUCCESS_CODE);
+        } else {
+            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::UNKNOW_ERROR], ApiResponse::UNKNOW_ERROR);
+        }
+    }
 }
