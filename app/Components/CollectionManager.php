@@ -39,4 +39,19 @@ class CollectionManager
         }
         return $goodses;
     }
+
+    /*
+     * 删除收藏夹里的产品
+     *
+     * by zm
+     *
+     * 2018-01-08
+     *
+     */
+    public static function deleteCollectionGoods($data){
+        foreach ($data['id'] as $id){
+            $result=Collection::where('id',$id)->delete();
+        }
+        return $result?true:false;
+    }
 }

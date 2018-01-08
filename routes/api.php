@@ -72,6 +72,8 @@ Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
 
     //查看收藏夹
     Route::get('center/getCollectionLists', 'API\CenterController@getCollectionLists');
+    //删除收藏夹里的产品
+    Route::post('center/deleteCollectionLists', 'API\CenterController@deleteCollectionLists');
 
 
 });
