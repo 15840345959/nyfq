@@ -111,4 +111,19 @@ class TourGoodsManager
         $tour_goods=TourGoods::where('id',$id)->first();
         return $tour_goods;
     }
+
+
+    /*
+     * 根据条件旅游产品信息
+     *
+     * by zm
+     *
+     * 2017-01-08
+     *
+     */
+    public static function getTourGoodsWhereArray($data){
+        //基本信息
+        $tour_goods=TourGoods::where($data)->first();
+        return $tour_goods;
+    }
 }

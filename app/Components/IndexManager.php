@@ -118,23 +118,93 @@ class IndexManager
     {
         $offset=$data["offset"];
         $page=$data["page"];
-        $goodses=Goods::orderBy('id','desc')
-            ->offset($offset)->limit($page)->get();
-        foreach ($goodses as $goods){
+        $goodses=Goods::orderBy('id','desc')->get();
+        $goods_lists=array();
+        foreach ($goodses as $key=>$goods){
             if($goods['goods_type']==1){
-                $goods['goods_id']=TourGoodsManager::getTourGoodsById($goods['goods_id']);
+                $where=array(
+                    "id"=>$goods['goods_id'],
+                    "sale"=>1
+                );
+                if(TourGoodsManager::getTourGoodsWhereArray($where)){
+                    $goods['goods_id']=TourGoodsManager::getTourGoodsWhereArray($where);
+                    array_push($goods_lists,$goods);
+                }
             }
             else if($goods['goods_type']==2){
-                $goods['goods_id']=HotelGoodsManager::getHotelGoodsById($goods['goods_id']);
+                $where=array(
+                    "id"=>$goods['goods_id'],
+                    "sale"=>1
+                );
+                if(HotelGoodsManager::getHotelGoodsWhereArray($where)){
+                    $goods['goods_id']=HotelGoodsManager::getHotelGoodsWhereArray($where);
+                    array_push($goods_lists,$goods);
+                }
             }
             else if($goods['goods_type']==3){
-                $goods['goods_id']=PlanGoodsManager::getPlanGoodsById($goods['goods_id']);
+                $where=array(
+                    "id"=>$goods['goods_id'],
+                    "sale"=>1
+                );
+                if(PlanGoodsManager::getPlanGoodsWhereArray($where)){
+                    $goods['goods_id']=PlanGoodsManager::getPlanGoodsWhereArray($where);
+                    array_push($goods_lists,$goods);
+                }
             }
             else if($goods['goods_type']==4){
-                $goods['goods_id']=CarGoodsManager::getCarGoodsById($goods['goods_id']);
+                $where=array(
+                    "id"=>$goods['goods_id'],
+                    "sale"=>1
+                );
+                if(CarGoodsManager::getHotelGoodsWhereArray($where)){
+                    $goods['goods_id']=CarGoodsManager::getHotelGoodsWhereArray($where);
+                    array_push($goods_lists,$goods);
+                }
             }
         }
-        return $goodses;
+        //如果数据库中的数据总数大于$page,在正常遍历完数据后实现循环输出
+        $goods_lists_count=count($goods_lists);
+        $goods_rows = array_slice($goods_lists, $offset, $page);
+        $goods_rows_count=count($goods_rows);
+        if($goods_rows_count<$page&&$goods_rows_count<$goods_lists_count){
+            $goods_rows=self::loopData($goods_lists, $goods_rows, $offset, $page);
+        }
+        return $goods_rows;
+    }
+
+    /*
+     * 循环数据
+     *
+     * By zm
+     *
+     * @param $lists 库表中的数据
+     * @param $rows 应输出的数据
+     * @param $offset 开始的位置
+     * @param $page 输出的条数
+     *
+     * 2018-01-08
+     */
+    public static function loopData($lists,$rows,$offset,$page){
+        if($offset<count($lists)){
+            $sub_lists=array_slice($lists, 0, $page-count($rows));
+            foreach ($sub_lists as $sub_list){
+                array_push($rows,$sub_list);
+            }
+        }
+        else{
+            $offset=$page-$offset%count($lists)+1;
+            $sub_lists=array_slice($lists, $offset, $page-count($rows));
+            foreach ($sub_lists as $sub_list){
+                array_push($rows,$sub_list);
+            }
+            if(count($rows)<$page){
+                $sub_lists=array_slice($lists, 0, $page-count($rows));
+                foreach ($sub_lists as $sub_list){
+                    array_push($rows,$sub_list);
+                }
+            }
+        }
+        return $rows;
     }
 
 }

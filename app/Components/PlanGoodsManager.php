@@ -26,4 +26,18 @@ class PlanGoodsManager
         $plan_goods=PlanGoods::where('id',$id)->first();
         return $plan_goods;
     }
+
+    /*
+     * 根据条件获取飞机票产品信息
+     *
+     * by zm
+     *
+     * 2017-01-08
+     *
+     */
+    public static function getPlanGoodsWhereArray($data){
+        //基本信息
+        $plan_goods=PlanGoods::where($data)->first();
+        return $plan_goods;
+    }
 }

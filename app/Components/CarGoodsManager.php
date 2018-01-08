@@ -26,4 +26,18 @@ class CarGoodsManager
         $car_goods=CarGoods::where('id',$id)->first();
         return $car_goods;
     }
+
+    /*
+     * 根据条件获取车导产品信息
+     *
+     * by zm
+     *
+     * 2017-01-08
+     *
+     */
+    public static function getHotelGoodsWhereArray($data){
+        //基本信息
+        $car_goods=CarGoods::where($data)->first();
+        return $car_goods;
+    }
 }

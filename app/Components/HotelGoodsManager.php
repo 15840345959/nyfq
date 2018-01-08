@@ -26,4 +26,18 @@ class HotelGoodsManager
         $hotel_goods=HotelGoods::where('id',$id)->first();
         return $hotel_goods;
     }
+
+    /*
+     * 根据条件获取酒店产品信息
+     *
+     * by zm
+     *
+     * 2017-01-08
+     *
+     */
+    public static function getHotelGoodsWhereArray($data){
+        //基本信息
+        $hotel_goods=HotelGoods::where($data)->first();
+        return $hotel_goods;
+    }
 }

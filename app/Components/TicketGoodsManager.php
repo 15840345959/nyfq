@@ -26,4 +26,18 @@ class TicketGoodsManager
         $ticket_goods=TicketGoods::where('id',$id)->first();
         return $ticket_goods;
     }
+
+    /*
+     * 根据条件获取抢票产品信息
+     *
+     * by zm
+     *
+     * 2017-01-08
+     *
+     */
+    public static function getTicketGoodsWhereArray($data){
+        //基本信息
+        $ticket_goods=TicketGoods::where($data)->first();
+        return $ticket_goods;
+    }
 }
