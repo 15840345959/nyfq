@@ -192,7 +192,17 @@ class IndexManager
             }
         }
         else{
-            $offset=$page-$offset%count($lists)+1;
+//            $offset=$page-$offset%count($lists)+1;
+            $base_count=($page-count($lists)%$page)+count($lists);  //得到第一个完全通过循环得到数据的起始位置
+            if($offset==$base_count){
+                $offset=$page-count($lists)%$page;
+            }
+            else{
+                $base_offset=$page-count($lists)%$page;
+                $base=($offset-$base_count)/$page;
+                $offset=($base_offset+$page*$base)>$page?$base_offset+$page*$base-count($lists)*$base:$base_offset+$page*$base;
+            }
+
             $sub_lists=array_slice($lists, $offset, $page-count($rows));
             foreach ($sub_lists as $sub_list){
                 array_push($rows,$sub_list);
