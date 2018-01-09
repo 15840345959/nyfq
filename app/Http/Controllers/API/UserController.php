@@ -24,11 +24,11 @@ use Qiniu\Auth;
 class UserController extends Controller
 {
     //正式
-//    const APPID = "wxa648f7ba502a5e59";    //微信小程序APPID
-//    const APPSECRET = "a9f2845edbff7920a6362bfb0237b909";    //微信小程序APPSECRET
+    const APPID = "wxa648f7ba502a5e59";    //微信小程序APPID
+    const APPSECRET = "a9f2845edbff7920a6362bfb0237b909";    //微信小程序APPSECRET
     //测试
-    const APPID = "wx84ba56e72f32fae2";    //微信小程序APPID
-    const APPSECRET = "a4ddb5f726631e398eec8033c08ce8b5";    //微信小程序APPSECRET
+//    const APPID = "wx84ba56e72f32fae2";    //微信小程序APPID
+//    const APPSECRET = "a4ddb5f726631e398eec8033c08ce8b5";    //微信小程序APPSECRET
     const QN_ACCESSKEY="JXanCoTnAoyJd4WclS-zPhA8JmWooPTqvK5RCHXb";  //七牛accessKey
     const QN_SECRETKEY="ouc-dLEY42KijHeUaTzTBzFeM2Q1mKk_M_3vNpmT";  //七牛secretKey
     const QN_BUCKET="dsyy"; //七牛图片上传空间
