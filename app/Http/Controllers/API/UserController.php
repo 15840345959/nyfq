@@ -154,12 +154,13 @@ class UserController extends Controller
     public function updateUserById(Request $request)
     {
         $requestValidationResult = RequestValidator::validator($request->all(), [
-            'id' => 'required',
+            'user_id' => 'required',
         ]);
         if ($requestValidationResult !== true) {
             return ApiResponse::makeResponse(false, $requestValidationResult, ApiResponse::MISSING_PARAM);
         }
         $data = $request->all();
+        $data['id']=$data['user_id'];
         $user = UserManager::updateUser($data);
         return ApiResponse::makeResponse(true, $user, ApiResponse::SUCCESS_CODE);
     }
