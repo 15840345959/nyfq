@@ -79,7 +79,11 @@ class TourGoodsManager
      *
      */
     public static function getTourGoodsCalendar($data){
-        $tour_goods_calendar=TourGoodsCalendar::where($data)->first();
+        $where=array(
+            'id'=>$data['id'],
+            'date'=>$data['date']
+        );
+        $tour_goods_calendar=TourGoodsCalendar::where($where)->first();
         return $tour_goods_calendar;
     }
 
