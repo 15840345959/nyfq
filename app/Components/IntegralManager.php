@@ -83,12 +83,59 @@ class IntegralManager
      *
      * by zm
      *
-     * 2017-12-22
+     * 2018-01-09
      *
      */
     public static function getIntegralGoodsById($id){
         //基本信息
         $integral_goods=IntegralGoods::where('id',$id)->first();
+        return $integral_goods;
+    }
+
+    /*
+     * 旅行社端——修改兑换状态
+     *
+     * by zm
+     *
+     * 2018-01-09
+     *
+     */
+    public static function setIntegralStatusById($id){
+        //基本信息
+        $integral=IntegralHistory::where('id',$id)->first();
+        $data['status']=1;
+        $integral = self::setIntegralHistoryStatus($integral, $data);
+        $integral->save();
+        $integral = IntegralHistory::where('id',$id)->first();
+        return $integral;
+    }
+
+    /*
+     * 根据Id获取积分兑换历史详情
+     *
+     * by zm
+     *
+     * 2018-01-09
+     *
+     */
+    public static function getIntegralHistoryById($id){
+        //基本信息
+        $integral_history=IntegralHistory::where('id',$id)->first();
+        return $integral_history;
+    }
+    
+    /*
+     * 配置修改兑换积分商品的状态的参数
+     *
+     * By zm
+     *
+     * 2018-01-09
+     *
+     */
+    public static function setIntegralHistoryStatus($integral_goods,$data){
+        if (array_key_exists('status', $data)) {
+            $integral_goods->status = array_get($data, 'status');
+        }
         return $integral_goods;
     }
 }
