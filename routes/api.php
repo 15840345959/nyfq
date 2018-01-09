@@ -17,7 +17,8 @@ use Illuminate\Http\Request;
 //    return $request->user();
 //});
 
-
+//根据code获取openid
+Route::get('user/getXCXOpenId', 'API\UserController@getXCXOpenId')->middleware('BeforeRequest');
 //用户类路由
 Route::group(['prefix' => '', 'middleware' => ['BeforeRequest','CheckToken']], function () {
     // 示例接口
@@ -30,8 +31,7 @@ Route::group(['prefix' => '', 'middleware' => ['BeforeRequest','CheckToken']], f
     Route::get('user/getById', 'API\UserController@getUserById');
     //根据id获取用户信息带token
     Route::get('user/getByIdWithToken', 'API\UserController@getUserInfoByIdWithToken')->middleware('CheckToken');
-    //根据code获取openid
-    Route::get('user/getXCXOpenId', 'API\UserController@getXCXOpenId');
+
     //登录/注册
     Route::post('user/login', 'API\UserController@login');
     //更新用户信息
