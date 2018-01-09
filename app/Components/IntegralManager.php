@@ -97,7 +97,7 @@ class IntegralManager
     }
 
     /*
-     * 旅行社端——添加积分兑换历史/修改兑换状态
+     * 旅行社端——修改兑换状态
      *
      * by zm
      *
@@ -105,20 +105,46 @@ class IntegralManager
      *
      */
     public static function setIntegralStatusById($data){
-        //基本信息
-        if(array_key_exists('id',$data)){
-            $integral=self::getIntegralHistoryById($data['id']);
-            $data['status']=1;
-        }
-        else{
-            $integral = new IntegralHistory();
-            $user=UserManager::getUserInfoById($data['user_id']);
-            $data['organization_id']=$user['organization_id'];
-        }
+        $integral=self::getIntegralHistoryById($data['id']);
+        $data['status']=1;
         $integral = self::setIntegralHistoryStatus($integral, $data);
         $integral->save();
         $integral = self::getIntegralHistoryById($integral->id);
         return $integral;
+    }
+
+
+
+    /*
+     * 游客端——添加积分兑换历史
+     *
+     * by zm
+     *
+     * 2018-01-09
+     *
+     */
+    public static function addIntegral($data){
+        $integral = new IntegralHistory();
+        $user=UserManager::getUserInfoByIdWithToken($data['user_id']);
+        $data['organization_id']=$user['organization_id'];
+        $integral = self::setIntegralHistoryStatus($integral, $data);
+        $integral->save();
+        $integral = self::getIntegralHistoryById($integral->id);
+        $datas['integral']=$integral;
+        if($integral){
+            $goods=self::getIntegralGoodsById($data['goods_id']);
+            $user->integral=$user->integral-$goods->price;
+            $user->save();
+            $datas['user']=$user;
+            $param['type']=4;
+            $param['content']='兑换'.$goods['name'].' -'.$goods['price'];
+            $param['user_id']=$data['user_id'];
+            $integral_record=self::addIntegralRecord($param);
+            if($integral_record){
+                $datas['integral_record']=$integral_record;
+            }
+        }
+        return $datas;
     }
 
     /*
@@ -164,16 +190,55 @@ class IntegralManager
      */
     public static function addIntegralRecord($data){
         if($data['type']==1){
-            $content="签到+".SIGN_INTEGRAL;
+            $content="签到 +".SIGN_INTEGRAL;
         }
         else if($data['type']==2){
-            $content="邀请好友成功+".INVITATION_INTEGRAL;
+            $content="邀请好友成功 +".INVITATION_INTEGRAL;
         }
-        else if($data['type']==2){
-            $content="发表评论并审核通过+".COMMENT_INTEGRAL;
+        else if($data['type']==3){
+            $content="发表评论并审核通过 +".COMMENT_INTEGRAL;
         }
         else{
             $content=$data['content'];
         }
+        $data['content']=$content;
+        $integral_record=new IntegralRecord();
+        $integral_record=self::setIntegralRecord($integral_record,$data);
+        $integral_record->save();
+        $integral_record=self::getIntegralRecordById($integral_record->id);
+        return $integral_record;
+    }
+
+
+    /*
+     * 根据Id获取积分记录详情
+     *
+     * by zm
+     *
+     * 2018-01-09
+     *
+     */
+    public static function getIntegralRecordById($id){
+        //基本信息
+        $integral_record=IntegralRecord::where('id',$id)->first();
+        return $integral_record;
+    }
+
+    /*
+     * 配置添加积分记录的参数
+     *
+     * By zm
+     *
+     * 2018-01-09
+     *
+     */
+    public static function setIntegralRecord($integral_record,$data){
+        if (array_key_exists('user_id', $data)) {
+            $integral_record->user_id = array_get($data, 'user_id');
+        }
+        if (array_key_exists('content', $data)) {
+            $integral_record->content = array_get($data, 'content');
+        }
+        return $integral_record;
     }
 }

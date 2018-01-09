@@ -103,20 +103,20 @@ class UserManager
         if (array_key_exists('password', $data)) {
             $user->password = array_get($data, 'password');
         }
-        if (array_key_exists('avatar', $data)) {
-            $user->avatar = array_get($data, 'avatar');
+        if (array_key_exists('open_id', $data)) {
+            $user->open_id = array_get($data, 'open_id');
         }
         if (array_key_exists('telephone', $data)) {
             $user->telephone = array_get($data, 'telephone');
         }
-        if (array_key_exists('open_id', $data)) {
-            $user->open_id = array_get($data, 'open_id');
+        if (array_key_exists('id_card', $data)) {
+            $user->id_card = array_get($data, 'id_card');
+        }
+        if (array_key_exists('avatar', $data)) {
+            $user->avatar = array_get($data, 'avatar');
         }
         if (array_key_exists('gender', $data)) {
             $user->gender = array_get($data, 'gender');
-        }
-        if (array_key_exists('admin', $data)) {
-            $user->admin = array_get($data, 'admin');
         }
         if (array_key_exists('organization_id', $data)) {
             $user->organization_id = array_get($data, 'organization_id');
@@ -132,6 +132,9 @@ class UserManager
         }
         if (array_key_exists('sign', $data)) {
             $user->sign = array_get($data, 'sign');
+        }
+        if (array_key_exists('integral', $data)) {
+            $user->integral = array_get($data, 'integral');
         }
         if (array_key_exists('background', $data)) {
             $user->background = array_get($data, 'background');

@@ -58,7 +58,7 @@ class IntegralController extends Controller
      */
     public function addIntegralHistory(Request $request){
         $data = $request->all();
-        $integral_histories=IntegralManager::setIntegralStatusById($data);
+        $integral_histories=IntegralManager::addIntegral($data);
         if ($integral_histories) {
             return ApiResponse::makeResponse(true, $integral_histories, ApiResponse::SUCCESS_CODE);
         } else {
