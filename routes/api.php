@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 
 
 //用户类路由
-Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
+Route::group(['prefix' => '', 'middleware' => ['BeforeRequest','CheckToken']], function () {
     // 示例接口
     Route::get('test', 'API\TestController@test');
 

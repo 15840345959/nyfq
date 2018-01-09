@@ -30,7 +30,7 @@ class CheckToken
             return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::USER_ID_LOST], ApiResponse::USER_ID_LOST);
         }
         //校验token的合法性
-        $result = UserManager::ckeckToken($data['id'], $data['token']);
+        $result = UserManager::ckeckToken($data['user_id'], $data['token']);
         if (!$result) {
             return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::TOKEN_ERROR], ApiResponse::TOKEN_ERROR);
         }
