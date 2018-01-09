@@ -54,6 +54,18 @@ class IntegralController extends Controller
         }
     }
     /*
+     * 游客端——兑换积分商品
+     */
+    public function addIntegralHistory(Request $request){
+        $data = $request->all();
+        $integral_histories=IntegralManager::setIntegralStatusById($data);
+        if ($integral_histories) {
+            return ApiResponse::makeResponse(true, $integral_histories, ApiResponse::SUCCESS_CODE);
+        } else {
+            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM], ApiResponse::MISSING_PARAM);
+        }
+    }
+    /*
      * 旅行社端——获取积分兑换历史
      */
     public function getIntegralHistoryListsForOrganization(Request $request){
@@ -80,7 +92,7 @@ class IntegralController extends Controller
         $user_id=$data['user_id'];
         $user=UserManager::getUserInfoById($user_id);
         if($user['type']==1){
-            $integral_histories=IntegralManager::setIntegralStatusById($data['id']);
+            $integral_histories=IntegralManager::setIntegralStatusById($data);
             if ($integral_histories) {
                 return ApiResponse::makeResponse(true, $integral_histories, ApiResponse::SUCCESS_CODE);
             } else {

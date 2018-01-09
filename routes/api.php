@@ -81,6 +81,8 @@ Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
     Route::get('integral/getIntegralDetaileLists', 'API\IntegralController@getIntegralDetaileLists')->middleware('CheckToken');
     //游客端——获取积分兑换历史
     Route::get('integral/getIntegralHistoryListsForUser', 'API\IntegralController@getIntegralHistoryListsForUser')->middleware('CheckToken');
+    //游客端——兑换积分商品
+    Route::post('integral/addIntegralHistory', 'API\IntegralController@addIntegralHistory')->middleware('CheckToken');
     //旅行社端——获取积分兑换历史
     Route::get('integral/getIntegralHistoryListsForOrganization', 'API\IntegralController@getIntegralHistoryListsForOrganization')->middleware('CheckToken');
     //旅行社端——修改兑换状态
