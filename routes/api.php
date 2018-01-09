@@ -42,38 +42,41 @@ Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
     Route::get('user/createUser', 'API\UserController@createUser');
 
     //获取首页Banner
-    Route::get('index/getBanners', 'API\IndexController@getBanners');
+    Route::get('index/getBanners', 'API\IndexController@getBanners')->middleware('CheckToken');
     //获取Banner的详细信息
-    Route::get('index/getBannerDetail', 'API\IndexController@getBannerDetail');
+    Route::get('index/getBannerDetail', 'API\IndexController@getBannerDetail')->middleware('CheckToken');
     //获取首页的动态栏目
-    Route::get('index/getIndexMenus', 'API\IndexController@getIndexMenus');
+    Route::get('index/getIndexMenus', 'API\IndexController@getIndexMenus')->middleware('CheckToken');
     //获取最新产品
-    Route::get('index/getNewGoods', 'API\IndexController@getNewGoods');
+    Route::get('index/getNewGoods', 'API\IndexController@getNewGoods')->middleware('CheckToken');
     //获取特价产品
-    Route::get('index/getSpecialGoods', 'API\IndexController@getSpecialGoods');
+    Route::get('index/getSpecialGoods', 'API\IndexController@getSpecialGoods')->middleware('CheckToken');
 
     //获取旅游产品的目的地
-    Route::get('tour/getTourCategories', 'API\TourController@getTourCategories');
+    Route::get('tour/getTourCategories', 'API\TourController@getTourCategories')->middleware('CheckToken');
     //获取旅游产品列表
-    Route::get('tour/getTourGoodsLists', 'API\TourController@getTourGoodsLists');
+    Route::get('tour/getTourGoodsLists', 'API\TourController@getTourGoodsLists')->middleware('CheckToken');
     //获取旅游产品的详细信息
-    Route::get('tour/getTourGoodsDetail', 'API\TourController@getTourGoodsDetail');
+    Route::get('tour/getTourGoodsDetail', 'API\TourController@getTourGoodsDetail')->middleware('CheckToken');
 
     //获取产品的评论详情
-    Route::get('comment/getGoodsCommentLists', 'API\CommentController@getGoodsCommentLists');
+    Route::get('comment/getGoodsCommentLists', 'API\CommentController@getGoodsCommentLists')->middleware('CheckToken');
     //获取所有评论的详情
-    Route::get('comment/getAllCommentLists', 'API\CommentController@getAllCommentLists');
+    Route::get('comment/getAllCommentLists', 'API\CommentController@getAllCommentLists')->middleware('CheckToken');
     //用户对评论进行点赞
-    Route::post('comment/addConsent', 'API\CommentController@addConsent');
+    Route::post('comment/addConsent', 'API\CommentController@addConsent')->middleware('CheckToken');
     //添加评论
-    Route::post('comment/addComment', 'API\CommentController@addComment');
+    Route::post('comment/addComment', 'API\CommentController@addComment')->middleware('CheckToken');
     //添加评论回复
-    Route::post('comment/addCommentReplie', 'API\CommentController@addCommentReplie');
+    Route::post('comment/addCommentReplie', 'API\CommentController@addCommentReplie')->middleware('CheckToken');
 
     //查看收藏夹
-    Route::get('center/getCollectionLists', 'API\CenterController@getCollectionLists');
+    Route::get('center/getCollectionLists', 'API\CenterController@getCollectionLists')->middleware('CheckToken');
     //删除收藏夹里的产品
-    Route::post('center/deleteCollectionLists', 'API\CenterController@deleteCollectionLists');
+    Route::post('center/deleteCollectionLists', 'API\CenterController@deleteCollectionLists')->middleware('CheckToken');
+
+    //获取积分商城列表
+    Route::get('integral/getIntegralLists', 'API\IntegralController@getIntegralLists')->middleware('CheckToken');
 
 
 });
