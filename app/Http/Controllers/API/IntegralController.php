@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Components\IntegralManager;
+use App\Components\UserManager;
 use App\Http\Controllers\ApiResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -40,16 +41,35 @@ class IntegralController extends Controller
         }
     }
     /*
-     * 客户端——获取积分兑换历史
+     * 游客端——获取积分兑换历史
      */
     public function getIntegralHistoryListsForUser(Request $request){
         $data = $request->all();
         $user_id=$data['user_id'];
-        $integral_details=IntegralManager::getIntegralHistoryForUser($user_id);
-        if ($integral_details) {
-            return ApiResponse::makeResponse(true, $integral_details, ApiResponse::SUCCESS_CODE);
+        $integral_histories=IntegralManager::getIntegralHistoryForUser($user_id);
+        if ($integral_histories) {
+            return ApiResponse::makeResponse(true, $integral_histories, ApiResponse::SUCCESS_CODE);
         } else {
             return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM], ApiResponse::MISSING_PARAM);
+        }
+    }
+    /*
+     * 游客端——获取积分兑换历史
+     */
+    public function getIntegralHistoryListsForOrganization(Request $request){
+        $data = $request->all();
+        $user_id=$data['user_id'];
+        $user=UserManager::getUserInfoById($user_id);
+        if($user['type']==1){
+            $integral_histories=IntegralManager::getIntegralHistoryForOrganization($user['organization_id']);
+            if ($integral_histories) {
+                return ApiResponse::makeResponse(true, $integral_histories, ApiResponse::SUCCESS_CODE);
+            } else {
+                return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM], ApiResponse::MISSING_PARAM);
+            }
+        }
+        else{
+            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::FAIL_USER_TYPE], ApiResponse::FAIL_USER_TYPE);
         }
     }
 }

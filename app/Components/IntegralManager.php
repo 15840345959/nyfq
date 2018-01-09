@@ -46,7 +46,7 @@ class IntegralManager
     }
 
     /*
-     * 客户端——获取积分兑换历史
+     * 游客端——获取积分兑换历史
      *
      * by zm
      *
@@ -55,8 +55,25 @@ class IntegralManager
      */
     public static function getIntegralHistoryForUser($user_id){
         $integral_histories=IntegralHistory::where('user_id',$user_id)->orderBy('id','desc')->get();
-        foreach ($integral_histories as $integral_historie){
-            $integral_historie['goods_id']=self::getIntegralGoodsById($integral_historie['goods_id']);
+        foreach ($integral_histories as $integral_history){
+            $integral_history['goods_id']=self::getIntegralGoodsById($integral_history['goods_id']);
+        }
+        return $integral_histories;
+    }
+
+    /*
+     * 旅行社端——获取积分兑换历史
+     *
+     * by zm
+     *
+     * 2018-01-09
+     *
+     */
+    public static function getIntegralHistoryForOrganization($organization_id){
+        $integral_histories=IntegralHistory::where('organization_id',$organization_id)->orderBy('id','desc')->get();
+        foreach ($integral_histories as $integral_history){
+            $integral_history['user_id']=UserManager::getUserInfoById($integral_history['user_id']);
+            $integral_history['goods_id']=self::getIntegralGoodsById($integral_history['goods_id']);
         }
         return $integral_histories;
     }

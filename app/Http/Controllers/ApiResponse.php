@@ -32,6 +32,9 @@ class ApiResponse
     //未找到用户
     const NO_USER = 105;
 
+    //用户身份校验失败
+    const FAIL_USER_TYPE = 106;
+
     //映射错误信息
     public static $errorMassage = [
         self::UNKNOW_ERROR => '未知错误',
@@ -40,6 +43,7 @@ class ApiResponse
         self::TOKEN_ERROR => 'token校验失败',
         self::USER_ID_LOST => '缺少用户编码',
         self::NO_USER => '未找到用户',
+        self::FAIL_USER_TYPE => '用户身份校验失败',
         self::REGISTER_FAILED => '注册失败'
     ];
 
