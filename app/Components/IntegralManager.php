@@ -190,13 +190,13 @@ class IntegralManager
      */
     public static function addIntegralRecord($data){
         if($data['type']==1){
-            $content="签到 +".SIGN_INTEGRAL;
+            $content='签到 +'.SIGN_INTEGRAL;
         }
         else if($data['type']==2){
-            $content="邀请好友成功 +".INVITATION_INTEGRAL;
+            $content='邀请好友成功 +'.INVITATION_INTEGRAL;
         }
         else if($data['type']==3){
-            $content="发表评论并审核通过 +".COMMENT_INTEGRAL;
+            $content='发表评论并审核通过 +'.COMMENT_INTEGRAL;
         }
         else{
             $content=$data['content'];
