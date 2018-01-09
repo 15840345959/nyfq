@@ -10,6 +10,7 @@ namespace App\Components;
 
 
 use App\Models\IntegralGoods;
+use App\Models\IntegralRecord;
 
 class IntegralManager
 {
@@ -24,5 +25,18 @@ class IntegralManager
     public static function IntegralGoodsLists(){
         $integral_goods=IntegralGoods::where('status','1')->get();
         return $integral_goods;
+    }
+
+    /*
+     * 获取用户积分明细列表
+     *
+     * by zm
+     *
+     * 2018-01-09
+     *
+     */
+    public static function getIntegralDetaileListsByUser($user_id){
+        $integral_details=IntegralRecord::where('user_id',$user_id)->orderBy('id','desc')->get();
+        return $integral_details;
     }
 }

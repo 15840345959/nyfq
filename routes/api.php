@@ -77,6 +77,8 @@ Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
 
     //获取积分商城列表
     Route::get('integral/getIntegralLists', 'API\IntegralController@getIntegralLists')->middleware('CheckToken');
+    //获取用户积分明细列表
+    Route::get('integral/getIntegralDetaileLists', 'API\IntegralController@getIntegralDetaileLists')->middleware('CheckToken');
 
 
 });

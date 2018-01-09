@@ -26,4 +26,17 @@ class IntegralController extends Controller
             return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM], ApiResponse::MISSING_PARAM);
         }
     }
+    /*
+     * 获取用户积分明细列表
+     */
+    public function getIntegralDetaileLists(Request $request){
+        $data = $request->all();
+        $user_id=$data['user_id'];
+        $integral_details=IntegralManager::getIntegralDetaileListsByUser($user_id);
+        if ($integral_details) {
+            return ApiResponse::makeResponse(true, $integral_details, ApiResponse::SUCCESS_CODE);
+        } else {
+            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM], ApiResponse::MISSING_PARAM);
+        }
+    }
 }
