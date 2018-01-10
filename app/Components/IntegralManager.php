@@ -250,7 +250,7 @@ class IntegralManager
      * 2018-01-10
      *
      */
-    public static function updateUserSign($data)
+    public static function updateUserSign ($data)
     {
         $user = UserManager::getUserInfoByIdWithToken($data['user_id']);
         $data['sign']=$user['sign']+self::SIGN_INTEGRAL;
