@@ -165,8 +165,13 @@ class UserManager
         $user->save();
         $user = self::getUserInfoByIdWithToken($user->id);
 
-        return $user;
+        ////判断是否有分享人
+        if($user['share_user']){
+            IntegralManager::updateShareUserIntegral($user['share_user']);
+        }
+        ////////////////////
 
+        return $user;
     }
 
     /*

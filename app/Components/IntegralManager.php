@@ -253,12 +253,39 @@ class IntegralManager
     public static function updateUserSign ($data)
     {
         $user = UserManager::getUserInfoByIdWithToken($data['user_id']);
-        $data['sign']=$user['sign']+self::SIGN_INTEGRAL;
+        $data['sign']=$user['sign']+1;
+        $data['integral']=$user['integral']+self::SIGN_INTEGRAL;
         $user = UserManager::setUser($user, $data);
         $user->save();
         $datas['user']=$user;
+
         $param['type']=1;
         $param['user_id']=$data['user_id'];
+        $integral_record=self::addIntegralRecord($param);
+        if($integral_record){
+            $datas['integral_record']=$integral_record;
+        }
+        return $datas;
+    }
+
+    /*
+     * 邀请好友成功后获得积分
+     *
+     * By zm
+     *
+     * 2018-01-10
+     *
+     */
+    public static function updateShareUserIntegral($user_id)
+    {
+        $user=UserManager::getUserInfoByIdWithToken($user_id);
+        $data['integral']=$user['integral']+self::INVITATION_INTEGRAL;
+        $user = UserManager::setUser($user, $data);
+        $user->save();
+        $datas['user']=$user;
+
+        $param['type']=2;
+        $param['user_id']=$user_id;
         $integral_record=self::addIntegralRecord($param);
         if($integral_record){
             $datas['integral_record']=$integral_record;

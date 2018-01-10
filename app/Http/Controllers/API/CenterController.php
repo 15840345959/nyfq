@@ -50,7 +50,6 @@ class CenterController extends Controller
      */
     public function addSign(Request $request){
         $data = $request->all();
-//        return \GuzzleHttp\json_encode($data);
         $user=IntegralManager::updateUserSign($data);
         if ($user) {
             return ApiResponse::makeResponse(true, $user, ApiResponse::SUCCESS_CODE);
