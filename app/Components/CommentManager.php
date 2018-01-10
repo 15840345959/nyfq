@@ -99,7 +99,7 @@ class CommentManager
             //获取此条评论的有效点赞数
             $comment['consent_count']=self::countConsents($comment['id']);
             //获取评论用户信息
-            $comment['user_id']=UserManager::getUserInfoByIdWithToken($comment['user_id']);
+            $comment['user_id']=UserManager::getUserInfoById($comment['user_id']);
             //获取评论的多媒体信息
             $comment['media']=self::getGoodsCommentImages($comment['id']);
             //获取评论的回复信息
@@ -107,7 +107,7 @@ class CommentManager
             $replies=$comment['replies'];
             foreach ($replies as $replie){
                 //获取回复的评论的用户信息
-                $replie['user_id']=UserManager::getUserInfoByIdWithToken($replie['user_id']);
+                $replie['user_id']=UserManager::getUserInfoById($replie['user_id']);
             }
             $comment['replies']=$replies;
         }
