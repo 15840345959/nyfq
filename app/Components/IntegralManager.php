@@ -265,7 +265,7 @@ class IntegralManager
         if($integral_record){
             $datas['integral_record']=$integral_record;
         }
-        return $datas;
+        return $user;
     }
 
     /*
