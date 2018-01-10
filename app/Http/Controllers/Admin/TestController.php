@@ -12,6 +12,6 @@ namespace App\Http\Controllers\Admin;
 class TestController
 {
     public function index(){
-        echo 111;
+        return view('admin.test.index');
     }
 }

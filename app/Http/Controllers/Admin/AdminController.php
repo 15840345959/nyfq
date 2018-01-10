@@ -13,6 +13,7 @@ use App\Components\AdminManager;
 use App\Components\QNManager;
 use App\Models\AD;
 use App\Models\Admin;
+use App\User;
 use Illuminate\Http\Request;
 use App\Libs\ServerUtils;
 use App\Components\RequestValidator;
@@ -25,7 +26,7 @@ class AdminController
     public function index(Request $request)
     {
         $admin = $request->session()->get('admin');
-        $admins = Admin::orderBy('id', 'asc')->get();
+        $admins = User::orderBy('id', 'asc')->get();
 //        dd($ads);
         return view('admin.admin.index', ['admin' => $admin, 'datas' => $admins]);
     }
