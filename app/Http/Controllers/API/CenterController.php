@@ -9,6 +9,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Components\CollectionManager;
+use App\Components\IntegralManager;
+use App\Components\UserManager;
 use App\Http\Controllers\ApiResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -39,6 +41,18 @@ class CenterController extends Controller
         $result=CollectionManager::deleteCollectionGoods($data);
         if ($result) {
             return ApiResponse::makeResponse(true, $result, ApiResponse::SUCCESS_CODE);
+        } else {
+            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM], ApiResponse::MISSING_PARAM);
+        }
+    }
+    /*
+     * 签到
+     */
+    public function addSign(Request $request){
+        $data = $request->all();
+        $user=IntegralManager::updateUserSign($data);
+        if ($user) {
+            return ApiResponse::makeResponse(true, $user, ApiResponse::SUCCESS_CODE);
         } else {
             return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM], ApiResponse::MISSING_PARAM);
         }

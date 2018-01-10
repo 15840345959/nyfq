@@ -74,6 +74,8 @@ Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
     Route::get('center/getCollectionLists', 'API\CenterController@getCollectionLists')->middleware('CheckToken');
     //删除收藏夹里的产品
     Route::post('center/deleteCollectionLists', 'API\CenterController@deleteCollectionLists')->middleware('CheckToken');
+    //签到
+    Route::post('center/addSign', 'API\CenterController@addSign')->middleware('CheckToken');
 
     //获取积分商城列表
     Route::get('integral/getIntegralLists', 'API\IntegralController@getIntegralLists')->middleware('CheckToken');

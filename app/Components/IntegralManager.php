@@ -190,13 +190,13 @@ class IntegralManager
      */
     public static function addIntegralRecord($data){
         if($data['type']==1){
-            $content='签到 +'.SIGN_INTEGRAL;
+            $content='签到 +'.self::SIGN_INTEGRAL;
         }
         else if($data['type']==2){
-            $content='邀请好友成功 +'.INVITATION_INTEGRAL;
+            $content='邀请好友成功 +'.self::INVITATION_INTEGRAL;
         }
         else if($data['type']==3){
-            $content='发表评论并审核通过 +'.COMMENT_INTEGRAL;
+            $content='发表评论并审核通过 +'.self::COMMENT_INTEGRAL;
         }
         else{
             $content=$data['content'];
@@ -240,5 +240,29 @@ class IntegralManager
             $integral_record->content = array_get($data, 'content');
         }
         return $integral_record;
+    }
+
+    /*
+     * 签到
+     *
+     * By zm
+     *
+     * 2018-01-10
+     *
+     */
+    public static function updateUserSign($data)
+    {
+        $user = UserManager::getUserInfoByIdWithToken($data['user_id']);
+        $data['sign']=$user['sign']+self::SIGN_INTEGRAL;
+        $user = UserManager::setUser($user, $data);
+        $user->save();
+        $datas['user']=$user;
+        $param['type']=1;
+        $param['user_id']=$data['user_id'];
+        $integral_record=self::addIntegralRecord($param);
+        if($integral_record){
+            $datas['integral_record']=$integral_record;
+        }
+        return $datas;
     }
 }
