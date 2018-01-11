@@ -38,9 +38,12 @@ class UserManager
     {
         $user = self::getUserInfoByIdWithToken($id);
         if ($user) {
-            $user->token = null;
-            $user->remember_token = null;
-            $user->password = null;
+//            $user->token = null;
+//            $user->remember_token = null;
+//            $user->password = null;
+            unset($user['token']);
+            unset($user['remember_token']);
+            unset($user['password']);
         }
         return $user;
     }
