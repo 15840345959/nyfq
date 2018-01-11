@@ -11,11 +11,12 @@
 |
 */
 //测试
-Route::get('/test/index', 'Admin\TestController@index');        //测试
+Route::get('/auth/login', 'Auth\LoginController@index');        //测试
+
 //登录
 
 Route::get('/admin/login', 'Admin\LoginController@login');        //登录
-Route::post('/admin/login', 'Admin\LoginController@loginPost');   //post登录请求
+Route::post('/admin/login', 'Admin\LoginController@loginDo');   //post登录请求
 Route::get('/admin/loginout', 'Admin\LoginController@loginout');  //注销
 
 Route::group(['prefix' => 'admin', 'middleware' => ['admin.login']], function () {
@@ -35,3 +36,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin.login']], function ()
     Route::post('/admin/edit', 'Admin\AdminController@editPost');  //新建或编辑管理员
 
 });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>孵化器 | 管理后台</title>
+    <title>辽宁南洋风情小程序 | 管理后台</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
@@ -39,17 +39,17 @@
     <div class="login-logo">
         <a href="">
             <img src="{{URL::asset('img/logo.png')}}" style="width: 36px;height: 36px;">
-            <span style="color: white; font-family:'Microsoft YaHei' !important;">孵化器管理后台</span>
+            <span style="color: white; font-family:'Microsoft YaHei' !important;">辽宁南洋风情小程序管理后台</span>
         </a>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
         <p class="login-box-msg">请输入手机号、密码登录，联系<a href="#">管理员</a></p>
 
-        <form action="" method="post" onsubmit="return checkValid()">
+        <form action="../admin/login" method="post" onsubmit="return checkValid()">
             {{csrf_field()}}
-            <div id="phonenum_div" class="form-group has-feedback">
-                <input id="phonenum" name="phonenum" type="phonenum" class="form-control" placeholder="手机号">
+            <div id="telephone_div" class="form-group has-feedback">
+                <input id="telephone" name="telephone" type="telephone" class="form-control" placeholder="手机号">
                 <span class="glyphicon glyphicon-earphone form-control-feedback"></span>
             </div>
             <div id="password_div" class="form-group has-feedback">
@@ -97,13 +97,13 @@
     //进行表单校验
     function checkValid() {
         //校验手机号
-        var phonenum = $("#phonenum").val();
-        console.log("phonenum:" + phonenum);
-        if (judgeIsNullStr(phonenum) || !isPoneAvailable(phonenum)) {
-            $("#phonenum_div").addClass("has-error");
+        var telephone = $("#telephone").val();
+        console.log("telephone:" + telephone);
+        if (judgeIsNullStr(telephone) || !isPoneAvailable(telephone)) {
+            $("#telephone_div").addClass("has-error");
             return false;
         } else {
-            $("#phonenum_div").removeClass("has-error");
+            $("#telephone_div").removeClass("has-error");
         }
         //校验密码
         var password = $("#password").val();
