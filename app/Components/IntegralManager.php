@@ -125,7 +125,7 @@ class IntegralManager
      */
     public static function addIntegral($data){
         $integral = new IntegralHistory();
-        $user=UserManager::getUserInfoByIdWithToken($data['user_id']);
+        $user=UserManager::getUserInfoById($data['user_id']);
         $data['organization_id']=$user['organization_id'];
         $integral = self::setIntegralHistoryStatus($integral, $data);
         $integral->save();
@@ -252,7 +252,7 @@ class IntegralManager
      */
     public static function updateUserSign ($data)
     {
-        $user = UserManager::getUserInfoByIdWithToken($data['user_id']);
+        $user = UserManager::getUserInfoById($data['user_id']);
         $data['sign']=$user['sign']+1;
         $data['integral']=$user['integral']+self::SIGN_INTEGRAL;
         $user = UserManager::setUser($user, $data);
