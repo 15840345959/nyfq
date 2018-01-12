@@ -13,6 +13,7 @@ use App\Components\IndexManager;
 use App\Http\Controllers\ApiResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Components\RequestValidator;
 
 class IndexController extends Controller
 {
@@ -71,6 +72,18 @@ class IndexController extends Controller
         $special_goodses=IndexManager::getIndexSpecialGoodes($data);
         if ($special_goodses) {
             return ApiResponse::makeResponse(true, $special_goodses, ApiResponse::SUCCESS_CODE);
+        } else {
+            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::UNKNOW_ERROR], ApiResponse::UNKNOW_ERROR);
+        }
+    }
+    /*
+     * 首页的搜索功能
+     */
+    public function search(Request $request){
+        $data = $request->all();
+        $goodses=IndexManager::searchGoods($data);
+        if ($goodses) {
+            return ApiResponse::makeResponse(true, $goodses, ApiResponse::SUCCESS_CODE);
         } else {
             return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::UNKNOW_ERROR], ApiResponse::UNKNOW_ERROR);
         }

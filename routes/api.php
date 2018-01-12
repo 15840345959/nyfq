@@ -51,6 +51,8 @@ Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
     Route::get('index/getNewGoods', 'API\IndexController@getNewGoods')->middleware('CheckToken');
     //获取特价产品
     Route::get('index/getSpecialGoods', 'API\IndexController@getSpecialGoods')->middleware('CheckToken');
+    //搜索功能
+    Route::get('index/search', 'API\IndexController@search')->middleware('CheckToken');
 
     //获取旅游产品的目的地
     Route::get('tour/getTourCategories', 'API\TourController@getTourCategories')->middleware('CheckToken');

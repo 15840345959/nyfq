@@ -217,4 +217,80 @@ class IndexManager
         return $rows;
     }
 
+    /*
+     * 搜索
+     *
+     * By zm
+     *
+     * 2018-01-12
+     */
+    public static function searchGoods($data){
+        $offset=$data["offset"];
+        $page=$data["page"];
+        $search_name=$data['search_name'];
+        $goodses=Goods::orderBy('id','desc')->get();
+        $goods_lists=array();
+        foreach ($goodses as $key=>$goods){
+            if($goods['goods_type']==1){
+                $where=array(
+                    "id"=>$goods['goods_id']
+                );
+                if(TourGoodsManager::getTourGoodsWhereArray($where)){
+                    $goods['goods_id']=TourGoodsManager::getTourGoodsWhereArray($where);
+                    if(empty($search_name)){
+                        array_push($goods_lists,$goods);
+                    }
+                    else if(stripos($goods['goods_id']['name'],$search_name)!==false){
+                        array_push($goods_lists,$goods);
+                    }
+                }
+            }
+            else if($goods['goods_type']==2){
+                $where=array(
+                    "id"=>$goods['goods_id']
+                );
+                if(HotelGoodsManager::getHotelGoodsWhereArray($where)){
+                    $goods['goods_id']=HotelGoodsManager::getHotelGoodsWhereArray($where);
+                    if(empty($search_name)){
+                        array_push($goods_lists,$goods);
+                    }
+                    else if(stripos($goods['goods_id']['name'],$search_name)!==false){
+                        array_push($goods_lists,$goods);
+                    }
+                }
+            }
+            else if($goods['goods_type']==3){
+                $where=array(
+                    "id"=>$goods['goods_id']
+                );
+                if(PlanGoodsManager::getPlanGoodsWhereArray($where)){
+                    $goods['goods_id']=PlanGoodsManager::getPlanGoodsWhereArray($where);
+                    if(empty($search_name)){
+                        array_push($goods_lists,$goods);
+                    }
+                    else if(stripos($goods['goods_id']['name'],$search_name)!==false){
+                        array_push($goods_lists,$goods);
+                    }
+                }
+            }
+            else if($goods['goods_type']==4){
+                $where=array(
+                    "id"=>$goods['goods_id']
+                );
+                if(CarGoodsManager::getHotelGoodsWhereArray($where)){
+                    $goods['goods_id']=CarGoodsManager::getHotelGoodsWhereArray($where);
+                    if(empty($search_name)){
+                        array_push($goods_lists,$goods);
+                    }
+                    else if(stripos($goods['goods_id']['name'],$search_name)!==false){
+                        array_push($goods_lists,$goods);
+                    }
+                }
+            }
+        }
+        $goods_rows = array_slice($goods_lists, $offset, $page);
+
+        return $goods_rows;
+    }
+
 }
