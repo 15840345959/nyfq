@@ -41,13 +41,13 @@ class UserController extends Controller
     {
 //        $accessKey = 'JXanCoTnAoyJd4WclS-zPhA8JmWooPTqvK5RCHXb';
 //        $secretKey = 'ouc-dLEY42KijHeUaTzTBzFeM2Q1mKk_M_3vNpmT';
-        $accessKey = QN_ACCESSKEY;
-        $secretKey = QN_SECRETKEY;
+        $accessKey = self::QN_ACCESSKEY;
+        $secretKey = self::QN_SECRETKEY;
 
         $auth = new Auth($accessKey, $secretKey);
 
 //        $bucket = 'dsyy';
-        $bucket = QN_BUCKET;
+        $bucket = self::QN_BUCKET;
         $upToken = $auth->uploadToken($bucket);
 
         return ApiResponse::makeResponse(true, $upToken, ApiResponse::SUCCESS_CODE);
