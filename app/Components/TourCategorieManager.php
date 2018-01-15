@@ -51,9 +51,14 @@ class TourCategorieManager
     public static function getTourGoodsLists($data){
         $offset=$data["offset"];
         $page=$data["page"];
-        $tour_category_id=$data["tour_category_id"];
-        $tour_goodses=TourGoods::where('tour_category_id',$tour_category_id)->orderBy('sort','desc')
-            ->offset($offset)->limit($page)->get();
+        if(array_key_exists("tour_category_id",$data)){
+            $tour_category_id=$data["tour_category_id"];
+            $tour_goodses=TourGoods::where('tour_category_id',$tour_category_id)->orderBy('sort','desc')
+                ->offset($offset)->limit($page)->get();
+        }
+        else{
+            $tour_goodses=TourGoods::orderBy('sort','desc')->offset($offset)->limit($page)->get();
+        }
         foreach ($tour_goodses as $tour_goods){
             $tour_goods['categorie']=self::getTourCategorieById($tour_goods['tour_category_id']);
         }
