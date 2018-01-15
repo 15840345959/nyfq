@@ -40,15 +40,15 @@ Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
     Route::get('user/createUser', 'API\UserController@createUser');
 
     //获取首页Banner
-    Route::get('index/getBanners', 'API\IndexController@getBanners')->middleware('CheckToken');
+    Route::get('index/getBanners', 'API\IndexController@getBanners');
     //获取Banner的详细信息
     Route::get('index/getBannerDetail', 'API\IndexController@getBannerDetail')->middleware('CheckToken');
     //获取首页的动态栏目
-    Route::get('index/getIndexMenus', 'API\IndexController@getIndexMenus')->middleware('CheckToken');
+    Route::get('index/getIndexMenus', 'API\IndexController@getIndexMenus');
     //获取最新产品
-    Route::get('index/getNewGoods', 'API\IndexController@getNewGoods')->middleware('CheckToken');
+    Route::get('index/getNewGoods', 'API\IndexController@getNewGoods');
     //获取特价产品
-    Route::get('index/getSpecialGoods', 'API\IndexController@getSpecialGoods')->middleware('CheckToken');
+    Route::get('index/getSpecialGoods', 'API\IndexController@getSpecialGoods');
     //搜索功能
     Route::get('index/search', 'API\IndexController@search')->middleware('CheckToken');
 
