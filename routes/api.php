@@ -20,8 +20,6 @@ use Illuminate\Http\Request;
 
 //用户类路由
 Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
-    // 示例接口
-    Route::get('test', 'API\TestController@test');
 
     //获取七牛token
     Route::get('user/getQiniuToken', 'API\UserController@getQiniuToken')->middleware('CheckToken');
@@ -74,6 +72,8 @@ Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
 
     //查看收藏夹
     Route::get('center/getCollectionLists', 'API\CenterController@getCollectionLists')->middleware('CheckToken');
+    //添加收藏
+    Route::post('center/addCollectionGoods', 'API\CenterController@addCollectionGoods')->middleware('CheckToken');
     //删除收藏夹里的产品
     Route::post('center/deleteCollectionLists', 'API\CenterController@deleteCollectionLists')->middleware('CheckToken');
     //签到

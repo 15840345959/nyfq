@@ -10,6 +10,7 @@
 namespace App\Components;
 
 use App\Models\AD;
+use App\User;
 use Qiniu\Auth;
 
 class AdminManager
@@ -29,15 +30,65 @@ class AdminManager
         if (array_key_exists('avatar', $data)) {
             $admin->avatar = array_get($data, 'avatar');
         }
-        if (array_key_exists('phonenum', $data)) {
-            $admin->phonenum = array_get($data, 'phonenum');
+        if (array_key_exists('telephone', $data)) {
+            $admin->telephone = array_get($data, 'telephone');
         }
         if (array_key_exists('password', $data)) {
             $admin->password = array_get($data, 'password');
         }
-        if (array_key_exists('role', $data)) {
-            $admin->role = array_get($data, 'role');
+        if (array_key_exists('type', $data)) {
+            $admin->role = array_get($data, 'type');
         }
         return $admin;
+    }
+
+    /*
+     * 后台登录
+     *
+     * By zm
+     *
+     * 2018-01-13
+     */
+    public static function login($telephone, $password,$remember_token){
+        $where=array(
+            'telephone'=>$telephone,
+            'password'=>$password,
+            'type'=>2
+        );
+        $admin=User::where($where)->first();
+        if($admin){
+            if(empty($admin['remember_token'])){
+                $admin['remember_token']=$remember_token;
+                $admin->save();
+            }
+        }
+        $user['nick_name']=$admin['nick_name'];
+        $user['avatar']=$admin['avatar'];
+        $user['id']=$admin['id'];
+        $user['remember_token']=$admin['remember_token'];
+        return $user;
+    }
+
+    /*
+     * 根据user_id和remember_token校验合法性，全部插入、更新、删除类操作需要使用中间件
+     *
+     * By zm
+     *
+     * 2018-01-13
+     *
+     */
+    public static function ckeckAdminToken($id, $remember_token)
+    {
+        //根据id、remember_token获取用户信息
+        $where=array(
+            'id'=>$id,
+            'remember_token'=>$remember_token
+        );
+        $count = User::where($where)->count();
+        if ($count > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

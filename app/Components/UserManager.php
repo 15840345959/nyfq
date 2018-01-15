@@ -38,9 +38,6 @@ class UserManager
     {
         $user = self::getUserInfoByIdWithToken($id);
         if ($user) {
-//            $user->token = null;
-//            $user->remember_token = null;
-//            $user->password = null;
             unset($user['token']);
             unset($user['remember_token']);
             unset($user['password']);
@@ -231,5 +228,22 @@ class UserManager
                 . substr($charid, 20, 12);
             return $uuid;
         }
+    }
+
+    /*
+     * 查找管理员
+     *
+     * By zm
+     *
+     * 2018-01-15
+     */
+    public static function getAlladminByName($search)
+    {
+        $where=array(
+            'type'=>2,
+            'nick_name'=>array('like','%'.$search.'%')
+        );
+        $users = User::where($where)->orderBy('id',asc)->get();
+        return $users;
     }
 }

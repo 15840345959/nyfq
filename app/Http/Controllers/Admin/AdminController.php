@@ -11,9 +11,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Components\AdminManager;
 use App\Components\QNManager;
+use App\Components\UserManager;
 use App\Models\AD;
 use App\Models\Admin;
-use App\User;
 use Illuminate\Http\Request;
 use App\Libs\ServerUtils;
 use App\Components\RequestValidator;
@@ -26,9 +26,10 @@ class AdminController
     public function index(Request $request)
     {
         $admin = $request->session()->get('admin');
-        $admins = User::orderBy('id', 'asc')->get();
-//        dd($ads);
-        return view('admin.admin.index', ['admin' => $admin, 'datas' => $admins]);
+//        var_dump($admin);
+        $admins = UserManager::getAlladminByName();
+        dd($admins);
+//        return view('admin.admin.index', ['admin' => $admin, 'datas' => $admins]);
     }
 
 

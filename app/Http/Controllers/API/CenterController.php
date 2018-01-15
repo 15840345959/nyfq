@@ -34,6 +34,18 @@ class CenterController extends Controller
         }
     }
     /*
+     * 添加收藏
+     */
+    public function addCollectionGoods(Request $request){
+        $data = $request->all();
+        $collection=CollectionManager::addCollectionGoods($data);
+        if ($collection) {
+            return ApiResponse::makeResponse(true, $collection, ApiResponse::SUCCESS_CODE);
+        } else {
+            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM], ApiResponse::MISSING_PARAM);
+        }
+    }
+    /*
      * 删除收藏夹里的产品
      */
     public function deleteCollectionLists(Request $request){

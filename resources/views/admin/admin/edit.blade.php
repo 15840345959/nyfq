@@ -1,125 +1,121 @@
 @extends('admin.layouts.app')
 
 @section('content')
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>
-            <small>新建/编辑管理员（新建管理员默认密码为Aa123456）</small>
-        </h1>
-        <ol class="breadcrumb">
 
-        </ol>
-    </section>
 
-    <!-- Main content -->
-    <section class="content">
-        <div class="row">
-            <!-- left column -->
-            <div class="col-md-6">
-                <!-- Horizontal Form -->
-                <div class="box box-info">
-                    <!-- form start -->
-                    <form action="" method="post" class="form-horizontal" onsubmit="return checkValid();">
-                        {{csrf_field()}}
-                        <div class="box-body">
-                            <div class="form-group">
-                                <label for="id" class="col-sm-2 control-label">*id</label>
 
-                                <div class="col-sm-10">
-                                    <input id="id" name="id" type="text" class="form-control"
-                                           placeholder="自动生成id" disabled
-                                           value="{{ isset($data->id) ? $data->id : '' }}">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="nick_name" class="col-sm-2 control-label">*姓名</label>
-                                <div class="col-sm-10">
-                                    <input id="nick_name" name="nick_name" type="text" class="form-control"
-                                           placeholder="请输入姓名"
-                                           value="{{ isset($data->nick_name) ? $data->nick_name : '' }}">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="avatar" class="col-sm-2 control-label">*头像</label>
-
-                                <div class="col-sm-10">
-                                    <input id="avatar" name="avatar" type="text" class="form-control"
-                                           placeholder="图片网路链接地址"
-                                           value="{{ isset($data->avatar) ? $data->avatar : '' }}">
-                                </div>
-                            </div>
-                            <div style="margin-top: 10px;" class="text-center">
-                                <div id="container">
-                                    <img id="pickfiles"
-                                         src="{{ isset($data->avatar) ? $data->avatar.'?imageView2/2/w/200/h/200/interlace/1/q/75|imageslim' : URL::asset('/img/upload_rect.png')}}"
-                                         style="width: 120px;height: 120px;border-radius: 50%;">
-                                </div>
-                                <div style="font-size: 12px;margin-top: 10px;" class="text-gray">*请上传200*200尺寸图片</div>
-                            </div>
-                            <div class="form-group" style="margin-top: 15px;">
-                                <label for="phonenum" class="col-sm-2 control-label">*电话</label>
-
-                                <div class="col-sm-10">
-                                    <input id="phonenum" name="phonenum" type="text" class="form-control"
-                                           value="{{ isset($data->phonenum) ? $data->phonenum : '' }}"
-                                           placeholder="请输入电话号码">
-                                </div>
-                            </div>
-                            <div class="form-group" style="margin-top: 15px;">
-                                <label for="role" class="col-sm-2 control-label">级别</label>
-
-                                <div class="col-sm-10">
-                                    <input id="role" name="role" type="checkbox" {{$data->role == '0'? 'checked':''}}>
-                                    根管理员
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /.box-body -->
-                        <div class="box-footer">
-                            <button type="submit" class="btn btn-info btn-block btn-flat">保存</button>
-                        </div>
-                        <!-- /.box-footer -->
-                    </form>
+    <div class="page-container">
+        <form class="form form-horizontal" id="form-admin-add">
+            {{csrf_field()}}
+            <div class="row cl hidden">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>id：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input id="id" name="id" type="text" class="input-text"
+                           value="{{ isset($data->id) ? $data->id : '' }}" placeholder="管理员id">
                 </div>
-                <!-- /.box -->
             </div>
-            <!--/.col (right) -->
-            <div class="col-md-6">
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>管理员：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input id="name" name="name" type="text" class="input-text"
+                           value="{{ isset($data->name) ? $data->name : '' }}" placeholder="请输入管理员姓名">
+                </div>
             </div>
-        </div>
-    </section>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2"></label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <span class="grey-font">新建管理员的默认密码为Aa123456</span>
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>联系电话：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input id="phonenum" name="phonenum" type="text" class="input-text"
+                           value="{{ isset($data->phonenum) ? $data->phonenum : '' }}" placeholder="请输入联系电话">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">头像：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input id="avatar" name="avatar" type="text" class="input-text"
+                           value="{{ isset($data->avatar) ? $data->avatar : '' }}" placeholder="请输入头像网络连接地址">
+                    <div id="container" class="margin-top-10">
+                        <img id="pickfiles"
+                             src="{{ isset($data->avatar) ? $data->avatar : URL::asset('/img/default_headicon.png') }}"
+                             style="width: 120px;height: 120px;border-radius: 50%;">
+                    </div>
+                    <div style="font-size: 12px;margin-top: 10px;" class="text-gray">*请上传200*200尺寸图片</div>
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>角色：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <select id="role" name="role" class="select">
+                        <option value="0" {{$data->role == "0"? "selected":""}}>普通管理员</option>
+                        <option value="1" {{$data->role == "1"? "selected":""}}>根级管理员</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row cl">
+                <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                    <input class="btn btn-primary radius" type="submit" value="保存管理员">
+                    <button onClick="layer_close();" class="btn btn-default radius" type="button">取消</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
 @endsection
 
 @section('script')
-    <script src="{{ URL::asset('js/qiniu.js') }}"></script>
-    <script src="{{ URL::asset('js/plupload/plupload.full.min.js') }}"></script>
-    <script src="{{ URL::asset('js/plupload/moxie.js') }}"></script>
-    <script type="application/javascript">
-
-        //合规校验
-        function checkValid() {
-            //合规校验
-            var nick_name = $("#nick_name").val();
-            if (judgeIsNullStr(nick_name)) {
-                $("#nick_name").focus();
-                return false;
-            }
-            var avatar = $("#avatar").val();
-            if (judgeIsNullStr(avatar)) {
-                $("#avatar").focus();
-                return false;
-            }
-            var phonenum = $("#phonenum").val();
-            if (judgeIsNullStr(phonenum) || !isPoneAvailable(phonenum)) {
-                $("#phonenum").focus();
-                return false;
-            }
-            return true;
-        }
-
-        $(document).ready(function () {
+    <script type="text/javascript">
+        $(function () {
             //获取七牛token
             initQNUploader();
+            $("#form-admin-add").validate({
+                rules: {
+                    name: {
+                        required: true,
+                    },
+                    phonenum: {
+                        required: true,
+                        isPhone: true,
+                    },
+                    avatar: {
+                        required: true,
+                    }
+                },
+                onkeyup: false,
+                focusCleanup: true,
+                success: "valid",
+                submitHandler: function (form) {
+                    $(form).ajaxSubmit({
+                        type: 'POST',
+                        url: "{{ URL::asset('/admin/admin/edit')}}",
+                        success: function (ret) {
+                            console.log(JSON.stringify(ret));
+                            if (ret.result) {
+                                layer.msg('保存成功', {icon: 1, time: 1000});
+                                setTimeout(function () {
+                                    var index = parent.layer.getFrameIndex(window.name);
+                                    parent.$('.btn-refresh').click();
+                                    parent.layer.close(index);
+                                }, 500)
+                            } else {
+                                layer.msg(ret.message, {icon: 2, time: 1000});
+                            }
+                        },
+                        error: function (XmlHttpRequest, textStatus, errorThrown) {
+                            layer.msg('保存失败', {icon: 1, time: 1000});
+                            console.log("XmlHttpRequest:" + JSON.stringify(XmlHttpRequest));
+                            console.log("textStatus:" + textStatus);
+                            console.log("errorThrown:" + errorThrown);
+                        }
+                    });
+                }
+
+            });
         });
 
         //初始化七牛上传模块
@@ -191,7 +187,7 @@
                         //获取上传成功后的文件的Url
                         var sourceLink = domain + res.key;
                         $("#avatar").val(sourceLink);
-                        $("#pickfiles").attr('src', qiniuUrlTool(sourceLink, "ad"));
+                        $("#pickfiles").attr('src', qiniuUrlTool(sourceLink, "head_icon"));
 //                        console.log($("#pickfiles").attr('src'));
                     },
                     'Error': function (up, err, errTip) {
