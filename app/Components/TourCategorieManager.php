@@ -51,7 +51,7 @@ class TourCategorieManager
     public static function getTourGoodsLists($data){
         $offset=$data["offset"];
         $page=$data["page"];
-        if(array_key_exists("tour_category_id",$data)){
+        if($data['tour_category_id']){
             $tour_category_id=$data["tour_category_id"];
             $tour_goodses=TourGoods::where('tour_category_id',$tour_category_id)->orderBy('sort','desc')
                 ->offset($offset)->limit($page)->get();
