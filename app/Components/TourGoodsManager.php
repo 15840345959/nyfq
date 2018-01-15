@@ -45,7 +45,7 @@ class TourGoodsManager
             'goods_id'=>$data['id'],
             'goods_type'=>1
         );
-        $tour_goods['collection']=CollectionManager::judgeCollection($collection_data);
+        $tour_goods['collection']=CollectionManager::judgeCollection($collection_data)?true:false;
         return $tour_goods;
     }
 
