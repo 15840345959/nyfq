@@ -39,6 +39,13 @@ class TourGoodsManager
         $tour_goods['routes']=self::getTourGoodsRoutes($id);
         //内容页详情
         $tour_goods['contents']=self::getTourGoodsContents($id);
+        //判断此用户是否对此产品添加过产品收藏
+        $collection_data=array(
+            'user_id'=>$data['user_id'],
+            'goods_id'=>$data['id'],
+            'goods_type'=>1
+        );
+        $tour_goods['collection']=CollectionManager::judgeCollection($collection_data);
         return $tour_goods;
     }
 

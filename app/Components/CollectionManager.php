@@ -90,4 +90,17 @@ class CollectionManager
         }
         return $collection;
     }
+
+    /*
+     * 判断用户是否添加过此产品的收藏
+     *
+     * By zm
+     *
+     * 2018-01-15
+     *
+     */
+    public static function judgeCollection($data){
+        $collection=Collection::where($data)->first();
+        return $collection;
+    }
 }
