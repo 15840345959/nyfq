@@ -37,7 +37,10 @@ class AdminManager
             $admin->password = array_get($data, 'password');
         }
         if (array_key_exists('type', $data)) {
-            $admin->role = array_get($data, 'type');
+            $admin->type = array_get($data, 'type');
+        }
+        if (array_key_exists('admin', $data)) {
+            $admin->admin = array_get($data, 'admin');
         }
         return $admin;
     }
@@ -49,40 +52,32 @@ class AdminManager
      *
      * 2018-01-13
      */
-    public static function login($telephone, $password,$remember_token){
-        $where=array(
-            'telephone'=>$telephone,
-            'password'=>$password,
-            'type'=>2
-        );
-        $admin=User::where($where)->first();
+    public static function login($telephone, $password){
+        $admin=User::where('telephone',$telephone)->where('password',$password)->where('type',2)->first();
+        $user=[];
         if($admin){
-            if(empty($admin['remember_token'])){
-                $admin['remember_token']=$remember_token;
-                $admin->save();
-            }
+            $user['id']=$admin['id'];
+            $user['nick_name']=$admin['nick_name'];
+            $user['avatar']=$admin['avatar'];
+            $user['type']=$admin['type'];
+            $user['admin']=$admin['admin'];
         }
-        $user['nick_name']=$admin['nick_name'];
-        $user['avatar']=$admin['avatar'];
-        $user['id']=$admin['id'];
-        $user['remember_token']=$admin['remember_token'];
         return $user;
     }
 
     /*
-     * 根据user_id和remember_token校验合法性，全部插入、更新、删除类操作需要使用中间件
+     * 根据user_id校验合法性，全部插入、更新、删除类操作需要使用中间件
      *
      * By zm
      *
      * 2018-01-13
      *
      */
-    public static function ckeckAdminToken($id, $remember_token)
+    public static function ckeckAdminToken($id)
     {
         //根据id、remember_token获取用户信息
         $where=array(
             'id'=>$id,
-            'remember_token'=>$remember_token
         );
         $count = User::where($where)->count();
         if ($count > 0) {

@@ -35,14 +35,19 @@ class LoginController
         }
         $telephone = $data['telephone'];
         $password = $data['password'];
-        $remember_token = $data['_token'];
 
-        $admin = AdminManager::login($telephone,$password,$remember_token);
+        $admin = AdminManager::login($telephone,$password);
         //登录失败
         if ($admin == null) {
             return view('admin.login.login', ['msg' => '手机号或密码错误']);
         }
         $request->session()->put('admin', $admin);//写入session
         return redirect('/admin/index');//跳转至后台首页
+    }
+    //退出登录
+    public function loginout(Request $request){
+        $request->session()->forget('admin');
+        $request->session()->flush();
+        return redirect('/admin/login');//跳转至后台首页
     }
 }

@@ -10,10 +10,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Components\AdminManager;
-use App\Components\QNManager;
 use App\Components\UserManager;
 use App\Models\AD;
 use App\Models\Admin;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Libs\ServerUtils;
 use App\Components\RequestValidator;
@@ -26,9 +26,8 @@ class AdminController
     public function index(Request $request)
     {
         $admin = $request->session()->get('admin');
-//        var_dump($admin);
-        $admins = UserManager::getAlladminByName();
-        dd($admins);
+        var_dump($admin);
+//        $admins = UserManager::getAlladminByName();
 //        return view('admin.admin.index', ['admin' => $admin, 'datas' => $admins]);
     }
 
@@ -52,19 +51,23 @@ class AdminController
     public function edit(Request $request)
     {
         $data = $request->all();
-        $admin_b = new Admin();
+        $user = new User();
         if (array_key_exists('id', $data)) {
-            $admin_b = Admin::find($data['id']);
+            $user = UserManager::getUserInfoById($data['id']);
         }
         $admin = $request->session()->get('admin');
         //只有根管理员有修改权限
-        if (!($admin->role == '0')) {
-            return redirect()->action('\App\Http\Controllers\Admin\IndexController@error', ['msg' => '合规校验失败，只有根级管理员有修改权限']);
+        if (!($user->type == '2')&&!($user->admin == '1')) {
+            return redirect()->action('\App\Http\Controllers\Admin\IndexController@error', ['msg' => '合规校验失败，只有管理员有修改权限']);
         }
 
-        //生成七牛token
-        $upload_token = QNManager::uploadToken();
-        return view('admin.admin.edit', ['admin' => $admin, 'data' => $admin_b, 'upload_token' => $upload_token]);
+//        //生成七牛token
+//        $upload_token = QNManager::uploadToken();
+        $param=array(
+            'admin'=>$admin,
+            'data'=>$user
+        );
+        return view('admin.admin.edit', $param);
     }
 
     //新建或编辑管理员->post
@@ -87,6 +90,42 @@ class AdminController
         }
         $admin->save();
         return redirect('/admin/admin/index');
+    }
+
+    //新建或编辑自己的信息-get
+    public function editMySelf(Request $request)
+    {
+        $admin = $request->session()->get('admin');
+        $user = UserManager::getUserInfoById($admin['id']);
+        $param=array(
+            'data'=>$user
+        );
+        return view('admin.admin.editMySelf', $param);
+    }
+
+    //新建或编辑自己的信息-post
+    public function editMySelfPost(Request $request)
+    {
+        $data = $request->all();
+//        var_dump($data);
+        $admin=UserManager::getUserInfoById($data['id']);
+        $admin = AdminManager::setAdmin($admin, $data);
+        $result=$admin->save();
+        if($result){
+            $user['nick_name']=$admin['nick_name'];
+            $user['avatar']=$admin['avatar'];
+            $user['id']=$admin['id'];
+            $user['remember_token']=$admin['remember_token'];
+            $request->session()->put('admin', $user);//写入session
+            return redirect('/admin/admin/editMySelf')->with('success','修改成功');
+        }
+        else{
+            return redirect('/admin/admin/editMySelf')->with('error','修改失败');
+        }
+//            $param=array(
+//                'data'=>$admin
+//            );
+//        return view('admin.admin.editMySelf', $param);
     }
 
 }

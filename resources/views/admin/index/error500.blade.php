@@ -12,7 +12,7 @@
             <small>业务错误，请联系<a href="#">管理员处理</a></small>
             <a href="javascript:;" onclick="history.go(-1)" class="c-primary">&lt; 返回上一页</a>
             <span class="ml-20">|</span>
-            <a href="/" class="c-primary ml-20">去首页 &gt;</a>
+            <a href="{{ URL::asset('/admin/index') }}" class="c-primary ml-20">去首页 &gt;</a>
         </p>
         <p>
             <div class="error-content">

@@ -23,4 +23,15 @@ class IndexController
         );
         return view('admin.index.index', $data);
     }
+    //错误页面
+    public function error(Request $request)
+    {
+        $data = $request->all();
+        return view('admin.index.error500', $data);
+    }
+    //欢迎页
+    public function welcome(Request $request)
+    {
+        return view('admin.index.welcome');
+    }
 }

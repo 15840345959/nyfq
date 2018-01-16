@@ -13,11 +13,10 @@
                     <ul class="cl">
                         <li>超级管理员</li>
                         <li class="dropDown dropDown_hover">
-                            <a href="#" class="dropDown_A">admin <i class="Hui-iconfont">&#xe6d5;</i></a>
+                            <a href="#" class="dropDown_A">{{$admin['nick_name']}}<i class="Hui-iconfont">&#xe6d5;</i></a>
                             <ul class="dropDown-menu menu radius box-shadow">
-                                <li><a href="javascript:;" onClick="myselfinfo()">个人信息</a></li>
-                                <li><a href="#">切换账户</a></li>
-                                <li><a href="#">退出</a></li>
+                                <li><a  href="javascript:;" onclick="mysqlf_edit('修改个人信息','{{ route('editMySelf') }}')">个人信息</a></li>
+                                <li><a href="{{ URL::asset('/admin/loginout') }}">退出</a></li>
                             </ul>
                         </li>
                         {{--<li id="Hui-msg">--}}
@@ -172,7 +171,7 @@
         <div id="iframe_box" class="Hui-article">
             <div class="show_iframe">
                 <div style="display:none" class="loading"></div>
-                <iframe scrolling="yes" frameborder="0" src="welcome.html"></iframe>
+                <iframe scrolling="yes" frameborder="0" src="{{ URL::asset('/admin/welcome') }}"></iframe>
             </div>
         </div>
     </section>
@@ -183,7 +182,6 @@
             <li id="closeall">关闭全部</li>
         </ul>
     </div>
-
 @endsection
 
 @section('script')
@@ -191,6 +189,14 @@
         $(function () {
 
         });
-
+        /*资讯-添加*/
+        function mysqlf_edit(title,url){
+            var index = layer.open({
+                type: 2,
+                title: title,
+                content: url
+            });
+            layer.full(index);
+        }
     </script>
 @endsection
