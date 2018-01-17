@@ -246,7 +246,7 @@ class UserManager
                 $users->where('nick_name'  , 'like', '%'.$search.'%')
                     ->orwhere('telephone', 'like', '%'.$search.'%');
             })->orderBy('id','asc')->get();
-            
+
         return $users;
     }
 

@@ -188,6 +188,8 @@ class AdminController
                 $user['avatar']=$admin['avatar'];
                 $user['id']=$admin['id'];
                 $user['remember_token']=$admin['remember_token'];
+                $user['type']=$admin['type'];
+                $user['admin']=$admin['admin'];
                 $request->session()->put('admin', $user);//写入session
                 return redirect('/admin/admin/editMySelf')->with('success','个人基本信息修改成功');
             }
@@ -209,11 +211,6 @@ class AdminController
                 $admin = AdminManager::setAdmin($admin, $data);
                 $result=$admin->save();
                 if($result){
-//                    return redirect('/admin/admin/editMySelf')->with('success','密码修改成功');
-//                    $request->session()->forget('admin');
-//                    $param=array(
-//                        'success'=>'密码修改成功，请重新登录'
-//                    );
                     return redirect('/admin/admin/editMySelf')->with('success','密码修改成功');
                 }
                 else{
