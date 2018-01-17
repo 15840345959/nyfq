@@ -239,11 +239,45 @@ class UserManager
      */
     public static function getAlladminByName($search)
     {
-        $where=array(
-            'type'=>2,
-            'nick_name'=>array('like','%'.$search.'%')
-        );
-        $users = User::where($where)->orderBy('id',asc)->get();
+        $users = User::where('type',2)->where('nick_name','like','%'.$search.'%')->orderBy('id','asc')->get();
         return $users;
+    }
+
+    /*
+     * 根据id获取用户的密码信息
+     *
+     * By zm
+     *
+     * 2018-01-17
+     */
+    public static function getUserInfoByIdForPassword($id)
+    {
+        $user = self::getUserInfoByIdWithToken($id);
+        $admin=null;
+        if ($user) {
+            $admin['password']=$user['password'];
+            $admin['id']=$user['id'];
+        }
+        return $admin;
+    }
+
+
+
+    /*
+     * 根据telephone获取用户信息
+     *
+     * By TerryQi
+     *
+     * 2017-09-28
+     */
+    public static function getUserInfoByTel($telephone)
+    {
+        $user = User::where('telephone',$telephone)->first();
+        if ($user) {
+            unset($user['token']);
+            unset($user['remember_token']);
+            unset($user['password']);
+        }
+        return $user;
     }
 }

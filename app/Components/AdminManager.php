@@ -52,8 +52,8 @@ class AdminManager
      *
      * 2018-01-13
      */
-    public static function login($telephone, $password){
-        $admin=User::where('telephone',$telephone)->where('password',$password)->where('type',2)->first();
+    public static function login($telephone){
+        $admin=User::where('telephone',$telephone)->where('type',2)->first();
         $user=[];
         if($admin){
             $user['id']=$admin['id'];
@@ -61,6 +61,28 @@ class AdminManager
             $user['avatar']=$admin['avatar'];
             $user['type']=$admin['type'];
             $user['admin']=$admin['admin'];
+            $user['password']=$admin['password'];
+        }
+        return $user;
+    }
+
+    /*
+     * 查询电话号码
+     *
+     * By zm
+     *
+     * 2018-01-17
+     */
+    public static function getAdminByTel($telephone){
+        $admin=User::where('telephone',$telephone)->where('type',2)->first();
+        $user=[];
+        if($admin){
+            $user['id']=$admin['id'];
+            $user['nick_name']=$admin['nick_name'];
+            $user['avatar']=$admin['avatar'];
+            $user['type']=$admin['type'];
+            $user['admin']=$admin['admin'];
+            $user['password']=$admin['password'];
         }
         return $user;
     }

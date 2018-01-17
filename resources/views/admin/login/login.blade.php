@@ -8,6 +8,7 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- common -->
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('dist/static/h-ui/css/H-ui.min.css') }}"/>
     <link rel="stylesheet" href="{{ URL::asset('css/common.css') }}">
     <!--login-->
     <link rel="stylesheet" href="{{ URL::asset('css/login.css') }}">
@@ -35,7 +36,6 @@
     </style>
 </head>
 <body>
-
 <div class="login">
     <div class="message font-size-22 text-white">辽宁南洋风情小程序-后台登录</div>
     <div id="darkbannerwrap"></div>
@@ -85,7 +85,7 @@
             return false;
         }
         //对密码进行md5加密
-        $("#password").val(hex_md5(password));
+        // $("#password").val(hex_md5(password));
         return true;
     }
 

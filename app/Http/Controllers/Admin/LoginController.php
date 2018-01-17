@@ -17,15 +17,17 @@ class LoginController
     //首页
     public function Login(Request $request)
     {
-        $msg="";
-        return view('admin.login.login',['msg' => $msg]);
+        $param=array(
+            'msg'=>'',
+        );
+        return view('admin.login.login',$param);
     }
 
     //登录验证
     public function LoginDo(Request $request){
         $data = $request->all();
 //        var_dump($data);
-        //参数校验
+//        //参数校验
         $requestValidationResult = RequestValidator::validator($request->all(), [
             'telephone' => 'required',
             'password' => 'required',
@@ -36,12 +38,21 @@ class LoginController
         $telephone = $data['telephone'];
         $password = $data['password'];
 
-        $admin = AdminManager::login($telephone,$password);
+        $admin = AdminManager::login($telephone);
         //登录失败
         if ($admin == null) {
-            return view('admin.login.login', ['msg' => '手机号或密码错误']);
+            return view('admin.login.login', ['msg' => '手机号错误']);
+        }
+        else{
+            if($password!=decrypt($admin['password'])){
+                return view('admin.login.login', ['msg' => '密码错误']);
+            }
+            else{
+                unset($admin['password']);
+            }
         }
         $request->session()->put('admin', $admin);//写入session
+//        var_dump($request->session()->get('admin'));
         return redirect('/admin/index');//跳转至后台首页
     }
     //退出登录

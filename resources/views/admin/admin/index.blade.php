@@ -10,15 +10,16 @@
                     class="Hui-iconfont">&#xe68f;</i></a></nav>
     <div class="page-container">
         <div class="text-c">
-            <form action="{{URL::asset('/admin/admin/search')}}" method="post" class="form-horizontal">
+            <form action="{{URL::asset('/admin/admin/index')}}" method="post" class="form-horizontal">
                 {{csrf_field()}}
-                <input id="search_word" name="search_word" type="text" class="input-text" style="width:450px"
+                <input id="search" name="search" type="text" class="input-text" style="width:450px"
                        placeholder="管理员名称\手机号码">
                 <button type="submit" class="btn btn-success" id="" name="">
                     <i class="Hui-iconfont">&#xe665;</i> 搜索
                 </button>
             </form>
         </div>
+        @if($admin['admin']==1)
         <div class="cl pd-5 bg-1 bk-gray mt-20">
             <span class="l">
                  <a href="javascript:;" onclick="admin_add('添加管理员','{{URL::asset('/admin/admin/edit')}}')"
@@ -28,68 +29,47 @@
             </span>
             <span class="r">共有数据：<strong>{{$datas->count()}}</strong> 条</span>
         </div>
+        @endif
         <table class="table table-border table-bordered table-bg">
             <thead>
             <tr>
                 <th scope="col" colspan="9">管理员列表</th>
             </tr>
             <tr class="text-c">
-                <th width="25"><input type="checkbox" name="" value=""></th>
                 <th width="40">ID</th>
                 <th width="50">头像</th>
-                <th width="150">登录名</th>
+                <th width="150">名称</th>
                 <th width="90">手机</th>
                 <th width="50">角色</th>
                 <th width="130">加入时间</th>
-                <th width="100">是否已启用</th>
+                @if($admin['admin']==1)
                 <th width="100">操作</th>
+                @endif
             </tr>
             </thead>
             <tbody>
             @foreach($datas as $data)
                 <tr class="text-c">
-                    <td><input type="checkbox" value="1" name=""></td>
-                    <td>{{$data->id}}</td>
+                    <td>{{$data['id']}}</td>
                     <td>
-                        <img src="{{ $data->avatar ? $data->avatar.'?imageView2/1/w/200/h/200/interlace/1/q/75|imageslim' : URL::asset('/img/default_headicon.png')}}"
+                        <img src="{{ $data['avatar'] ? $data['avatar'].'?imageView2/1/w/200/h/200/interlace/1/q/75|imageslim' : URL::asset('/img/default_headicon.png')}}"
                              class="img-rect-30 radius-5">
                     </td>
-                    <td>{{$data->name}}</td>
-                    <td>{{$data->phonenum}}</td>
-                    <td>{{$data->role == "0" ? "普通管理员" : "根级管理员"}}</td>
+                    <td>{{$data['nick_name']}}</td>
+                    <td>{{$data['telephone']}}</td>
+                    <td>{{$data->admin == "0" ? "普通管理员" : "超级管理员"}}</td>
                     <td>{{$data->created_at}}</td>
-                    <td class="td-status">
-                        @if($data->status=="1")
-                            <span class="label label-success radius">已启用</span>
-                        @else
-                            <span class="label label-default radius">已禁用</span>
-                        @endif
-                    </td>
+                    @if($admin['admin']==1)
                     <td class="td-manage">
-                        @if($data->status=="1")
-                            <a style="text-decoration:none" onClick="admin_stop(this,'{{$data->id}}')"
-                               href="javascript:;"
-                               title="停用">
-                                <i class="Hui-iconfont">&#xe631;</i>
-                            </a>
-                        @else
-                            <a style="text-decoration:none" onClick="admin_start(this,'{{$data->id}}')"
-                               href="javascript:;"
-                               title="启用">
-                                <i class="Hui-iconfont">&#xe615;</i>
-                            </a>
-                        @endif
-                        <a title="编辑" href="javascript:;"
-                           onclick="admin_edit('管理员编辑','{{URL::asset('/admin/admin/edit')}}?id={{$data->id}})',{{$data->id}})"
+                        <a title="编辑" href="javascript:;" onclick="admin_edit('管理员编辑','{{URL::asset('/admin/admin/edit')}}?id={{$data['id']}})',{{$data['id']}})"
                            class="ml-5" style="text-decoration:none">
                             <i class="Hui-iconfont">&#xe6df;</i>
                         </a>
-                        <a title="删除" href="javascript:;" onclick="admin_del(this,'{{$data->id}}')"
-                           class="ml-5"
-                           style="text-decoration:none">
+                        <a title="删除" href="javascript:;" onclick="admin_del(this,'{{$data['id']}}')" class="ml-5" style="text-decoration:none">
                             <i class="Hui-iconfont">&#xe6e2;</i>
                         </a>
                     </td>
+                    @endif
                 </tr>
             @endforeach
             </tbody>
@@ -133,9 +113,9 @@
                 delAdmin('{{URL::asset('')}}', param, function (ret) {
                     if (ret.result == true) {
                         $(obj).parents("tr").remove();
-                        layer.msg('已删除', {icon: 1, time: 1000});
+                        layer.msg(ret.msg, {icon: 1, time: 1000});
                     } else {
-                        layer.msg('删除失败', {icon: 2, time: 1000})
+                        layer.msg(ret.msg, {icon: 2, time: 1000})
                     }
                 })
             });
