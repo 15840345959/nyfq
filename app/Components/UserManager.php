@@ -239,7 +239,14 @@ class UserManager
      */
     public static function getAlladminByName($search)
     {
-        $users = User::where('type',2)->where('nick_name','like','%'.$search.'%')->orderBy('id','asc')->get();
+//            $users = User::where('type',2)->where('nick_name','like','%'.$search.'%')
+//                ->orderBy('id','asc')->get();
+
+            $users = User::where('type',2)->where(function ($users) use ($search) {
+                $users->where('nick_name'  , 'like', '%'.$search.'%')
+                    ->orwhere('telephone', 'like', '%'.$search.'%');
+            })->orderBy('id','asc')->get();
+            
         return $users;
     }
 

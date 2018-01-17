@@ -37,7 +37,7 @@
             </tr>
             <tr class="text-c">
                 <th width="40">ID</th>
-                <th width="50">头像</th>
+                {{--<th width="50">头像</th>--}}
                 <th width="150">名称</th>
                 <th width="90">手机</th>
                 <th width="50">角色</th>
@@ -51,10 +51,10 @@
             @foreach($datas as $data)
                 <tr class="text-c">
                     <td>{{$data['id']}}</td>
-                    <td>
-                        <img src="{{ $data['avatar'] ? $data['avatar'].'?imageView2/1/w/200/h/200/interlace/1/q/75|imageslim' : URL::asset('/img/default_headicon.png')}}"
-                             class="img-rect-30 radius-5">
-                    </td>
+                    {{--<td>--}}
+                        {{--<img src="{{ $data['avatar'] ? $data['avatar'].'?imageView2/1/w/200/h/200/interlace/1/q/75|imageslim' : URL::asset('/img/default_headicon.png')}}"--}}
+                             {{--class="img-rect-30 radius-5">--}}
+                    {{--</td>--}}
                     <td>{{$data['nick_name']}}</td>
                     <td>{{$data['telephone']}}</td>
                     <td>{{$data->admin == "0" ? "普通管理员" : "超级管理员"}}</td>
@@ -65,9 +65,15 @@
                            class="ml-5" style="text-decoration:none">
                             <i class="Hui-iconfont">&#xe6df;</i>
                         </a>
-                        <a title="删除" href="javascript:;" onclick="admin_del(this,'{{$data['id']}}')" class="ml-5" style="text-decoration:none">
-                            <i class="Hui-iconfont">&#xe6e2;</i>
-                        </a>
+                        @if($data['admin']==0)
+                            <a title="删除" href="javascript:;" onclick="admin_del(this,'{{$data['id']}}')" class="ml-5" style="text-decoration:none">
+                                <i class="Hui-iconfont">&#xe6e2;</i>
+                            </a>
+                        @else
+                            <span class="ml-5">
+                                <i class="Hui-iconfont no_click">&#xe6e2;</i>
+                            </span>
+                        @endif
                     </td>
                     @endif
                 </tr>

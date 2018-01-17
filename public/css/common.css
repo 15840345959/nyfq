@@ -405,3 +405,7 @@
 .hidden {
     display: none;;
 }
+
+.no_click{
+    color:#ddd;
+}

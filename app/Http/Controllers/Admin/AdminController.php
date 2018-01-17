@@ -49,24 +49,24 @@ class AdminController
             return redirect()->action('\App\Http\Controllers\Admin\IndexController@error', ['msg' => '合规校验失败，请检查参数管理员id$id']);
         }
         $user = User::find($id);
-        $data=null;
+        $return=null;
         //非根管理员
         if ($user['admin'] == '0') {
             $result=$user->delete();
             if($result){
-                $data['result']=true;
-                $data['msg']='删除成功';
+                $return['result']=true;
+                $return['msg']='删除成功';
             }
             else{
-                $data['result']=false;
-                $data['msg']='删除失败，高级管理员无法删除';
+                $return['result']=false;
+                $return['msg']='删除失败，高级管理员无法删除';
             }
         }
         else{
-            $data['result']=false;
-            $data['msg']='删除失败';
+            $return['result']=false;
+            $return['msg']='删除失败';
         }
-        return $data;
+        return $return;
     }
 
 
@@ -93,49 +93,64 @@ class AdminController
             return redirect()->action('\App\Http\Controllers\Admin\IndexController@error', ['msg' => '合规校验失败，只有管理员有修改权限']);
         }
     }
-
-    //新建或编辑管理员->post
-    public function editPost(Request $request)
+    public function editDo(Request $request)
     {
         $data = $request->all();
-        $data['type']=2;
-        //专门处理admin
-        if (array_key_exists('admin', $data)) {
-            $data['admin'] = '0';
-        }
-
+//        var_dump($data);
+        $return=null;
         //存在id是保存
-        if (array_key_exists('id', $data)) {
-            $user = UserManager::getUserInfoById($data['id']);
-        }
-        //如果不存在id代表新建，则默认设置密码
         if (empty($data['id'])) {
+            $user = new User();
+            //如果不存在id代表新建，则默认设置密码
             $data['password']=encrypt('Aa123456');
+            $data['type']=2;
             //查询电话号码是否唯一
-            $admin_f=UserManager::getUserInfoByTel($data['telephone']);
-            if($admin_f){
-                return redirect('/admin/admin/edit')->with('error','编辑管理员失败,此电话号码已被注册');
+            $admin_chenck=UserManager::getUserInfoByTel($data['telephone']);
+            if($admin_chenck){
+                $return['result']=false;
+                $return['msg']='添加管理员失败,此电话号码已被注册';
             }
-        }
-        else{
-            //查询电话号码是否唯一
-            $admin_f=UserManager::getUserInfoById($data['id']);
-            if($data['telephone']!=$admin_f['telephone']){
-                $result=AdminManager::getAdminByTel($admin_f['telephone']);
+            else{
+                $user = AdminManager::setAdmin($user, $data);
+                $result=$user->save();
                 if($result){
-                    return redirect('/admin/admin/editMySelf')->with('error','编辑管理员失败,此电话号码已被注册');
+                    $return['result']=true;
+                    $return['msg']='添加管理员成功';
+                }
+                else{
+                    $return['result']=false;
+                    $return['msg']='添加管理员失败';
                 }
             }
         }
-        $user = new User();
-        $user = AdminManager::setAdmin($user, $data);
-        $result=$user->save();
-        if($result){
-            return redirect('/admin/admin/edit')->with('success','编辑管理员成功');
-        }
         else{
-            return redirect('/admin/admin/edit')->with('error','编辑管理员失败');
+            $user = UserManager::getUserInfoById($data['id']);
+            //查询电话号码是否唯一
+            $result=AdminManager::getAdminByTel($data['telephone']);
+            if($data['telephone']!=$user['telephone']&&$result){
+                $return['result']=false;
+                $return['msg']='编辑管理员失败,此电话号码已被注册';
+            }
+            else{
+                $user = AdminManager::setAdmin($user, $data);
+                $result=$user->save();
+                if($result){
+                    $return['result']=true;
+                    $return['msg']='编辑管理员成功';
+                }
+                else{
+                    $return['result']=false;
+                    $return['msg']='编辑管理员失败';
+                }
+            }
         }
+        $admin = $request->session()->get('admin');
+        $param=array(
+            'return'=>$return,
+            'data'=>$data,
+            'admin'=>$admin
+        );
+        return view('admin.admin.edit',$param);
     }
 
     //新建或编辑自己的信息-get

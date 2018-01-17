@@ -31,7 +31,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin.login']], function ()
     Route::post('/admin/index', 'Admin\AdminController@index');  //搜索管理员
     Route::get('/admin/del/{id}', 'Admin\AdminController@del');  //删除管理员
     Route::get('/admin/edit', 'Admin\AdminController@edit');  //新建或编辑管理员
-    Route::post('/admin/edit', 'Admin\AdminController@editPost');  //新建或编辑管理员
+    Route::post('/admin/edit', 'Admin\AdminController@editDo');  //新建或编辑管理员
     Route::get('/admin/editMySelf', ['as' => 'editMySelf', 'uses' => 'Admin\AdminController@editMySelf']);  //新建或编辑管理员
     Route::post('/admin/editMySelf', 'Admin\AdminController@editMySelfPost');  //新建或编辑管理员
     Route::post('/admin/testPassword', 'Admin\AdminController@testPassword');  //新建或编辑管理员

@@ -1,11 +1,12 @@
 @extends('admin.layouts.app')
 
 @section('content')
-    @if(Session::has('success'))
-        <div class="Huialert Huialert-success"><i class="Hui-iconfont">&#xe6a6;</i>{{ Session::get('success') }}</div>
-    @endif
-    @if(Session::has('error'))
-        <div class="Huialert Huialert-error"><i class="Hui-iconfont">&#xe6a6;</i>{{ Session::get('error') }}</div>
+    @if(isset($return['result']))
+        @if($return['result'])
+            <div class="Huialert Huialert-success"><i class="Hui-iconfont">&#xe6a6;</i>{{ $return['msg'] }}</div>
+        @else
+            <div class="Huialert Huialert-error"><i class="Hui-iconfont">&#xe6a6;</i>{{ $return['msg'] }}</div>
+        @endif
     @endif
     <div class="page-container">
         <form class="form form-horizontal" method="post" id="form-admin-edit">
@@ -83,8 +84,8 @@
             success:"valid",
             submitHandler:function(form){
                     $('#error').hide();
-                    $('.btn-primary').html('<i class="Hui-iconfont">&#xe634;</i> 保存中...')
-                    $(form).submit();
+                $('.btn-primary').html('<i class="Hui-iconfont">&#xe634;</i> 保存中...')
+                $(form).submit();
             }
         });
     </script>
