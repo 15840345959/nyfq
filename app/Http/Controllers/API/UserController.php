@@ -143,9 +143,12 @@ class UserController extends Controller
         } else {
             /////获取最后一次的签到信息
             $sign_time=IntegralManager::getLastSign($user['id']);
+            $sign_created_time=date('Y-m-d',strtotime($sign_time['created_at']));
+            $nowtime=date("Y-m-d",time()+8*3600);
+            $sign_status=$sign_created_time==$nowtime;
             $sign=array(
                 'sign'=>$user['sign'],
-                'last_sign_time'=>$sign_time
+                'status'=>$sign_status
             );
             $user['sign']=$sign;
             ////////////////
