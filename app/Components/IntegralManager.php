@@ -136,7 +136,7 @@ class IntegralManager
             $user->integral=$user->integral-$goods->price;
             $user->save();
             $datas['user']=$user;
-            $param['type']=4;
+            $param['type']=0;
             $param['content']='兑换'.$goods['name'].' -'.$goods['price'];
             $param['user_id']=$data['user_id'];
             $integral_record=self::addIntegralRecord($param);
@@ -239,6 +239,9 @@ class IntegralManager
         if (array_key_exists('content', $data)) {
             $integral_record->content = array_get($data, 'content');
         }
+        if (array_key_exists('type', $data)) {
+            $integral_record->type = array_get($data, 'type');
+        }
         return $integral_record;
     }
 
@@ -265,6 +268,14 @@ class IntegralManager
         if($integral_record){
             $datas['integral_record']=$integral_record;
         }
+        /////获取最后一次的签到信息
+        $sign_time=self::getLastSign($data['user_id']);
+        $sign=array(
+            'sign'=>$user['sign'],
+            'last_sign_time'=>$sign_time
+        );
+        $user['sign']=$sign;
+        ////////////////
         return $user;
     }
 
@@ -291,5 +302,22 @@ class IntegralManager
             $datas['integral_record']=$integral_record;
         }
         return $datas;
+    }
+
+    /*
+     * 邀请好友成功后获得积分
+     *
+     * By zm
+     *
+     * 2018-01-10
+     *
+     */
+    public static function getLastSign($user_id){
+        $where=array(
+            'user_id'=>$user_id,
+            'type'=>1
+        );
+        $sign=IntegralRecord::where($where)->orderBy('id','desc')->first();
+        return $sign;
     }
 }

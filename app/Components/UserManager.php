@@ -41,6 +41,7 @@ class UserManager
             unset($user['token']);
             unset($user['remember_token']);
             unset($user['password']);
+
         }
         return $user;
     }

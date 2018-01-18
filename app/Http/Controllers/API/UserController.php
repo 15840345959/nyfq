@@ -9,12 +9,14 @@
 namespace App\Http\Controllers\API;
 
 use App\Components\HomeManager;
+use App\Components\IntegralManager;
 use App\Components\OrganizationManager;
 use App\Components\UserManager;
 use App\Http\Controllers\ApiResponse;
 use App\Http\Controllers\Controller;
 use App\Libs\wxDecode\ErrorCode;
 use App\Libs\wxDecode\WXBizDataCrypt;
+use App\Models\IntegralRecord;
 use App\Models\User;
 use App\Models\ViewModels\HomeView;
 use Illuminate\Http\Request;
@@ -139,6 +141,14 @@ class UserController extends Controller
         if ($user == null) {
             return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::REGISTER_FAILED], ApiResponse::REGISTER_FAILED);
         } else {
+            /////获取最后一次的签到信息
+            $sign_time=IntegralManager::getLastSign($user['id']);
+            $sign=array(
+                'sign'=>$user['sign'],
+                'last_sign_time'=>$sign_time
+            );
+            $user['sign']=$sign;
+            ////////////////
             return ApiResponse::makeResponse(true, $user, ApiResponse::SUCCESS_CODE);
         }
     }
