@@ -85,7 +85,7 @@
             return false;
         }
         //对密码进行md5加密
-        // $("#password").val(hex_md5(password));
+        $("#password").val(hex_md5(password));
         return true;
     }
 

@@ -68,7 +68,6 @@
             </div>
         </form>
     </div>
-
 @endsection
 
 @section('script')
@@ -83,6 +82,7 @@
                 index:0
             });
         });
+        var md5_status=true; //防止二次加密
         $("#form-admin-edit").validate({
             rules:{
                 nick_name:{
@@ -112,11 +112,18 @@
                     var password=$('#password').val();
                     var new_password=$('#new_password').val();
                     var confirm_password=$('#confirm_password').val();
+
                     if(new_password!=confirm_password){
                         $('#error').show();
                         $('#error').html('<i class="Hui-iconfont">&#xe6a6;</i>密码修改失败，确认密码与新密码不相符')
                     }
                     else{
+                        if(md5_status){
+                            $('#password').val(hex_md5(password));
+                            $('#new_password').val(hex_md5(new_password));
+                            $('#confirm_password').val(hex_md5(confirm_password));
+                            md5_status=false
+                        }
                         $('#error').hide();
                         $('.btn-primary').html('<i class="Hui-iconfont">&#xe634;</i> 保存中...')
                         $(form).submit();

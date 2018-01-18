@@ -102,7 +102,7 @@ class AdminController
         if (empty($data['id'])) {
             $user = new User();
             //如果不存在id代表新建，则默认设置密码
-            $data['password']=encrypt('Aa123456');
+            $data['password']='afdd0b4ad2ec172c586e2150770fbf9e';  //Aa123456
             $data['type']=2;
             //查询电话号码是否唯一
             $admin_chenck=UserManager::getUserInfoByTel($data['telephone']);
@@ -168,7 +168,6 @@ class AdminController
     public function editMySelfPost(Request $request)
     {
         $data = $request->all();
-//        var_dump($data);
         if(empty($data['password'])){
             $admin=UserManager::getUserInfoById($data['id']);
             unset($data['password']);
@@ -201,11 +200,11 @@ class AdminController
             $admin=UserManager::getUserInfoByIdWithToken($data['id']);
             unset($data['nick_name']);
             unset($data['telephone']);
-            if($data['password']!= decrypt($admin['password'])){
+            if($data['password']!= $admin['password']){
                 return redirect('/admin/admin/editMySelf')->with('error','密码修改失败，原密码输入错误');
             }
             else{
-                $data['password']=encrypt($data['new_password']);
+                $data['password']=$data['new_password'];
                 unset($data['new_password']);
                 unset($data['confirm_password']);
                 $admin = AdminManager::setAdmin($admin, $data);
@@ -220,4 +219,59 @@ class AdminController
         }
 
     }
+//    public function editMySelfPost(Request $request)
+//    {
+//        $data = $request->all();
+////        var_dump($data);
+//        if(empty($data['password'])){
+//            $admin=UserManager::getUserInfoById($data['id']);
+//            unset($data['password']);
+//            unset($data['new_password']);
+//            unset($data['confirm_password']);
+//            //查询电话号码是否唯一
+//            if($data['telephone']!=$admin['telephone']){
+//                $result=AdminManager::getAdminByTel($admin['telephone']);
+//                if($result){
+//                    return redirect('/admin/admin/editMySelf')->with('error','个人基本信息修改失败,此电话号码已被注册');
+//                }
+//            }
+//            $admin = AdminManager::setAdmin($admin, $data);
+//            $result=$admin->save();
+//            if($result){
+//                $user['nick_name']=$admin['nick_name'];
+//                $user['avatar']=$admin['avatar'];
+//                $user['id']=$admin['id'];
+//                $user['remember_token']=$admin['remember_token'];
+//                $user['type']=$admin['type'];
+//                $user['admin']=$admin['admin'];
+//                $request->session()->put('admin', $user);//写入session
+//                return redirect('/admin/admin/editMySelf')->with('success','个人基本信息修改成功');
+//            }
+//            else{
+//                return redirect('/admin/admin/editMySelf')->with('error','个人基本信息修改失败');
+//            }
+//        }
+//        else{
+//            $admin=UserManager::getUserInfoByIdWithToken($data['id']);
+//            unset($data['nick_name']);
+//            unset($data['telephone']);
+//            if($data['password']!= decrypt($admin['password'])){
+//                return redirect('/admin/admin/editMySelf')->with('error','密码修改失败，原密码输入错误');
+//            }
+//            else{
+//                $data['password']=encrypt($data['new_password']);
+//                unset($data['new_password']);
+//                unset($data['confirm_password']);
+//                $admin = AdminManager::setAdmin($admin, $data);
+//                $result=$admin->save();
+//                if($result){
+//                    return redirect('/admin/admin/editMySelf')->with('success','密码修改成功');
+//                }
+//                else{
+//                    return redirect('/admin/admin/editMySelf')->with('error','密码修改失败');
+//                }
+//            }
+//        }
+//
+//    }
 }
