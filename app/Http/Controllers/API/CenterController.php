@@ -13,6 +13,7 @@ use App\Components\IntegralManager;
 use App\Components\UserManager;
 use App\Http\Controllers\ApiResponse;
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Http\Request;
 
 class CenterController extends Controller
@@ -65,6 +66,18 @@ class CenterController extends Controller
         $user=IntegralManager::updateUserSign($data);
         if ($user) {
             return ApiResponse::makeResponse(true, $user, ApiResponse::SUCCESS_CODE);
+        } else {
+            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM], ApiResponse::MISSING_PARAM);
+        }
+    }
+    /*
+     * 我的邀请
+     */
+    public function getMyInvitation(Request $request){
+        $data = $request->all();
+        $users=UserManager::getMyInvitationById($data);
+        if ($users) {
+            return ApiResponse::makeResponse(true, $users, ApiResponse::SUCCESS_CODE);
         } else {
             return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM], ApiResponse::MISSING_PARAM);
         }

@@ -78,6 +78,8 @@ Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
     Route::post('center/deleteCollectionLists', 'API\CenterController@deleteCollectionLists')->middleware('CheckToken');
     //签到
     Route::post('center/addSign', 'API\CenterController@addSign')->middleware('CheckToken');
+    //我的邀请
+    Route::get('center/getMyInvitation', 'API\CenterController@getMyInvitation')->middleware('CheckToken');
 
     //获取积分商城列表
     Route::get('integral/getIntegralLists', 'API\IntegralController@getIntegralLists')->middleware('CheckToken');

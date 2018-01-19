@@ -269,14 +269,12 @@ class UserManager
         return $admin;
     }
 
-
-
     /*
      * 根据telephone获取用户信息
      *
-     * By TerryQi
+     * By zm
      *
-     * 2017-09-28
+     * 2018-01-15
      */
     public static function getUserInfoByTel($telephone)
     {
@@ -287,5 +285,34 @@ class UserManager
             unset($user['password']);
         }
         return $user;
+    }
+
+    /*
+     * 根据id获得我的邀请列表
+     *
+     * By zm
+     *
+     * 2018-01-19
+     */
+    public static function getMyInvitationById($data)
+    {
+        $user_id=$data['user_id'];
+        $users = User::where('share_user',$user_id)->get();
+        foreach ($users as $user){
+            unset($user['open_id']);
+            unset($user['password']);
+            unset($user['token']);
+            unset($user['remember_token']);
+            unset($user['type']);
+            unset($user['admin']);
+            unset($user['id_card']);
+            unset($user['email']);
+            unset($user['passport']);
+            unset($user['sign']);
+            unset($user['background']);
+            unset($user['account_type']);
+            unset($user['integral']);
+        }
+        return $users;
     }
 }
