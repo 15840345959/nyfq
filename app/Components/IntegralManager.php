@@ -59,9 +59,6 @@ class IntegralManager
      */
     public static function getIntegralHistoryForUser($user_id){
         $integral_histories=IntegralHistory::where('user_id',$user_id)->orderBy('id','desc')->get();
-        foreach ($integral_histories as $integral_history){
-            $integral_history['goods_id']=self::getIntegralGoodsById($integral_history['goods_id']);
-        }
         return $integral_histories;
     }
 
@@ -75,10 +72,6 @@ class IntegralManager
      */
     public static function getIntegralHistoryForOrganization($organization_id){
         $integral_histories=IntegralHistory::where('organization_id',$organization_id)->orderBy('id','desc')->get();
-        foreach ($integral_histories as $integral_history){
-            $integral_history['user_id']=UserManager::getUserInfoById($integral_history['user_id']);
-            $integral_history['goods_id']=self::getIntegralGoodsById($integral_history['goods_id']);
-        }
         return $integral_histories;
     }
 
@@ -127,6 +120,10 @@ class IntegralManager
         $integral = new IntegralHistory();
         $user=UserManager::getUserInfoById($data['user_id']);
         $data['organization_id']=$user['organization_id'];
+        $integral_goods=IntegralManager::getIntegralGoodsById($data['goods_id']);
+        $data['goods_name']=$integral_goods['name'];
+        $data['goods_price']=$integral_goods['price'];
+        $data['goods_image']=$integral_goods['image'];
         $integral = self::setIntegralHistoryStatus($integral, $data);
         $integral->save();
         $integral = self::getIntegralHistoryById($integral->id);
@@ -181,6 +178,15 @@ class IntegralManager
         }
         if (array_key_exists('organization_id', $data)) {
             $integral_goods->organization_id = array_get($data, 'organization_id');
+        }
+        if (array_key_exists('goods_name', $data)) {
+            $integral_goods->goods_name = array_get($data, 'goods_name');
+        }
+        if (array_key_exists('goods_price', $data)) {
+            $integral_goods->goods_price = array_get($data, 'goods_price');
+        }
+        if (array_key_exists('goods_image', $data)) {
+            $integral_goods->goods_image = array_get($data, 'goods_image');
         }
         return $integral_goods;
     }

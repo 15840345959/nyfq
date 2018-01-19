@@ -33,10 +33,10 @@ class AdminController
         else{
             $search='';
         }
-        $admins = UserManager::getAlladminByName($search);
+        $datas = UserManager::getAllAdminByName($search);
         $param=array(
             'admin'=>$admin,
-            'datas'=>$admins
+            'datas'=>$datas
         );
         return view('admin.admin.index', $param);
     }

@@ -9,7 +9,6 @@
 
 namespace App\Components;
 
-use App\Models\AD;
 use App\User;
 use Qiniu\Auth;
 

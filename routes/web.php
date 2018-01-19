@@ -36,6 +36,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin.login']], function ()
     Route::post('/admin/editMySelf', 'Admin\AdminController@editMySelfPost');  //新建或编辑管理员
     Route::post('/admin/testPassword', 'Admin\AdminController@testPassword');  //新建或编辑管理员
 
+    //Banner管理
+    Route::get('/banner/index', 'Admin\BannerController@index');  //Banner管理首页
 });
 Auth::routes();
 
