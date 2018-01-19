@@ -29,8 +29,7 @@ class IntegralManager
      */
     public static function IntegralGoodsLists(){
         $where=array(
-            'status'=>1,
-            'delete'=>0
+            'status'=>1
         );
         $integral_goods=IntegralGoods::where($where)->get();
         return $integral_goods;
