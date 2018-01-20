@@ -38,6 +38,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin.login']], function ()
 
     //Banner管理
     Route::get('/banner/index', 'Admin\BannerController@index');  //Banner管理首页
+    Route::post('/banner/index', 'Admin\BannerController@index');  //搜索管理员
+    Route::get('/banner/add', 'Admin\BannerController@add');  //新建Banner
+    Route::post('/banner/add', 'Admin\BannerController@addDo');  //新建Banner
+    Route::get('/banner/del/{id}', 'Admin\BannerController@del');  //删除Banner
 });
 Auth::routes();
 

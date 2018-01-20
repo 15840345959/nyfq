@@ -28,6 +28,10 @@ function setAdminStatus(url, param, callBack) {
 function delAdmin(url, param, callBack) {
     ajaxRequest(url + "admin/admin/del/" + param.id, param, "GET", callBack);
 }
+//删除Banner
+function delBanner(url, param, callBack) {
+    ajaxRequest(url + "admin/banner/del/" + param.id, param, "GET", callBack);
+}
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
