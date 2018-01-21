@@ -61,8 +61,7 @@
                     <td>{{$data->created_at}}</td>
                     @if($admin['admin']==1)
                     <td class="td-manage">
-                        <a title="编辑" href="javascript:;" onclick="admin_edit('管理员编辑','{{URL::asset('/admin/admin/edit')}}?id={{$data['id']}})',{{$data['id']}})"
-                           class="ml-5" style="text-decoration:none">
+                        <a title="编辑" href="javascript:;" onclick="admin_edit('管理员编辑','{{URL::asset('/admin/admin/edit')}}?id={{$data['id']}}',{{$data['id']}})"  class="ml-5" style="text-decoration:none">
                             <i class="Hui-iconfont">&#xe6df;</i>
                         </a>
                         @if($data['admin']==0)

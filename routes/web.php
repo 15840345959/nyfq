@@ -33,7 +33,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin.login']], function ()
     Route::get('/admin/edit', 'Admin\AdminController@edit');  //新建或编辑管理员
     Route::post('/admin/edit', 'Admin\AdminController@editDo');  //新建或编辑管理员
     Route::get('/admin/editMySelf', ['as' => 'editMySelf', 'uses' => 'Admin\AdminController@editMySelf']);  //新建或编辑管理员
-    Route::post('/admin/editMySelf', 'Admin\AdminController@editMySelfPost');  //新建或编辑管理员
+    Route::post('/admin/editMySelf', 'Admin\AdminController@editMySelfDo');  //新建或编辑管理员
     Route::post('/admin/testPassword', 'Admin\AdminController@testPassword');  //新建或编辑管理员
 
     //Banner管理
@@ -42,6 +42,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin.login']], function ()
     Route::get('/banner/add', 'Admin\BannerController@add');  //新建Banner
     Route::post('/banner/add', 'Admin\BannerController@addDo');  //新建Banner
     Route::get('/banner/del/{id}', 'Admin\BannerController@del');  //删除Banner
+    Route::get('/banner/edit', 'Admin\BannerController@edit');  //编辑Banner
+    Route::post('/banner/edit', 'Admin\BannerController@editDo');  //编辑Banner
 });
 Auth::routes();
 

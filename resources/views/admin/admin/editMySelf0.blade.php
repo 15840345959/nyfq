@@ -1,6 +1,13 @@
 @extends('admin.layouts.app')
 
 @section('content')
+    @if(Session::has('success'))
+        <div class="Huialert Huialert-success"><i class="Hui-iconfont">&#xe6a6;</i>{{ Session::get('success') }}</div>
+    @endif
+    @if(Session::has('error'))
+        <div class="Huialert Huialert-error"><i class="Hui-iconfont">&#xe6a6;</i>{{ Session::get('error') }}</div>
+    @endif
+    <div class="Huialert Huialert-error" id="error" hidden></div>
     <div class="page-container">
         <form class="form form-horizontal" method="post" id="form-admin-edit">
             {{csrf_field()}}
@@ -107,7 +114,8 @@
                     var confirm_password=$('#confirm_password').val();
 
                     if(new_password!=confirm_password){
-                        layer.msg('密码修改失败，确认密码与新密码不相符', {icon: 2, time: 2000});
+                        $('#error').show();
+                        $('#error').html('<i class="Hui-iconfont">&#xe6a6;</i>密码修改失败，确认密码与新密码不相符')
                     }
                     else{
                         if(md5_status){
@@ -118,71 +126,13 @@
                         }
                         $('#error').hide();
                         $('.btn-primary').html('<i class="Hui-iconfont">&#xe634;</i> 保存中...')
-                        $(form).ajaxSubmit({
-                            type: 'POST',
-                            url: "{{ URL::asset('/admin/admin/editMySelf')}}",
-                            success: function (ret) {
-                                console.log(JSON.stringify(ret));
-                                if (ret.result) {
-                                    layer.msg(ret.msg, {icon: 1, time: 2000});
-                                    setTimeout(function () {
-                                        // var index = parent.layer.getFrameIndex(window.name);
-                                        // parent.$('.btn-refresh').click();
-                                        // parent.layer.close(index);
-                                        window.parent.location="{{ URL::asset('/admin/loginout')}}"
-                                    }, 1000)
-                                } else {
-                                    layer.msg(ret.msg, {icon: 2, time: 2000});
-                                }
-                                $('#password').val('');
-                                $('#new_password').val('');
-                                $('#confirm_password').val('');
-                                md5_status=true
-                                $('.btn-primary').html('<i class="Hui-iconfont">&#xe632;</i> 保存')
-                            },
-                            error: function (XmlHttpRequest, textStatus, errorThrown) {
-                                $('#password').val('');
-                                $('#new_password').val('');
-                                $('#confirm_password').val('');
-                                md5_status=true
-                                layer.msg('保存失败', {icon: 1, time: 2000});
-                                console.log("XmlHttpRequest:" + JSON.stringify(XmlHttpRequest));
-                                console.log("textStatus:" + textStatus);
-                                console.log("errorThrown:" + errorThrown);
-                                $('.btn-primary').html('<i class="Hui-iconfont">&#xe632;</i> 保存')
-                            }
-                        });
+                        $(form).submit();
                     }
                 }
                 else{
                     $('#error').hide();
                     $('.btn-primary').html('<i class="Hui-iconfont">&#xe634;</i> 保存中...')
-                    $(form).ajaxSubmit({
-                        type: 'POST',
-                        url: "{{ URL::asset('/admin/admin/editMySelf')}}",
-                        success: function (ret) {
-                            console.log(JSON.stringify(ret));
-                            if (ret.result) {
-                                layer.msg(ret.msg, {icon: 1, time: 2000});
-                                setTimeout(function () {
-                                    var index = parent.layer.getFrameIndex(window.name);
-                                    parent.$('.btn-refresh').click();
-                                    parent.location.reload(); // 父页面刷新
-                                    parent.layer.close(index);
-                                }, 1000)
-                            } else {
-                                layer.msg(ret.msg, {icon: 2, time: 2000});
-                            }
-                            $('.btn-primary').html('<i class="Hui-iconfont">&#xe632;</i> 保存')
-                        },
-                        error: function (XmlHttpRequest, textStatus, errorThrown) {
-                            layer.msg('保存失败', {icon: 1, time: 2000});
-                            console.log("XmlHttpRequest:" + JSON.stringify(XmlHttpRequest));
-                            console.log("textStatus:" + textStatus);
-                            console.log("errorThrown:" + errorThrown);
-                            $('.btn-primary').html('<i class="Hui-iconfont">&#xe632;</i> 保存')
-                        }
-                    });
+                    $(form).submit();
                 }
             }
         });

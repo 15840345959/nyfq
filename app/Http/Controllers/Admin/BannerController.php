@@ -58,7 +58,7 @@ class BannerController
         $admin = $request->session()->get('admin');
         $banner=new Banner();
         if (array_key_exists('id', $data)) {
-            $user = UserManager::getUserInfoById($data['id']);
+            $banner = BannerManager::getBannerById($data['id']);
         }
         //生成七牛token
         $upload_token = QNManager::uploadToken();
@@ -90,5 +90,22 @@ class BannerController
             $return['msg']='编辑Banner失败';
         }
         return $return;
+    }
+    //编辑Banner
+    public function edit(Request $request){
+        $data = $request->all();
+        $admin = $request->session()->get('admin');
+        $banner=new Banner();
+        if (array_key_exists('id', $data)) {
+            $banner = BannerManager::getBannerById($data['id']);
+        }
+        //生成七牛token
+        $upload_token = QNManager::uploadToken();
+        $param=array(
+            'admin'=>$admin,
+            'data'=>$banner,
+            'upload_token'=>$upload_token
+        );
+        return view('admin.banner.edit', $param);
     }
 }

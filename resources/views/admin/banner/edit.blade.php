@@ -1,66 +1,80 @@
 @extends('admin.layouts.app')
 
 @section('content')
-
-
-
+    @if(isset($return['result']))
+        @if($return['result'])
+            <div class="Huialert Huialert-success"><i class="Hui-iconfont">&#xe6a6;</i>{{ $return['msg'] }}</div>
+        @else
+            <div class="Huialert Huialert-error"><i class="Hui-iconfont">&#xe6a6;</i>{{ $return['msg'] }}</div>
+        @endif
+    @endif
     <div class="page-container">
-        <form class="form form-horizontal" id="form-admin-add">
+        <form class="form form-horizontal" method="post" id="form-banner-add">
             {{csrf_field()}}
-            <div class="row cl hidden">
+            <div id="tab-system" class="HuiTab">
+                <div class="tabBar cl">
+                    <span>基本信息</span>
+                    <span>内容详情</span>
+                </div>
+                <div class="row cl hidden">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>id：</label>
                 <div class="formControls col-xs-8 col-sm-9">
                     <input id="id" name="id" type="text" class="input-text"
-                           value="{{ isset($data->id) ? $data->id : '' }}" placeholder="管理员id">
+                           value="{{ isset($data['id']) ? $data['id'] : '' }}" placeholder="Banner_id">
                 </div>
             </div>
-            <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>管理员：</label>
-                <div class="formControls col-xs-8 col-sm-9">
-                    <input id="name" name="name" type="text" class="input-text"
-                           value="{{ isset($data->name) ? $data->name : '' }}" placeholder="请输入管理员姓名">
-                </div>
-            </div>
-            <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"></label>
-                <div class="formControls col-xs-8 col-sm-9">
-                    <span class="grey-font">新建管理员的默认密码为Aa123456</span>
-                </div>
-            </div>
-            <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>联系电话：</label>
-                <div class="formControls col-xs-8 col-sm-9">
-                    <input id="phonenum" name="phonenum" type="text" class="input-text"
-                           value="{{ isset($data->phonenum) ? $data->phonenum : '' }}" placeholder="请输入联系电话">
-                </div>
-            </div>
-            <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2">头像：</label>
-                <div class="formControls col-xs-8 col-sm-9">
-                    <input id="avatar" name="avatar" type="text" class="input-text"
-                           value="{{ isset($data->avatar) ? $data->avatar : '' }}" placeholder="请输入头像网络连接地址">
-                    <div id="container" class="margin-top-10">
-                        <img id="pickfiles"
-                             src="{{ isset($data->avatar) ? $data->avatar : URL::asset('/img/default_headicon.png') }}"
-                             style="width: 120px;height: 120px;border-radius: 50%;">
+                <div class="tabCon">
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>标题：</label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input id="title" name="title" type="text" class="input-text" value="{{ isset($data['title']) ? $data['title'] : '' }}" placeholder="请输入标题">
+                        </div>
                     </div>
-                    <div style="font-size: 12px;margin-top: 10px;" class="text-gray">*请上传200*200尺寸图片</div>
+                    <div class="row cl" id="container">
+                        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>图片上传：</label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            @if($data['image'])
+                                <img id="imagePrv" src="{{$data['image']}}" width="210" />
+                            @else
+                                <img id="imagePrv" src="{{ URL::asset('/img/add_picture.png') }}" />
+                            @endif
+                            <span class="c-red margin-left-5">*请上传900*500尺寸图片</span>
+                            <input type="hidden" class="input-text" id="image" name="image" value="{{ isset($data['image']) ? $data['image'] : '' }}"  />
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2">类型：</label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            @if($data['type']==0)
+                                <input type="text" value="正常详情页" class="input-text no_click" readonly />
+                            @else
+                                <input type="text" value="自定义链接" class="input-text no_click" readonly />
+                            @endif
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>排序：</label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input id="sort" name="sort" type="text" class="input-text" value="{{ isset($data['sort']) ? $data['sort'] : '' }}" placeholder="请输入排序，越大越靠前">
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>角色：</label>
-                <div class="formControls col-xs-8 col-sm-9">
-                    <select id="role" name="role" class="select">
-                        <option value="0" {{$data->role == "0"? "selected":""}}>普通管理员</option>
-                        <option value="1" {{$data->role == "1"? "selected":""}}>根级管理员</option>
-                    </select>
+                <div class="tabCon">
+                    @if($data['type']==0)
+                    @else
+                        <div class="row cl">
+                            <label class="form-label col-xs-4 col-sm-2">外链地址：</label>
+                            <div class="formControls col-xs-8 col-sm-9">
+                                <input id="link" name="link" type="text" class="input-text" value="{{ isset($data['link']) ? $data['link'] : '' }}" placeholder="请输入外链地址">
+                            </div>
+                        </div>
+                    @endif
                 </div>
-            </div>
-
-            <div class="row cl">
-                <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-                    <input class="btn btn-primary radius" type="submit" value="保存管理员">
-                    <button onClick="layer_close();" class="btn btn-default radius" type="button">取消</button>
+                <div class="row cl">
+                    <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                        <button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
+                        <button onClick="layer_close();" class="btn btn-default radius" type="button">取消</button>
+                    </div>
                 </div>
             </div>
         </form>
@@ -71,46 +85,57 @@
 @section('script')
     <script type="text/javascript">
         $(function () {
+            $('.skin-minimal input').iCheck({
+                checkboxClass: 'icheckbox-blue',
+                radioClass: 'iradio-blue',
+                increaseArea: '20%'
+            });
+            $("#tab-system").Huitab({
+                index:0
+            });
             //获取七牛token
             initQNUploader();
-            $("#form-admin-add").validate({
+            $("#form-banner-add").validate({
                 rules: {
-                    name: {
+                    title: {
                         required: true,
                     },
-                    phonenum: {
+                    sort: {
                         required: true,
-                        isPhone: true,
+                        digits:true,
                     },
-                    avatar: {
+                    image: {
                         required: true,
                     }
                 },
                 onkeyup: false,
-                focusCleanup: true,
+                focusCleanup: false,
                 success: "valid",
                 submitHandler: function (form) {
+                    $('.btn-primary').html('<i class="Hui-iconfont">&#xe634;</i> 保存中...')
                     $(form).ajaxSubmit({
                         type: 'POST',
-                        url: "{{ URL::asset('/admin/admin/edit')}}",
+                        url: "{{ URL::asset('/admin/banner/add')}}",
                         success: function (ret) {
                             console.log(JSON.stringify(ret));
                             if (ret.result) {
-                                layer.msg('保存成功', {icon: 1, time: 1000});
+                                layer.msg(ret.msg, {icon: 1, time: 2000});
                                 setTimeout(function () {
                                     var index = parent.layer.getFrameIndex(window.name);
                                     parent.$('.btn-refresh').click();
                                     parent.layer.close(index);
-                                }, 500)
+                                }, 1000)
                             } else {
-                                layer.msg(ret.message, {icon: 2, time: 1000});
+                                layer.msg(ret.msg, {icon: 2, time: 2000});
                             }
+                            $('.btn-primary').html('<i class="Hui-iconfont">&#xe632;</i> 保存')
                         },
                         error: function (XmlHttpRequest, textStatus, errorThrown) {
-                            layer.msg('保存失败', {icon: 1, time: 1000});
+                            layer.msg('保存失败', {icon: 1, time: 2000});
                             console.log("XmlHttpRequest:" + JSON.stringify(XmlHttpRequest));
                             console.log("textStatus:" + textStatus);
                             console.log("errorThrown:" + errorThrown);
+                            $('.btn-primary').html('<i class="Hui-iconfont">&#xe632;</i> 保存')
                         }
                     });
                 }
@@ -122,7 +147,7 @@
         function initQNUploader() {
             var uploader = Qiniu.uploader({
                 runtimes: 'html5,flash,html4',      // 上传模式，依次退化
-                browse_button: 'pickfiles',         // 上传选择的点选按钮，必需
+                browse_button: 'imagePrv',         // 上传选择的点选按钮，必需
                 container: 'container',//上传按钮的上级元素ID
                 // 在初始化时，uptoken，uptoken_url，uptoken_func三个参数中必须有一个被设置
                 // 切如果提供了多个，其优先级为uptoken > uptoken_url > uptoken_func
@@ -138,7 +163,7 @@
                 // Ajax请求downToken的Url，私有空间时使用，JS-SDK将向该地址POST文件的key和domain，服务端返回的JSON必须包含url字段，url值为该文件的下载地址
                 unique_names: true,              // 默认false，key为文件名。若开启该选项，JS-SDK会为每个文件自动生成key（文件名）
                 // save_key: true,                  // 默认false。若在服务端生成uptoken的上传策略中指定了sava_key，则开启，SDK在前端将不对key进行任何处理
-                domain: 'http://twst.isart.me/',     // bucket域名，下载资源时用到，必需
+                domain: 'http://dsyy.isart.me/',     // bucket域名，下载资源时用到，必需
                 max_file_size: '100mb',             // 最大文件体积限制
                 flash_swf_url: 'path/of/plupload/Moxie.swf',  //引入flash，相对路径
                 max_retries: 3,                     // 上传失败最大重试次数
@@ -186,9 +211,9 @@
                         var res = JSON.parse(info);
                         //获取上传成功后的文件的Url
                         var sourceLink = domain + res.key;
-                        $("#avatar").val(sourceLink);
-                        $("#pickfiles").attr('src', qiniuUrlTool(sourceLink, "head_icon"));
-//                        console.log($("#pickfiles").attr('src'));
+                        $("#image").val(sourceLink);
+                        $("#imagePrv").attr('src', qiniuUrlTool(sourceLink, "head_icon"));
+                       // console.log($("#pickfiles").attr('src'));
                     },
                     'Error': function (up, err, errTip) {
                         //上传出错时，处理相关的事情
@@ -208,6 +233,5 @@
                 }
             });
         }
-
     </script>
 @endsection

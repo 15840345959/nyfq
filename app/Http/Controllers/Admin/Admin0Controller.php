@@ -93,8 +93,6 @@ class AdminController
             return redirect()->action('\App\Http\Controllers\Admin\IndexController@error', ['msg' => '合规校验失败，只有管理员有修改权限']);
         }
     }
-
-    //新建或编辑管理员-post
     public function editDo(Request $request)
     {
         $data = $request->all();
@@ -146,7 +144,13 @@ class AdminController
                 }
             }
         }
-        return $return;
+        $admin = $request->session()->get('admin');
+        $param=array(
+            'return'=>$return,
+            'data'=>$data,
+            'admin'=>$admin
+        );
+        return view('admin.admin.edit',$param);
     }
 
     //新建或编辑自己的信息-get
@@ -161,10 +165,9 @@ class AdminController
     }
 
     //新建或编辑自己的信息-post
-    public function editMySelfDo(Request $request)
+    public function editMySelfPost(Request $request)
     {
         $data = $request->all();
-        $return=null;
         if(empty($data['password'])){
             $admin=UserManager::getUserInfoById($data['id']);
             unset($data['password']);
@@ -174,10 +177,7 @@ class AdminController
             if($data['telephone']!=$admin['telephone']){
                 $result=AdminManager::getAdminByTel($admin['telephone']);
                 if($result){
-                    $return['result']=false;
-                    $return['msg']='个人基本信息修改失败,此电话号码已被注册';
-//                    return redirect('/admin/admin/editMySelf')->with('error','个人基本信息修改失败,此电话号码已被注册');
-                    return $return;
+                    return redirect('/admin/admin/editMySelf')->with('error','个人基本信息修改失败,此电话号码已被注册');
                 }
             }
             $admin = AdminManager::setAdmin($admin, $data);
@@ -190,15 +190,10 @@ class AdminController
                 $user['type']=$admin['type'];
                 $user['admin']=$admin['admin'];
                 $request->session()->put('admin', $user);//写入session
-
-                $return['result']=true;
-                $return['msg']='个人基本信息修改成功';
-//                return redirect('/admin/admin/editMySelf')->with('success','个人基本信息修改成功');
+                return redirect('/admin/admin/editMySelf')->with('success','个人基本信息修改成功');
             }
             else{
-                $return['result']=false;
-                $return['msg']='个人基本信息修改失败';
-//                return redirect('/admin/admin/editMySelf')->with('error','个人基本信息修改失败');
+                return redirect('/admin/admin/editMySelf')->with('error','个人基本信息修改失败');
             }
         }
         else{
@@ -206,9 +201,7 @@ class AdminController
             unset($data['nick_name']);
             unset($data['telephone']);
             if($data['password']!= $admin['password']){
-                $return['result']=false;
-                $return['msg']='密码修改失败，原密码输入错误';
-//                return redirect('/admin/admin/editMySelf')->with('error','密码修改失败，原密码输入错误');
+                return redirect('/admin/admin/editMySelf')->with('error','密码修改失败，原密码输入错误');
             }
             else{
                 $data['password']=$data['new_password'];
@@ -217,18 +210,13 @@ class AdminController
                 $admin = AdminManager::setAdmin($admin, $data);
                 $result=$admin->save();
                 if($result){
-                    $return['result']=true;
-                    $return['msg']='密码修改成功，请重新登录';
-//                    return redirect('/admin/admin/editMySelf')->with('success','密码修改成功');
+                    return redirect('/admin/admin/editMySelf')->with('success','密码修改成功');
                 }
                 else{
-                    $return['result']=false;
-                    $return['msg']='密码修改失败';
-//                    return redirect('/admin/admin/editMySelf')->with('error','密码修改失败');
+                    return redirect('/admin/admin/editMySelf')->with('error','密码修改失败');
                 }
             }
         }
 
-        return $return;
     }
 }

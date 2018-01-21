@@ -24,25 +24,33 @@
                     <input id="title" name="title" type="text" class="input-text" value="{{ isset($data['title']) ? $data['title'] : '' }}" placeholder="请输入标题">
                 </div>
             </div>
-            <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>排序：</label>
-                <div class="formControls col-xs-8 col-sm-9">
-                    <input id="sort" name="sort" type="text" class="input-text" value="{{ isset($data['sort']) ? $data['sort'] : '' }}" placeholder="请输入排序，越大越靠前">
-                </div>
-            </div>
             <div class="row cl" id="container">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>图片上传：</label>
-                <img id="imagePrv" src="{{ URL::asset('/img/add_picture.png') }}" />
-                *请上传200*200尺寸图片
-                <input type="hidden" class="input-text" id="image" name="image"  />
+                <div class="formControls col-xs-8 col-sm-9">
+                    @if($data['image'])
+                        <img id="imagePrv" src="{{$data['image'] }}" width="210" />
+                    @else
+                        <img id="imagePrv" src="{{ URL::asset('/img/add_picture.png') }}" />
+                    @endif
+                    <span class="c-red">*请上传900*500尺寸图片</span>
+                    <input type="hidden" class="input-text" id="image" name="image" value="{{ isset($data['image']) ? $data['image'] : '' }}"  />
+                </div>
             </div>
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>类型：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <select id="type" name="type" class="select">
-                        <option value="0" {{$data['type'] == "0"? "selected":""}} >正常详情页</option>
-                        <option value="1" {{$data['type'] == "1"? "selected":""}} >自定义链接</option>
-                    </select>
+                    <span class="select-box">
+                        <select id="type" name="type" class="select">
+                            <option value="0" {{$data['type'] == "0"? "selected":""}} >正常详情页</option>
+                            <option value="1" {{$data['type'] == "1"? "selected":""}} >自定义链接</option>
+                        </select>
+                    </span>
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>排序：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input id="sort" name="sort" type="text" class="input-text" value="{{ isset($data['sort']) ? $data['sort'] : '' }}" placeholder="请输入排序，越大越靠前">
                 </div>
             </div>
             <div class="row cl">
@@ -84,18 +92,18 @@
                         success: function (ret) {
                             console.log(JSON.stringify(ret));
                             if (ret.result) {
-                                layer.msg(ret.msg, {icon: 1, time: 1000});
+                                layer.msg(ret.msg, {icon: 1, time: 2000});
                                 setTimeout(function () {
                                     var index = parent.layer.getFrameIndex(window.name);
                                     parent.$('.btn-refresh').click();
                                     parent.layer.close(index);
-                                }, 500)
+                                }, 1000)
                             } else {
-                                layer.msg(ret.msg, {icon: 2, time: 1000});
+                                layer.msg(ret.msg, {icon: 2, time: 2000});
                             }
                         },
                         error: function (XmlHttpRequest, textStatus, errorThrown) {
-                            layer.msg('保存失败', {icon: 1, time: 1000});
+                            layer.msg('保存失败', {icon: 1, time: 2000});
                             console.log("XmlHttpRequest:" + JSON.stringify(XmlHttpRequest));
                             console.log("textStatus:" + textStatus);
                             console.log("errorThrown:" + errorThrown);
