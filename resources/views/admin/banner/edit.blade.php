@@ -61,6 +61,12 @@
                 </div>
                 <div class="tabCon">
                     @if($data['type']==0)
+                        @foreach($data['details'] as $detail)
+                            <div class="row cl">
+                                <textarea name="" cols="" rows=""wrap="\n" class="textarea" placeholder="请填写内容" dragonfly="true" nullmsg="备注不能为空！" >{{$detail['content']}}</textarea>
+
+                            </div>
+                        @endforeach
                     @else
                         <div class="row cl">
                             <label class="form-label col-xs-4 col-sm-2">外链地址：</label>

@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Admin;
 use App\Components\BannerManager;
 use App\Components\QNManager;
 use App\Models\Banner;
+use App\Models\BannerDetail;
 use Illuminate\Http\Request;
 
 class BannerController
@@ -98,6 +99,10 @@ class BannerController
         $banner=new Banner();
         if (array_key_exists('id', $data)) {
             $banner = BannerManager::getBannerById($data['id']);
+            if($banner['type']==0){
+                $banner_details=BannerDetail::where('banner_id',$data['id'])->orderBy('sort','asc')->get();
+                $banner['details']=$banner_details;
+            }
         }
         //生成七牛token
         $upload_token = QNManager::uploadToken();

@@ -289,7 +289,6 @@ class IndexManager
             }
         }
         $goods_rows = array_slice($goods_lists, $offset, $page);
-
         return $goods_rows;
     }
 

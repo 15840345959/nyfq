@@ -85,7 +85,8 @@ class IndexController extends Controller
         if ($goodses) {
             return ApiResponse::makeResponse(true, $goodses, ApiResponse::SUCCESS_CODE);
         } else {
-            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::UNKNOW_ERROR], ApiResponse::UNKNOW_ERROR);
+//            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::UNKNOW_ERROR], ApiResponse::UNKNOW_ERROR);
+            return ApiResponse::makeResponse(true, [], ApiResponse::SUCCESS_CODE);
         }
     }
 }
