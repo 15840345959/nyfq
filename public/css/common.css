@@ -409,3 +409,16 @@
 .no_click{
     color:#999;
 }
+
+.admin-content-show{
+    width:375px;
+    height:667px;
+    overflow-y: scroll;
+    margin:0 auto;
+    border:1px solid #ddd;
+}
+
+.common-text-align-center{
+    text-align: center;
+}
+
