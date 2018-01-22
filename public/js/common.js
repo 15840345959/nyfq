@@ -32,6 +32,15 @@ function delAdmin(url, param, callBack) {
 function delBanner(url, param, callBack) {
     ajaxRequest(url + "admin/banner/del/" + param.id, param, "GET", callBack);
 }
+//删除Banner详情
+function delBannerDetail(url, param, callBack) {
+    ajaxRequest(url + "admin/bannerdetail/del/" + param.id, param, "GET", callBack);
+}
+//修改Banner详情
+function editBannerDetail(url, param, callBack) {
+    $.post(url + "admin/bannerdetail/edit",param,callBack)
+}
+
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////

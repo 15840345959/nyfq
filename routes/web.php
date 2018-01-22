@@ -44,6 +44,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin.login']], function ()
     Route::get('/banner/del/{id}', 'Admin\BannerController@del');  //删除Banner
     Route::get('/banner/edit', 'Admin\BannerController@edit');  //编辑Banner
     Route::post('/banner/edit', 'Admin\BannerController@editDo');  //编辑Banner
+    Route::get('/bannerdetail/del/{id}', 'Admin\BannerController@delDetail');  //删除Banner详情信息
+    Route::post('/bannerdetail/edit', 'Admin\BannerController@editDoDetail');  //编辑Banner详情信息
 });
 Auth::routes();
 

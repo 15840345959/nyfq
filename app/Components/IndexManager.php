@@ -42,7 +42,7 @@ class IndexManager
     {
         $banner = Banner::where('id',$id)->first();
         $banner_details=BannerDetail::where('banner_id',$id)
-            ->orderBy('id','asc')->get();
+            ->orderBy('sort','asc')->get();
         $banner["details"]=$banner_details;
         return $banner;
     }

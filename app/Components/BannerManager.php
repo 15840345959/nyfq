@@ -10,6 +10,7 @@ namespace App\Components;
 
 
 use App\Models\Banner;
+use App\Models\BannerDetail;
 
 class BannerManager
 {
@@ -68,5 +69,46 @@ class BannerManager
     public static function getBannerById($id){
         $banner=Banner::where('id',$id)->first();
         return $banner;
+    }
+
+
+    /*
+     * 通过id获得BannerDetail
+     *
+     * By zm
+     *
+     * 2018-01-22
+     *
+     */
+    public static function getBannerDetailById($id){
+        $banner_detail=BannerDetail::where('id',$id)->first();
+        return $banner_detail;
+    }
+
+
+
+
+    /*
+     * 配置BannerDetail的参数
+     *
+     * By zm
+     *
+     * 2018-01-22
+     *
+     */
+    public static function setBannerDetail($banner_detail, $data){
+        if (array_key_exists('banner_id', $data)) {
+            $banner_detail->banner_id = array_get($data, 'banner_id');
+        }
+        if (array_key_exists('content', $data)) {
+            $banner_detail->content = array_get($data, 'content');
+        }
+        if (array_key_exists('type', $data)) {
+            $banner_detail->type = array_get($data, 'type');
+        }
+        if (array_key_exists('sort', $data)) {
+            $banner_detail->sort = array_get($data, 'sort');
+        }
+        return $banner_detail;
     }
 }

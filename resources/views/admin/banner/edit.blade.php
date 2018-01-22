@@ -51,6 +51,12 @@
                             <input id="sort" name="sort" type="text" class="input-text" value="{{ isset($data['sort']) ? $data['sort'] : '' }}" placeholder="请输入排序，越大越靠前">
                         </div>
                     </div>
+                    <div class="row cl">
+                        <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                            <button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
+                            <button onClick="layer_close();" class="btn btn-default radius" type="button">取消</button>
+                        </div>
+                    </div>
                 </div>
                 <style>
                     #details_black img,video{
@@ -210,13 +216,13 @@
                                 <input id="link" name="link" type="text" class="input-text" value="{{ isset($data['link']) ? $data['link'] : '' }}" placeholder="请输入外链地址">
                             </div>
                         </div>
+                        <div class="row cl">
+                            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                                <button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
+                                <button onClick="layer_close();" class="btn btn-default radius" type="button">取消</button>
+                            </div>
+                        </div>
                     @endif
-                </div>
-                <div class="row cl">
-                    <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-                        <button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
-                        <button onClick="layer_close();" class="btn btn-default radius" type="button">取消</button>
-                    </div>
                 </div>
             </div>
         </form>
@@ -224,7 +230,7 @@
     <script id="banner_details_content_template" type="text/x-dot-template">
         <div id="banner_details_content_detail" class="formControls col-xs-12 col-sm-12">
             @{{? it.type==0 }}
-                <textarea name="" wrap="\n" class="textarea" style="resize:vertical;" placeholder="请填写内容" dragonfly="true" nullmsg="内容不能为空！">@{{=it.content}}</textarea>
+                <textarea  id="text_detail_@{{=it.index}}" wrap="\n" class="textarea" style="resize:vertical;" placeholder="请填写内容" dragonfly="true" nullmsg="内容不能为空！">@{{=it.content}}</textarea>
             @{{?? it.type==1 }}
                 <img src="@{{=it.content}}" />
             @{{?? it.type==2 }}
@@ -232,15 +238,30 @@
                     您的浏览器不支持 video 标签。
                 </video>
             @{{? }}
-            <a href="javascript:" onclick="sortUp(@{{=it.index}})">
-                <div id="banner_details_content" class="formControls col-xs-4 col-sm-4 Hui-iconfont">&#xe6d6;</div>
-            </a>
-            <a href="javascript:" onclick="delDetial(@{{=it.index}})">
-                <div id="banner_details_content" class="formControls col-xs-4 col-sm-4 c-red Hui-iconfont">&#xe6a6;</div>
-            </a>
-            <a href="javascript:" onclick="sortDown(@{{=it.index}})">
-                <div id="banner_details_content" class="formControls col-xs-4 col-sm-4 Hui-iconfont">&#xe6d5;</div>
-            </a>
+            @{{? it.type==0 }}
+                <a href="javascript:" onclick="sortUp(@{{=it.index}},@{{=it.id}})" title="上移">
+                    <div class="formControls col-xs-3 col-sm-3 Hui-iconfont">&#xe6d6;</div>
+                </a>
+                <a href="javascript:" onclick="delDetial(@{{=it.index}},@{{=it.id}})" title="删除">
+                    <div class="formControls col-xs-3 col-sm-3 c-red Hui-iconfont">&#xe6a6;</div>
+                </a>
+                <a href="javascript:" onclick="updateTextDetial(@{{=it.index}},@{{=it.id}})" title="提交编辑">
+                    <div class="formControls col-xs-3 col-sm-3 c-green  Hui-iconfont">&#xe60c;</div>
+                </a>
+                <a href="javascript:" onclick="sortDown(@{{=it.index}},@{{=it.id}})" title="下移">
+                    <div class="formControls col-xs-3 col-sm-3 Hui-iconfont">&#xe6d5;</div>
+                </a>
+            @{{?? }}
+                <a href="javascript:" onclick="sortUp(@{{=it.index}},@{{=it.id}})" title="上移">
+                    <div class="formControls col-xs-4 col-sm-4 Hui-iconfont">&#xe6d6;</div>
+                </a>
+                <a href="javascript:" onclick="delDetial(@{{=it.index}},@{{=it.id}})" title="删除">
+                    <div class="formControls col-xs-4 col-sm-4 c-red Hui-iconfont">&#xe6a6;</div>
+                </a>
+                <a href="javascript:" onclick="sortDown(@{{=it.index}},@{{=it.id}})" title="下移">
+                    <div class="formControls col-xs-4 col-sm-4 Hui-iconfont">&#xe6d5;</div>
+                </a>
+            @{{? }}
         </div>
     </script>
     <script id="banner_details_show_content_template" type="text/x-dot-template">
@@ -290,7 +311,7 @@
                     $('.btn-primary').html('<i class="Hui-iconfont">&#xe634;</i> 保存中...')
                     $(form).ajaxSubmit({
                         type: 'POST',
-                        url: "{{ URL::asset('/admin/banner/add')}}",
+                        url: "{{ URL::asset('/admin/banner/edit')}}",
                         success: function (ret) {
                             // console.log(JSON.stringify(ret));
                             if (ret.result) {
@@ -306,7 +327,7 @@
                             $('.btn-primary').html('<i class="Hui-iconfont">&#xe632;</i> 保存')
                         },
                         error: function (XmlHttpRequest, textStatus, errorThrown) {
-                            layer.msg('保存失败', {icon: 1, time: 2000});
+                            layer.msg('保存失败', {icon: 2, time: 2000});
                             console.log("XmlHttpRequest:" + JSON.stringify(XmlHttpRequest));
                             console.log("textStatus:" + textStatus);
                             console.log("errorThrown:" + errorThrown);
@@ -472,7 +493,7 @@
                         var res = JSON.parse(info);
                         //获取上传成功后的文件的Url
                         var sourceLink = domain + res.key;
-                        $("#imagePrv_image").attr('src', qiniuUrlTool(sourceLink, "head_icon"));
+                        $("#imagePrv_image").attr('src', sourceLink);
                         $('#add_image').val(sourceLink)
                         // console.log($("#pickfiles").attr('src'));
                     },
@@ -591,7 +612,7 @@
             var str='{{$data['details']}}'
             var jsonStr=str.replace(/&quot;/ig, '"')
             var jsonObj =  JSON.parse(jsonStr)
-            // console.log(jsonObj)
+            console.log(jsonObj)
             //内容详情页
             LoadDetailsHtml(jsonObj)
         }
@@ -610,19 +631,22 @@
             }
         }
         //点击排序-上升
-        function sortUp(index){
+        function sortUp(index,id){
             // console.log('sortUp index is : ' + JSON.stringify((jsonObj[index])))
             //判断如果不是最上面的内容，执行向上操作
             if(index!=0){
+                //再交换jsonObj中的位置
                 var pack=jsonObj[index-1]
                 jsonObj[index-1]=jsonObj[index]
-                jsonObj[index-1]['sort']=index-1
                 jsonObj[index]=pack
-                jsonObj[index]['sort']=index
+                for(var i=0;i<jsonObj.length;i++){
+                    jsonObj[i]['sort']=i
+                }
+                for(var i=0;i<jsonObj.length;i++){
+                    editBannerDetailList(jsonObj[i])
+                }
                 //重新展示
-                $("#banner_details_content").html('')
-                $("#banner_details_show_content").html('')
-                LoadDetailsHtml(jsonObj)
+                refresh(jsonObj)
             }
         }
         //点击排序-下降
@@ -630,30 +654,56 @@
             // console.log('sortDown index is : ' + JSON.stringify((jsonObj[index])))
             //判断如果不是最上面的内容，执行向上操作
             if(index!=jsonObj.length-1){
+                //再交换jsonObj中的位置
                 var pack=jsonObj[index+1]
                 jsonObj[index+1]=jsonObj[index]
                 jsonObj[index+1]['sort']=index+1
                 jsonObj[index]=pack
                 jsonObj[index]['sort']=index
+                for(var i=0;i<jsonObj.length;i++){
+                    jsonObj[i]['sort']=i
+                }
+                for(var i=0;i<jsonObj.length;i++){
+                    editBannerDetailList(jsonObj[i])
+                }
                 //重新展示
-                $("#banner_details_content").html('')
-                $("#banner_details_show_content").html('')
-                LoadDetailsHtml(jsonObj)
+                refresh(jsonObj)
             }
         }
         //删除这条数据
-        function delDetial(index){
-            // console.log('sortDown index is : ' + JSON.stringify((jsonObj[index])))
-            //判断如果不是最上面的内容，执行向上操作
-            for(var i=0;i<jsonObj.length;i++){
-                if(i==index){
-                    jsonObj.splice(i,1);//从下标为i的元素开始，连续删除1个元素
+        function delDetial(index,id){
+            layer.confirm('确认要删除这条数据吗？',function(index){
+                //进行后台删除
+                var param = {
+                    id: id,
+                    _token: "{{ csrf_token() }}"
                 }
+                delBannerDetail('{{URL::asset('')}}', param, function (ret) {
+                    if (ret.result == true) {
+                        layer.msg(ret.msg, {icon: 1, time: 1000});
+                        // console.log('sortDown index is : ' + JSON.stringify((jsonObj[index])))
+                        for(var i=0;i<jsonObj.length;i++){
+                            if(i==index){
+                                jsonObj.splice(i,1);//从下标为i的元素开始，连续删除1个元素
+                            }
+                        }
+                        //重新展示
+                        refresh(jsonObj)
+                    } else {
+                        layer.msg(ret.msg, {icon: 2, time: 1000})
+                    }
+                })
+            });
+        }
+        //提交修改后的文本
+        function updateTextDetial(index){
+            var content=$('#text_detail_'+index).val();
+            jsonObj[index]['content']=content;
+            for(var i=0;i<jsonObj.length;i++){
+                editBannerDetailList(jsonObj[i])
             }
             //重新展示
-            $("#banner_details_content").html('')
-            $("#banner_details_show_content").html('')
-            LoadDetailsHtml(jsonObj)
+            refresh(jsonObj)
         }
         //显示添加文本
         function addDetailText(){
@@ -674,11 +724,15 @@
                 detail['type']=0;
                 detail['sort']=jsonObj.length;
                 jsonObj.push(detail);
-                //重新展示
-                $("#banner_details_content").html('')
-                $("#banner_details_show_content").html('')
-                $('#add_text').val('')
-                LoadDetailsHtml(jsonObj)
+                addBannerDetailList(detail,function(ret){
+                    if (ret.result == true) {
+                        //重新展示
+                        $('#add_text').val('')
+                        refresh(jsonObj)
+                    } else {
+                        layer.msg(ret.msg, {icon: 2, time: 1000})
+                    }
+                })
             }
         }
         //显示添加图片
@@ -700,12 +754,16 @@
                 detail['type']=1;
                 detail['sort']=jsonObj.length;
                 jsonObj.push(detail);
-                //重新展示
-                $("#banner_details_content").html('')
-                $("#banner_details_show_content").html('')
-                $('#add_image').val('')
-                $("#imagePrv_image").attr('src', '{{ URL::asset('/img/add_image.png') }}')
-                LoadDetailsHtml(jsonObj)
+                addBannerDetailList(detail,function(ret){
+                    if (ret.result == true) {
+                        //重新展示
+                        $('#add_image').val('')
+                        $("#imagePrv_image").attr('src', '{{ URL::asset('/img/add_image.png') }}')
+                        refresh(jsonObj)
+                    } else {
+                        layer.msg(ret.msg, {icon: 2, time: 1000})
+                    }
+                })
             }
         }
         //显示添加视频
@@ -727,16 +785,55 @@
                 detail['type']=2;
                 detail['sort']=jsonObj.length;
                 jsonObj.push(detail);
-                //重新展示
-                $("#banner_details_content").html('')
-                $("#banner_details_show_content").html('')
-                $('#add_video').val('')
-                $('#videoPrv').attr('src', '')
-                $('#videoPrv').hide()
-                $('#imagePrv_video').show()
-                $('.sr-only').css('width','0%');
-                LoadDetailsHtml(jsonObj)
+                addBannerDetailList(detail,function(ret){
+                    if (ret.result == true) {
+                        //重新展示
+                        $('#add_video').val('')
+                        $('#videoPrv').attr('src', '')
+                        $('#videoPrv').hide()
+                        $('#imagePrv_video').show()
+                        $('.sr-only').css('width','0%');
+                        refresh(jsonObj)
+                    } else {
+                        layer.msg(ret.msg, {icon: 2, time: 1000})
+                    }
+                })
             }
+        }
+        //刷新页面
+        function refresh(jsonObj){
+            $("#banner_details_content").html('')
+            $("#banner_details_show_content").html('')
+            LoadDetailsHtml(jsonObj)
+        }
+        //提交后台编辑数据
+        function editBannerDetailList(jsonObj){
+            var param = {
+                sort:jsonObj['sort'],
+                content:jsonObj['content'],
+                id: jsonObj['id'],
+                _token: "{{ csrf_token() }}"
+            }
+            editBannerDetail('{{URL::asset('')}}', param, function (ret) {
+                // console.log("editBannerDetail ret is ： "+JSON.stringify(ret))
+                if (ret.result == true) {
+                    return ret.result;
+                } else {
+                    layer.msg(ret.msg, {icon: 2, time: 1000})
+                    return ret.result;
+                }
+            })
+        }
+        //提交后台添加数据
+        function addBannerDetailList(detail,callBack){
+            var param={
+                _token: "{{ csrf_token() }}",
+                banner_id:detail['banner_id'],
+                content:detail['content'],
+                type:detail['type'],
+                sort:detail['sort']
+            }
+            editBannerDetail('{{URL::asset('')}}', param, callBack)
         }
     </script>
 @endsection
