@@ -1,7 +1,12 @@
 @extends('admin.layouts.app')
 
 @section('content')
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 旅行社管理 <span class="c-gray en">&gt;</span> 旅行社列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 旅行社管理 <span
+                class="c-gray en">&gt;</span> 旅行社列表 <a class="btn btn-success radius r btn-refresh"
+                                                       style="line-height:1.6em;margin-top:3px"
+                                                       href="javascript:location.replace(location.href);" title="刷新"
+                                                       onclick="location.replace('{{URL::asset('/admin/organization/index')}}');">
+            <i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
     <div class="text-c">
         <form action="{{URL::asset('/admin/organization/index')}}" method="post" class="form-horizontal">
@@ -38,7 +43,7 @@
                     <td class="text-l">{{$data['address']}}</td>
                     <td>{{$data['updated_at']}}</td>
                     <td class="td-manage">
-                        <a title="管理员管理" href="javascript:;" onclick="organization_admin('管理员管理','{{URL::asset('/admin/organization/edit')}}?id={{$data['id']}}',{{$data['id']}})" class="ml-5" style="text-decoration:none">
+                        <a title="管理员管理" href="javascript:;" onclick="organization_admin('管理员管理','{{URL::asset('/admin/organization/admin')}}?organization_id={{$data['id']}}')" class="ml-5" style="text-decoration:none">
                             <i class="Hui-iconfont">&#xe62c;</i>
                         </a>
                         <a title="编辑" href="javascript:;" onclick="organization_edit('旅行社编辑','{{URL::asset('/admin/organization/edit')}}?id={{$data['id']}}',{{$data['id']}})" class="ml-5" style="text-decoration:none">
@@ -59,10 +64,20 @@
 
 @section('script')
 <script type="text/javascript">
+    /*旅行社-管理员管理*/
+    function organization_admin(title, url, id) {
+        // console.log("organization_admin url:" + url);
+        var index = layer.open({
+            type: 2,
+            title: title,
+            content: url
+        });
+        layer.full(index);
+    }
 
     /*旅行社-添加或编辑*/
     function organization_edit(title, url, id) {
-        console.log("organization_edit url:" + url);
+        // console.log("organization_edit url:" + url);
         var index = layer.open({
             type: 2,
             title: title,

@@ -54,6 +54,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin.login']], function ()
     Route::post('/organization/edit', 'Admin\OrganizationController@editDo');  //新建或编辑旅行社
     Route::get('/organization/del/{id}', 'Admin\OrganizationController@del');  //删除旅行社
     Route::get('/organization/admin', 'Admin\OrganizationController@admin');  //旅行社管理员管理首页
+    Route::get('/organization/adminSearch', 'Admin\OrganizationController@admin');  //搜索旅行社管理员
+    Route::get('/organization/delAdmin/{id}', 'Admin\OrganizationController@delAdmin');  //删除旅行社管理员
+    Route::get('/organization/editAdmin', 'Admin\OrganizationController@editAdmin');  //新建或编辑旅行社管理员
+    Route::get('/organization/editAdminSearch', 'Admin\OrganizationController@editAdmin');  //搜索旅行社备选管理员
+    Route::post('/organization/editAdmin', 'Admin\OrganizationController@editAdminDo');  //新建或编辑旅行社管理员
 });
 Auth::routes();
 

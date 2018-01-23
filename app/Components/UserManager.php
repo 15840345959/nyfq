@@ -273,6 +273,30 @@ class UserManager
     }
 
     /*
+     * 查找旅行社的备选管理员
+     *
+     * By zm
+     *
+     * 2018-01-23
+     */
+    public static function getAllOrganizationSpareAdminByName($search)
+    {
+        $users = User::where('type',0)->where(function ($users) use ($search) {
+            $users->where('nick_name'  , 'like', '%'.$search.'%')
+                ->orwhere('telephone', 'like', '%'.$search.'%');
+        })->orderBy('id','asc')->get();
+        if($users){
+            foreach ($users as $user){
+                unset($user['password']);
+                unset($user['open_id']);
+                unset($user['token']);
+                unset($user['admin']);
+            }
+        }
+        return $users;
+    }
+
+    /*
      * 根据id获取用户的密码信息
      *
      * By zm

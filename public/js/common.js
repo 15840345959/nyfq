@@ -38,11 +38,23 @@ function delBannerDetail(url, param, callBack) {
 }
 //修改Banner详情
 function editBannerDetail(url, param, callBack) {
-    $.post(url + "admin/bannerdetail/edit",param,callBack)
+    $.post(url + "admin/bannerdetail/edit",param,callBack);
 }
 //删除旅行社
 function delOrganization(url, param, callBack) {
     ajaxRequest(url + "admin/organization/del/" + param.id, param, "GET", callBack);
+}
+//删除旅行社管理员
+function delOrganizationAdmin(url, param, callBack) {
+    ajaxRequest(url + "admin/organization/delAdmin/" + param.id, param, "GET", callBack);
+}
+//添加旅行社管理员
+function editOrganizationAdmin(url, param, callBack) {
+    ajaxRequest(url + "admin/organization/editAdmin/", param, "GET", callBack);
+}
+//设置旅行社管理员
+function setUpOrganizationAdmin(url, param, callBack) {
+    $.post(url + "admin/organization/editAdmin",param,callBack);
 }
 
 
