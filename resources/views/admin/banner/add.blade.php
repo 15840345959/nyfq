@@ -1,6 +1,13 @@
 @extends('admin.layouts.app')
 
 @section('content')
+    @if(isset($return['result']))
+        @if($return['result'])
+            <div class="Huialert Huialert-success"><i class="Hui-iconfont">&#xe6a6;</i>{{ $return['msg'] }}</div>
+        @else
+            <div class="Huialert Huialert-error"><i class="Hui-iconfont">&#xe6a6;</i>{{ $return['msg'] }}</div>
+        @endif
+    @endif
     <div class="page-container">
         <form class="form form-horizontal" method="post" id="form-banner-add">
             {{csrf_field()}}

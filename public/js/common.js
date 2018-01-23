@@ -40,10 +40,6 @@ function delBannerDetail(url, param, callBack) {
 function editBannerDetail(url, param, callBack) {
     $.post(url + "admin/bannerdetail/edit",param,callBack)
 }
-//删除旅行社
-function delOrganization(url, param, callBack) {
-    ajaxRequest(url + "admin/organization/del/" + param.id, param, "GET", callBack);
-}
 
 
 

@@ -14,6 +14,9 @@
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="l">
+            <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius">
+                <i class="Hui-iconfont">&#xe6e2;</i> 批量删除
+            </a>
             <a class="btn btn-primary radius" onclick="banner_add('添加Banner','{{URL::asset('/admin/banner/add')}}')" href="javascript:;">
                 <i class="Hui-iconfont">&#xe600;</i> 添加Banner
             </a>
@@ -23,6 +26,7 @@
         <table class="table table-border table-bordered table-bg table-hover table-sort" id="table-sort">
             <thead>
             <tr class="text-c">
+                <th width="40"><input name="" type="checkbox" value=""></th>
                 <th width="80">ID</th>
                 <th width="100">图片</th>
                 <th>标题</th>
@@ -34,6 +38,7 @@
             <tbody>
             @foreach($datas as $data)
                 <tr class="text-c">
+                    <td><input name="" type="checkbox" value=""></td>
                     <td>{{$data['id']}}</td>
                     <td><img width="210" class="picture-thumb" src="{{$data['image']}}"></td>
                     <td class="text-l">{{$data['title']}}</td>
