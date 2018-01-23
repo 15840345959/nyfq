@@ -39,7 +39,7 @@ class UserManager
         $user = self::getUserInfoByIdWithToken($id);
         if ($user) {
             unset($user['token']);
-            unset($user['remember_token']);
+//            unset($user['remember_token']);
             unset($user['password']);
 
         }
@@ -249,6 +249,30 @@ class UserManager
     }
 
     /*
+     * 根据旅行社id查找旅行社的管理员
+     *
+     * By zm
+     *
+     * 2018-01-23
+     */
+    public static function getAllOrganizationAdminByName($search,$organization_id)
+    {
+        $users = User::where('type',1)->where('organization_id',$organization_id)->where(function ($users) use ($search) {
+            $users->where('nick_name'  , 'like', '%'.$search.'%')
+                ->orwhere('telephone', 'like', '%'.$search.'%');
+        })->orderBy('id','asc')->get();
+        if($users){
+            foreach ($users as $user){
+                unset($user['password']);
+                unset($user['open_id']);
+                unset($user['token']);
+                unset($user['admin']);
+            }
+        }
+        return $users;
+    }
+
+    /*
      * 根据id获取用户的密码信息
      *
      * By zm
@@ -278,7 +302,7 @@ class UserManager
         $user = User::where('telephone',$telephone)->first();
         if ($user) {
             unset($user['token']);
-            unset($user['remember_token']);
+//            unset($user['remember_token']);
             unset($user['password']);
         }
         return $user;
@@ -299,7 +323,7 @@ class UserManager
             unset($user['open_id']);
             unset($user['password']);
             unset($user['token']);
-            unset($user['remember_token']);
+//            unset($user['remember_token']);
             unset($user['type']);
             unset($user['admin']);
             unset($user['id_card']);

@@ -96,7 +96,7 @@ class AdminManager
      */
     public static function ckeckAdminToken($id)
     {
-        //根据id、remember_token获取用户信息
+        //根据id获取用户信息
         $where=array(
             'id'=>$id,
         );

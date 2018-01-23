@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Components\OrganizationManager;
+use App\Components\UserManager;
 use App\Models\Organization;
 use Illuminate\Http\Request;
 
@@ -91,5 +92,22 @@ class OrganizationController
         }
         return $return;
     }
-
+    //首页
+    public function admin(Request $request)
+    {
+        $data = $request->all();
+        $admin = $request->session()->get('admin');
+        if(array_key_exists('search',$data)){
+            $search=$data['search'];
+        }
+        else{
+            $search='';
+        }
+        $datas = UserManager::getAllOrganizationAdminByName($search,$data['organization_id']);
+        $param=array(
+            'admin'=>$admin,
+            'datas'=>$datas
+        );
+        return view('admin.organization.index', $param);
+    }
 }

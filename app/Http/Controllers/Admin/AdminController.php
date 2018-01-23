@@ -185,7 +185,7 @@ class AdminController
                 $user['nick_name']=$admin['nick_name'];
                 $user['avatar']=$admin['avatar'];
                 $user['id']=$admin['id'];
-                $user['remember_token']=$admin['remember_token'];
+//                $user['remember_token']=$admin['remember_token'];
                 $user['type']=$admin['type'];
                 $user['admin']=$admin['admin'];
                 $request->session()->put('admin', $user);//写入session
