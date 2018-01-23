@@ -9,6 +9,7 @@
 
 namespace App\Components;
 
+use App\Models\Organization;
 use App\Models\User;
 
 class UserManager
@@ -291,6 +292,42 @@ class UserManager
                 unset($user['open_id']);
                 unset($user['token']);
                 unset($user['admin']);
+            }
+        }
+        return $users;
+    }
+
+    /*
+     * 查找所有会员信息
+     *
+     * By zm
+     *
+     * 2018-01-23
+     */
+    public static function getAllMembersByName($search,$organization_id)
+    {
+        if($organization_id!=''){
+            $users = User::where('organization_id',$organization_id)
+                ->where(function ($users) use ($search) {
+                $users->where('nick_name'  , 'like', '%'.$search.'%')
+                    ->orwhere('telephone', 'like', '%'.$search.'%');
+            })->orderBy('id','asc')->get();
+        }
+        else{
+            $users = User::where(function ($users) use ($search) {
+                    $users->where('nick_name'  , 'like', '%'.$search.'%')
+                        ->orwhere('telephone', 'like', '%'.$search.'%');
+                })->orderBy('id','asc')->get();
+        }
+        if($users){
+            foreach ($users as $user){
+                unset($user['password']);
+                unset($user['open_id']);
+                unset($user['token']);
+                unset($user['admin']);
+                if($user['organization_id']!=0){
+                    $user['organization']=Organization::find($user['organization_id']);
+                }
             }
         }
         return $users;

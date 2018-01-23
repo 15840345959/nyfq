@@ -19,7 +19,8 @@
                 <input class="btn btn-primary-outline radius" type="button" value="返回">
             </a>
         </span>
-        <span class="r">共有数据：<strong>{{count($datas)}}</strong> 条</span> </div>
+        {{--<span class="r">共有数据：<strong>{{count($datas)}}</strong> 条</span> --}}
+    </div>
     <div class="mt-20">
         <table class="table table-border table-bordered table-bg table-hover table-sort" id="table-sort">
             <thead>
@@ -42,7 +43,7 @@
                     </td>
                     <td class="text-l">{{$data['nick_name']}}</td>
                     @if($data['telephone'])
-                        <td>{{substr($data['telephone'],0,3)}}****{{substr($data['telephone'],6,3)}}</td>
+                        <td>{{$data['telephone']}}</td>
                     @else
                         <td>暂未设置</td>
                     @endif
@@ -63,6 +64,17 @@
 
 @section('script')
 <script type="text/javascript">
+    $('.table-sort').dataTable({
+        "aaSorting": [[ 1, "desc" ]],//默认第几个排序
+        "bStateSave": true,//状态保存
+        "pading":false,
+        "searching" : false, //去掉搜索框
+        "bLengthChange": false,   //去掉每页显示多少条数据方法
+        "aoColumnDefs": [
+            //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+            {"orderable":false,"aTargets":[0,5]}// 不参与排序的列
+        ]
+    });
 
     /*成为旅行社管理员*/
     function organizationAdmin_setUp(obj,id,organization_id){

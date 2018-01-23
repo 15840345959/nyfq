@@ -22,7 +22,8 @@
                 <input class="btn btn-primary-outline radius" type="button" value="返回">
             </a>
         </span>
-        <span class="r">共有数据：<strong>{{count($datas)}}</strong> 条</span> </div>
+        {{--<span class="r">共有数据：<strong>{{count($datas)}}</strong> 条</span> --}}
+    </div>
     <div class="mt-20">
         <table class="table table-border table-bordered table-bg table-hover table-sort" id="table-sort">
             <thead>
@@ -30,6 +31,7 @@
                 <th width="80">ID</th>
                 <th>头像</th>
                 <th>旅行社管理员</th>
+                <th>电话</th>
                 <th width="150">更新时间</th>
                 <th width="100">操作</th>
             </tr>
@@ -43,6 +45,11 @@
                              class="img-rect-30 radius-5">
                     </td>
                     <td class="text-l">{{$data['nick_name']}}</td>
+                    @if($data['telephone'])
+                        <td>{{$data['telephone']}}</td>
+                    @else
+                        <td>暂未设置</td>
+                    @endif
                     <td>{{$data['updated_at']}}</td>
                     <td class="td-manage">
                         <a title="移除旅行社管理员" href="javascript:;" onclick="organizationAdmin_del(this,'{{$data['id']}}')" class="ml-5" style="text-decoration:none">
@@ -60,6 +67,17 @@
 
 @section('script')
 <script type="text/javascript">
+    $('.table-sort').dataTable({
+        "aaSorting": [[ 1, "desc" ]],//默认第几个排序
+        "bStateSave": true,//状态保存
+        "pading":false,
+        "searching" : false, //去掉搜索框
+        "bLengthChange": false,   //去掉每页显示多少条数据方法
+        "aoColumnDefs": [
+            //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+            {"orderable":false,"aTargets":[0,5]}// 不参与排序的列
+        ]
+    });
 
     /*旅行社管理员-添加或编辑*/
     function organizationAdmin_edit(title, url, organization_id) {

@@ -27,14 +27,15 @@
                      <i class="Hui-iconfont">&#xe600;</i> 添加管理员
                  </a>
             </span>
-            <span class="r">共有数据：<strong>{{$datas->count()}}</strong> 条</span>
+            {{--<span class="r">共有数据：<strong>{{$datas->count()}}</strong> 条</span>--}}
         </div>
         @endif
-        <table class="table table-border table-bordered table-bg">
+        <div class="mt-20">
+            <table class="table table-border table-bordered table-bg">
             <thead>
-            <tr>
-                <th scope="col" colspan="9">管理员列表</th>
-            </tr>
+            {{--<tr>--}}
+                {{--<th scope="col" colspan="9">管理员列表</th>--}}
+            {{--</tr>--}}
             <tr class="text-c">
                 <th width="40">ID</th>
                 {{--<th width="50">头像</th>--}}
@@ -79,12 +80,24 @@
             @endforeach
             </tbody>
         </table>
+        </div>
     </div>
 
 @endsection
 
 @section('script')
     <script type="text/javascript">
+        $('.table-sort').dataTable({
+            "aaSorting": [[ 1, "desc" ]],//默认第几个排序
+            "bStateSave": true,//状态保存
+            "pading":false,
+            "searching" : false, //去掉搜索框
+            "bLengthChange": false,   //去掉每页显示多少条数据方法
+            "aoColumnDefs": [
+                //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+                {"orderable":false,"aTargets":[0,5]}// 不参与排序的列
+            ]
+        });
 
         $(function () {
 
