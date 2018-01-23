@@ -89,7 +89,7 @@
                                 setTimeout(function () {
                                     var index = parent.layer.getFrameIndex(window.name);
                                     parent.$('.btn-refresh').click();
-                                    parent.layer.close(index);
+                                    // parent.layer.close(index);
                                 }, 1000)
                             } else {
                                 layer.msg(ret.msg, {icon: 2, time: 2000});
