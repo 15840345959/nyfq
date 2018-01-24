@@ -56,6 +56,14 @@ function editOrganizationAdmin(url, param, callBack) {
 function setUpOrganizationAdmin(url, param, callBack) {
     $.post(url + "admin/organization/editAdmin",param,callBack);
 }
+//审核评论
+function examineComment(url, param, callBack) {
+    $.post(url + "admin/comment/examine",param,callBack);
+}
+//删除评论
+function delComment(url, param, callBack) {
+    ajaxRequest(url + "admin/comment/del/" + param.id, param, "GET", callBack);
+}
 
 
 

@@ -83,7 +83,7 @@
                         type: 'POST',
                         url: "{{ URL::asset('/admin/organization/edit')}}",
                         success: function (ret) {
-                            console.log(JSON.stringify(ret));
+                            // console.log(JSON.stringify(ret));
                             if (ret.result) {
                                 layer.msg(ret.msg, {icon: 1, time: 2000});
                                 setTimeout(function () {

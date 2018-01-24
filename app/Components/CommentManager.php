@@ -299,8 +299,8 @@ class CommentManager
         if (array_key_exists('user_id', $data)) {
             $comment->user_id = array_get($data, 'user_id');
         }
-        if (array_key_exists('user_id', $data)) {
-            $comment->user_id = array_get($data, 'user_id');
+        if (array_key_exists('examine', $data)) {
+            $comment->examine = array_get($data, 'examine');
         }
         return $comment;
     }
@@ -485,5 +485,36 @@ class CommentManager
         }
         $comment['replies']=$replies;
         return $comment;
+    }
+
+    /*
+     * 根据id评论
+     *
+     * by zm
+     *
+     * 2018-01-24
+     *
+     */
+    public static function examineCommentStatus($data){
+        $comment=Comment::find($data['id']);
+        $data['examine']=1;
+        $comment=self::setComment($comment,$data);
+        $result=$comment->save();
+        if($result){
+            //给发表评论的人增加积分
+            $user = UserManager::getUserInfoById($comment['user_id']);
+            $user->integral=$user['integral']+IntegralManager::COMMENT_INTEGRAL;
+            $user_result=$user->save();
+//            if($user_result){
+//                //添加积分记录
+//                $param['type']=3;
+//                $param['user_id']=$comment['user_id'];
+//                $integral_record=IntegralManager::addIntegralRecord($param);
+//                if($integral_record){
+//                    $datas['integral_record']=$integral_record;
+//                }
+//            }
+        }
+        return $result;
     }
 }
