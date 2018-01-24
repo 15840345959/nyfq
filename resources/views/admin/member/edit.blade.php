@@ -1,9 +1,26 @@
 @extends('admin.layouts.app')
 
 @section('content')
+    <style>
+        .member-image{
+            width:100px;
+            height:100px;
+            border-radius: 100%;
+        }
+    </style>
     <div class="page-container">
         <form class="form form-horizontal" method="post" id="form-member-edit">
             {{csrf_field()}}
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">头像：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    @if($data['avatar'])
+                        <img src="{{$data['avatar']}}" class="member-image" />
+                    @else
+                        <img src="{{URL::asset('/img/default_headicon.png')}}" class="member-image" />
+                    @endif
+                </div>
+            </div>
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2">昵称：</label>
                 <div class="formControls col-xs-8 col-sm-9">

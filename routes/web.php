@@ -63,6 +63,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin.login']], function ()
     //会员管理
     Route::get('/member/index', 'Admin\MemberController@index');  //会员管理首页
     Route::get('/member/edit', 'Admin\MemberController@edit');  //查看会员详情
+
+    //评论管理
+    Route::get('/comment/index', 'Admin\CommentController@index');  //评论管理首页
+    Route::get('/comment/edit', 'Admin\CommentController@edit');  //查看评论详情
 });
 Auth::routes();
 

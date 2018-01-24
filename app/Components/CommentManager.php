@@ -416,4 +416,74 @@ class CommentManager
         $comment_replie=CommentReplie::where('id',$id)->get();
         return $comment_replie;
     }
+
+    /*
+     * 获取所有评论详情
+     *
+     * by zm
+     *
+     * 2018-01-24
+     *
+     */
+    public static function getAllCommentLists($data){
+        $comments=Comment::orderBy('id','desc')->get();
+        foreach ($comments as $comment){
+            //获取评论用户信息
+            $comment['user_id']=UserManager::getUserInfoById($comment['user_id']);
+        }
+        return $comments;
+    }
+
+    /*
+     * 根据id评论详情
+     *
+     * by zm
+     *
+     * 2018-01-24
+     *
+     */
+    public static function getAllCommentDetailById($data){
+        $comment=Comment::find($data['id']);
+        if($comment['goods_id']&&$comment['goods_type']){
+            $goods_id=$comment['goods_id'];
+            $goods_type=$comment['goods_type'];
+            if($goods_type==1){
+                $comment['goods']=TourGoodsManager::getTourGoodsById($goods_id);
+                $comment['goods']['tour_category_id']=IndexManager::getNewTourCategorie($comment['goods']['tour_category_id']);
+            }
+            else if($goods_type==2){
+                $comment['goods']=HotelGoodsManager::getHotelGoodsById($goods_id);
+            }
+            else if($goods_type==3){
+                $comment['goods']=PlanGoodsManager::getPlanGoodsById($goods_id);
+            }
+            else if($goods_type==4){
+                $comment['goods']=CarGoodsManager::getCarGoodsById($goods_id);
+            }
+            else if($goods_type==5){
+                $comment['goods']=TicketGoodsManager::getTicketGoodsById($goods_id);
+            }
+            else{
+                $comment['goods']=[];
+            }
+        }
+        else{
+            $comment['goods']=[];
+        }
+        //获取此条评论的有效点赞数
+        $comment['consent_count']=self::countConsents($comment['id']);
+        //获取评论用户信息
+        $comment['user_id']=UserManager::getUserInfoById($comment['user_id']);
+        //获取评论的多媒体信息
+        $comment['media']=self::getGoodsCommentImages($comment['id']);
+        //获取评论的回复信息
+        $comment['replies']=self::getGoodsCommentReplies($comment['id']);
+        $replies=$comment['replies'];
+        foreach ($replies as $replie){
+            //获取回复的评论的用户信息
+            $replie['user_id']=UserManager::getUserInfoById($replie['user_id']);
+        }
+        $comment['replies']=$replies;
+        return $comment;
+    }
 }
