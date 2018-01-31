@@ -35,11 +35,49 @@ class OrderManager
             $Orders["tour_goods"] = $tour_goods;
 
             $Orders["surplus"] = true;
-            LOG:info("Orders : " . $Orders);
+            LOG:
+            info("Orders : " . $Orders);
         } else {
             $Orders["surplus"] = false;
         }
         return $Orders;
+    }
+
+    /*
+     * 查询所有订单
+     *
+     * by Acker
+     *
+     * 2018-01-31
+     *
+     */
+    public static function getAllOrders($data)
+    {
+        $orders = Orders::all();
+        foreach ($orders as $order) {
+            $goods_id = $order->goos_is;
+            $tour_goods = TourGoods::where('id', $goods_id)->first(); //旅游信息
+            $user = TourGoods::where('id', $goods_id)->first(); //用户信息
+            $order['tour_goods'] = $tour_goods;
+        }
+        LOG:info($orders);
+        return $orders;
+//        $goods_id = $data['goods_id'];
+//        $tour_goods = TourGoods::where('id', $goods_id)->first(); //旅游信息
+//        if ($tour_goods->surplus > 0) {
+//            $Orders = new Orders();
+//            $Orders = self::setOrder($Orders, $data);
+//            $Orders->save();
+//            $tour_goods->surplus = $tour_goods->surplus - 1;
+//            $tour_goods->save();
+//            $Orders["tour_goods"] = $tour_goods;
+//
+//            $Orders["surplus"] = true;
+//            LOG:info("Orders : " . $Orders);
+//        } else {
+//            $Orders["surplus"] = false;
+//        }
+//        return $Orders;
     }
 
     /*

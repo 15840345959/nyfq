@@ -17,17 +17,19 @@
                             <li>普通管理员</li>
                         @endif
                         <li class="dropDown dropDown_hover">
-                            <a href="#" class="dropDown_A">{{$admin['nick_name']}}<i class="Hui-iconfont">&#xe6d5;</i></a>
+                            <a href="#" class="dropDown_A">{{$admin['nick_name']}}<i
+                                        class="Hui-iconfont">&#xe6d5;</i></a>
                             <ul class="dropDown-menu menu radius box-shadow">
-                                <li><a  href="javascript:;" onclick="mysqlf_edit('修改个人信息','{{ route('editMySelf') }}')">个人信息</a></li>
+                                <li><a href="javascript:;" onclick="mysqlf_edit('修改个人信息','{{ route('editMySelf') }}')">个人信息</a>
+                                </li>
                                 <li><a href="{{ URL::asset('/admin/loginout') }}">退出</a></li>
                             </ul>
                         </li>
                         {{--<li id="Hui-msg">--}}
-                            {{--<a href="#" title="消息">--}}
-                                {{--<span class="badge badge-danger">1</span>--}}
-                                {{--<i class="Hui-iconfont" style="font-size:18px">&#xe68a;</i>--}}
-                            {{--</a>--}}
+                        {{--<a href="#" title="消息">--}}
+                        {{--<span class="badge badge-danger">1</span>--}}
+                        {{--<i class="Hui-iconfont" style="font-size:18px">&#xe68a;</i>--}}
+                        {{--</a>--}}
                         {{--</li>--}}
                         <li id="Hui-skin" class="dropDown right dropDown_hover">
                             <a href="javascript:;" class="dropDown_A" title="换肤">
@@ -61,11 +63,13 @@
                 </dd>
             </dl>
             <dl id="menu-picture">
-                <dt><i class="Hui-iconfont">&#xe613;</i> Banner管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+                <dt><i class="Hui-iconfont">&#xe613;</i> Banner管理<i
+                            class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
                 </dt>
                 <dd>
                     <ul>
-                        <li><a data-href="{{ URL::asset('/admin/banner/index') }}" data-title="Banner管理" href="javascript:void(0)">Banner管理</a></li>
+                        <li><a data-href="{{ URL::asset('/admin/banner/index') }}" data-title="Banner管理"
+                               href="javascript:void(0)">Banner管理</a></li>
                     </ul>
                 </dd>
             </dl>
@@ -74,79 +78,94 @@
                 </dt>
                 <dd>
                     <ul>
-                        <li><a data-href="{{ URL::asset('/admin/organization/index') }}" data-title="旅行社管理" href="javascript:void(0)">旅行社管理</a></li>
+                        <li><a data-href="{{ URL::asset('/admin/organization/index') }}" data-title="旅行社管理"
+                               href="javascript:void(0)">旅行社管理</a></li>
                     </ul>
                 </dd>
             </dl>
             {{--<dl id="menu-product">--}}
-                {{--<dt><i class="Hui-iconfont">&#xe648;</i> 产品管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>--}}
-                {{--</dt>--}}
-                {{--<dd>--}}
-                    {{--<ul>--}}
-                        {{--<li><a data-href="product-brand.html" data-title="产品分类" href="javascript:void(0)">产品分类</a></li>--}}
-                        {{--<li><a data-href="product-category.html" data-title="产品管理" href="javascript:void(0)">产品管理</a>--}}
-                    {{--</ul>--}}
-                {{--</dd>--}}
+            {{--<dt><i class="Hui-iconfont">&#xe648;</i> 产品管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>--}}
+            {{--</dt>--}}
+            {{--<dd>--}}
+            {{--<ul>--}}
+            {{--<li><a data-href="product-brand.html" data-title="产品分类" href="javascript:void(0)">产品分类</a></li>--}}
+            {{--<li><a data-href="product-category.html" data-title="产品管理" href="javascript:void(0)">产品管理</a>--}}
+            {{--</ul>--}}
+            {{--</dd>--}}
             {{--</dl>--}}
             {{--<dl id="menu-goods">--}}
-                {{--<dt><i class="Hui-iconfont">&#xe649;</i> 旅游定制管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>--}}
-                {{--</dt>--}}
-                {{--<dd>--}}
-                    {{--<ul>--}}
-                        {{--<li><a data-href="product-brand.html" data-title="酒店" href="javascript:void(0)">酒店</a></li>--}}
-                        {{--<li><a data-href="product-category.html" data-title="航班" href="javascript:void(0)">航班</a></li>--}}
-                        {{--<li><a data-href="product-category.html" data-title="套餐" href="javascript:void(0)">套餐</a></li>--}}
-                        {{--<li><a data-href="product-category.html" data-title="车导" href="javascript:void(0)">车导</a></li>--}}
-                        {{--<li><a data-href="product-category.html" data-title="成型套餐" href="javascript:void(0)">成型套餐</a></li>--}}
-                    {{--</ul>--}}
-                {{--</dd>--}}
+            {{--<dt><i class="Hui-iconfont">&#xe649;</i> 旅游定制管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>--}}
+            {{--</dt>--}}
+            {{--<dd>--}}
+            {{--<ul>--}}
+            {{--<li><a data-href="product-brand.html" data-title="酒店" href="javascript:void(0)">酒店</a></li>--}}
+            {{--<li><a data-href="product-category.html" data-title="航班" href="javascript:void(0)">航班</a></li>--}}
+            {{--<li><a data-href="product-category.html" data-title="套餐" href="javascript:void(0)">套餐</a></li>--}}
+            {{--<li><a data-href="product-category.html" data-title="车导" href="javascript:void(0)">车导</a></li>--}}
+            {{--<li><a data-href="product-category.html" data-title="成型套餐" href="javascript:void(0)">成型套餐</a></li>--}}
+            {{--</ul>--}}
+            {{--</dd>--}}
             {{--</dl>--}}
             {{--<dl id="menu-order">--}}
-                {{--<dt><i class="Hui-iconfont">&#xe670;</i> 订单管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>--}}
-                {{--</dt>--}}
-                {{--<dd>--}}
-                    {{--<ul>--}}
-                        {{--<li><a data-href="product-brand.html" data-title="订单管理" href="javascript:void(0)">订单管理</a></li>--}}
-                    {{--</ul>--}}
-                {{--</dd>--}}
+            {{--<dt><i class="Hui-iconfont">&#xe670;</i> 订单管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>--}}
+            {{--</dt>--}}
+            {{--<dd>--}}
+            {{--<ul>--}}
+            {{--<li><a data-href="product-brand.html" data-title="订单管理" href="javascript:void(0)">订单管理</a></li>--}}
+            {{--</ul>--}}
+            {{--</dd>--}}
             {{--</dl>--}}
             <dl id="menu-member">
                 <dt><i class="Hui-iconfont">&#xe62b;</i> 会员管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
                 </dt>
                 <dd>
                     <ul>
-                        <li><a data-href="{{ URL::asset('/admin/member/index') }}" data-title="会员管理" href="javascript:void(0)">会员管理</a></li>
+                        <li><a data-href="{{ URL::asset('/admin/member/index') }}" data-title="会员管理"
+                               href="javascript:void(0)">会员管理</a></li>
                     </ul>
                 </dd>
             </dl>
             {{--<dl id="menu-integral">--}}
-                {{--<dt><i class="Hui-iconfont">&#xe6b5;</i> 积分商城管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>--}}
-                {{--</dt>--}}
-                {{--<dd>--}}
-                    {{--<ul>--}}
-                        {{--<li><a data-href="product-brand.html" data-title="积分兑换商品" href="javascript:void(0)">积分兑换商品</a></li>--}}
-                        {{--<li><a data-href="product-brand.html" data-title="兑换记录信息" href="javascript:void(0)">兑换记录信息</a></li>--}}
-                    {{--</ul>--}}
-                {{--</dd>--}}
+            {{--<dt><i class="Hui-iconfont">&#xe6b5;</i> 积分商城管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>--}}
+            {{--</dt>--}}
+            {{--<dd>--}}
+            {{--<ul>--}}
+            {{--<li><a data-href="product-brand.html" data-title="积分兑换商品" href="javascript:void(0)">积分兑换商品</a></li>--}}
+            {{--<li><a data-href="product-brand.html" data-title="兑换记录信息" href="javascript:void(0)">兑换记录信息</a></li>--}}
+            {{--</ul>--}}
+            {{--</dd>--}}
             {{--</dl>--}}
             {{--<dl id="menu-ticket">--}}
-                {{--<dt><i class="Hui-iconfont">&#xe628;</i> 抢票模块管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>--}}
-                {{--</dt>--}}
-                {{--<dd>--}}
-                    {{--<ul>--}}
-                        {{--<li><a data-href="product-brand.html" data-title="评论管理" href="javascript:void(0)">抢票模块管理</a></li>--}}
-                    {{--</ul>--}}
-                {{--</dd>--}}
+            {{--<dt><i class="Hui-iconfont">&#xe628;</i> 抢票模块管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>--}}
+            {{--</dt>--}}
+            {{--<dd>--}}
+            {{--<ul>--}}
+            {{--<li><a data-href="product-brand.html" data-title="评论管理" href="javascript:void(0)">抢票模块管理</a></li>--}}
+            {{--</ul>--}}
+            {{--</dd>--}}
             {{--</dl>--}}
             <dl id="menu-comment">
                 <dt><i class="Hui-iconfont">&#xe6b3;</i> 评论管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
                 </dt>
                 <dd>
                     <ul>
-                        <li><a data-href="{{ URL::asset('/admin/comment/index') }}" data-title="评论管理" href="javascript:void(0)">评论管理</a></li>
+                        <li><a data-href="{{ URL::asset('/admin/comment/index') }}" data-title="评论管理"
+                               href="javascript:void(0)">评论管理</a></li>
                     </ul>
                 </dd>
             </dl>
+
+            <dl id="menu-comment">
+                <dt><i class="Hui-iconfont">&#xe6b3;</i> 订单管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+                </dt>
+                <dd>
+                    <ul>
+                        <li><a data-href="{{ URL::asset('/admin/orders/index') }}" data-title="订单管理"
+                               href="javascript:void(0)">订单管理</a></li>
+                    </ul>
+                </dd>
+            </dl>
+
         </div>
     </aside>
     <div class="dislpayArrow hidden-xs"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a>
@@ -187,8 +206,9 @@
         $(function () {
 
         });
+
         /*资讯-添加*/
-        function mysqlf_edit(title,url){
+        function mysqlf_edit(title, url) {
             var index = layer.open({
                 type: 2,
                 title: title,

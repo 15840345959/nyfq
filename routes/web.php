@@ -69,6 +69,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin.login']], function ()
     Route::get('/comment/edit', 'Admin\CommentController@edit');  //查看评论详情
     Route::post('/comment/examine', 'Admin\CommentController@examine');  //审核评论
     Route::get('/comment/del/{id}', 'Admin\CommentController@del');  //删除评论
+
+    //订单管理
+    Route::get('/orders/index', 'Admin\ordersController@index');  //订单管理首页
+
 });
 Auth::routes();
 
