@@ -47,7 +47,7 @@ class CenterController extends Controller
         }
     }
     /*
-     * 删除收藏夹里的产品
+     *  删除收藏夹里的产品
      */
     public function deleteCollectionLists(Request $request){
         $data = $request->all();

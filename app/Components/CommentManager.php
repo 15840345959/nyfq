@@ -270,6 +270,7 @@ class CommentManager
         $comment = self::setComment($comment, $data);
         $comment->save();
         $comment_id=$comment['id'];
+//        LOG:info("comment_id: ".$comment);
         $comment = self::getCommentById($comment_id);
         if (array_key_exists('media', $data)) {
             //添加多媒体

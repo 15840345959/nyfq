@@ -12,6 +12,7 @@ namespace App\Components;
 use App\Models\IntegralGoods;
 use App\Models\IntegralHistory;
 use App\Models\IntegralRecord;
+use Illuminate\Support\Facades\Log;
 
 class IntegralManager
 {
@@ -27,11 +28,12 @@ class IntegralManager
      * 2018-01-09
      *
      */
-    public static function IntegralGoodsLists(){
-        $where=array(
-            'status'=>1
+    public static function IntegralGoodsLists()
+    {
+        $where = array(
+            'status' => 1
         );
-        $integral_goods=IntegralGoods::where($where)->get();
+        $integral_goods = IntegralGoods::where($where)->get();
         return $integral_goods;
     }
 
@@ -43,8 +45,9 @@ class IntegralManager
      * 2018-01-09
      *
      */
-    public static function getIntegralDetaileListsByUser($user_id){
-        $integral_details=IntegralRecord::where('user_id',$user_id)->orderBy('id','desc')->get();
+    public static function getIntegralDetaileListsByUser($user_id)
+    {
+        $integral_details = IntegralRecord::where('user_id', $user_id)->orderBy('id', 'desc')->get();
         return $integral_details;
     }
 
@@ -56,8 +59,9 @@ class IntegralManager
      * 2018-01-09
      *
      */
-    public static function getIntegralHistoryForUser($user_id){
-        $integral_histories=IntegralHistory::where('user_id',$user_id)->orderBy('id','desc')->get();
+    public static function getIntegralHistoryForUser($user_id)
+    {
+        $integral_histories = IntegralHistory::where('user_id', $user_id)->orderBy('id', 'desc')->get();
         return $integral_histories;
     }
 
@@ -69,8 +73,9 @@ class IntegralManager
      * 2018-01-09
      *
      */
-    public static function getIntegralHistoryForOrganization($organization_id){
-        $integral_histories=IntegralHistory::where('organization_id',$organization_id)->orderBy('id','desc')->get();
+    public static function getIntegralHistoryForOrganization($organization_id)
+    {
+        $integral_histories = IntegralHistory::where('organization_id', $organization_id)->orderBy('id', 'desc')->get();
         return $integral_histories;
     }
 
@@ -82,9 +87,10 @@ class IntegralManager
      * 2018-01-09
      *
      */
-    public static function getIntegralGoodsById($id){
+    public static function getIntegralGoodsById($id)
+    {
         //基本信息
-        $integral_goods=IntegralGoods::where('id',$id)->first();
+        $integral_goods = IntegralGoods::where('id', $id)->first();
         return $integral_goods;
     }
 
@@ -96,15 +102,15 @@ class IntegralManager
      * 2018-01-09
      *
      */
-    public static function setIntegralStatusById($data){
-        $integral=self::getIntegralHistoryById($data['id']);
-        $data['status']=1;
+    public static function setIntegralStatusById($data)
+    {
+        $integral = self::getIntegralHistoryById($data['id']);
+        $data['status'] = 1;
         $integral = self::setIntegralHistoryStatus($integral, $data);
         $integral->save();
         $integral = self::getIntegralHistoryById($integral->id);
         return $integral;
     }
-
 
 
     /*
@@ -115,29 +121,30 @@ class IntegralManager
      * 2018-01-09
      *
      */
-    public static function addIntegral($data){
+    public static function addIntegral($data)
+    {
         $integral = new IntegralHistory();
-        $user=UserManager::getUserInfoById($data['user_id']);
-        $data['organization_id']=$user['organization_id'];
-        $integral_goods=IntegralManager::getIntegralGoodsById($data['goods_id']);
-        $data['goods_name']=$integral_goods['name'];
-        $data['goods_price']=$integral_goods['price'];
-        $data['goods_image']=$integral_goods['image'];
+        $user = UserManager::getUserInfoById($data['user_id']);
+        $data['organization_id'] = $user['organization_id'];
+        $integral_goods = IntegralManager::getIntegralGoodsById($data['goods_id']);
+        $data['goods_name'] = $integral_goods['name'];
+        $data['goods_price'] = $integral_goods['price'];
+        $data['goods_image'] = $integral_goods['image'];
         $integral = self::setIntegralHistoryStatus($integral, $data);
         $integral->save();
         $integral = self::getIntegralHistoryById($integral->id);
-        $datas['integral']=$integral;
-        if($integral){
-            $goods=self::getIntegralGoodsById($data['goods_id']);
-            $user->integral=$user->integral-$goods->price;
+        $datas['integral'] = $integral;
+        if ($integral) {
+            $goods = self::getIntegralGoodsById($data['goods_id']);
+            $user->integral = $user->integral - $goods->price;
             $user->save();
-            $datas['user']=$user;
-            $param['type']=0;
-            $param['content']='兑换'.$goods['name'].' -'.$goods['price'];
-            $param['user_id']=$data['user_id'];
-            $integral_record=self::addIntegralRecord($param);
-            if($integral_record){
-                $datas['integral_record']=$integral_record;
+            $datas['user'] = $user;
+            $param['type'] = 0;
+            $param['content'] = '兑换' . $goods['name'] . ' -' . $goods['price'];
+            $param['user_id'] = $data['user_id'];
+            $integral_record = self::addIntegralRecord($param);
+            if ($integral_record) {
+                $datas['integral_record'] = $integral_record;
             }
         }
         return $datas;
@@ -151,12 +158,13 @@ class IntegralManager
      * 2018-01-09
      *
      */
-    public static function getIntegralHistoryById($id){
+    public static function getIntegralHistoryById($id)
+    {
         //基本信息
-        $integral_history=IntegralHistory::where('id',$id)->first();
+        $integral_history = IntegralHistory::where('id', $id)->first();
         return $integral_history;
     }
-    
+
     /*
      * 配置添加/修改兑换积分商品历史的状态的参数
      *
@@ -165,7 +173,8 @@ class IntegralManager
      * 2018-01-09
      *
      */
-    public static function setIntegralHistoryStatus($integral_goods,$data){
+    public static function setIntegralHistoryStatus($integral_goods, $data)
+    {
         if (array_key_exists('goods_id', $data)) {
             $integral_goods->goods_id = array_get($data, 'goods_id');
         }
@@ -193,24 +202,22 @@ class IntegralManager
     /*
      * 按用户编号添加积分记录
      */
-    public static function addIntegralRecord($data){
-        if($data['type']==1){
-            $content='签到 +'.self::SIGN_INTEGRAL;
+    public static function addIntegralRecord($data)
+    {
+        if ($data['type'] == 1) {
+            $content = '签到 +' . self::SIGN_INTEGRAL;
+        } else if ($data['type'] == 2) {
+            $content = '邀请好友成功 +' . self::INVITATION_INTEGRAL;
+        } else if ($data['type'] == 3) {
+            $content = '发表评论并审核通过 +' . self::COMMENT_INTEGRAL;
+        } else {
+            $content = $data['content'];
         }
-        else if($data['type']==2){
-            $content='邀请好友成功 +'.self::INVITATION_INTEGRAL;
-        }
-        else if($data['type']==3){
-            $content='发表评论并审核通过 +'.self::COMMENT_INTEGRAL;
-        }
-        else{
-            $content=$data['content'];
-        }
-        $data['content']=$content;
-        $integral_record=new IntegralRecord();
-        $integral_record=self::setIntegralRecord($integral_record,$data);
+        $data['content'] = $content;
+        $integral_record = new IntegralRecord();
+        $integral_record = self::setIntegralRecord($integral_record, $data);
         $integral_record->save();
-        $integral_record=self::getIntegralRecordById($integral_record->id);
+        $integral_record = self::getIntegralRecordById($integral_record->id);
         return $integral_record;
     }
 
@@ -223,9 +230,10 @@ class IntegralManager
      * 2018-01-09
      *
      */
-    public static function getIntegralRecordById($id){
+    public static function getIntegralRecordById($id)
+    {
         //基本信息
-        $integral_record=IntegralRecord::where('id',$id)->first();
+        $integral_record = IntegralRecord::where('id', $id)->first();
         return $integral_record;
     }
 
@@ -237,7 +245,8 @@ class IntegralManager
      * 2018-01-09
      *
      */
-    public static function setIntegralRecord($integral_record,$data){
+    public static function setIntegralRecord($integral_record, $data)
+    {
         if (array_key_exists('user_id', $data)) {
             $integral_record->user_id = array_get($data, 'user_id');
         }
@@ -258,31 +267,35 @@ class IntegralManager
      * 2018-01-10
      *
      */
-    public static function updateUserSign ($data)
+    public static function updateUserSign($data)
     {
-        $user = UserManager::getUserInfoById($data['user_id']);
-        $data['sign']=$user['sign']+1;
-        $data['integral']=$user['integral']+self::SIGN_INTEGRAL;
-        $user = UserManager::setUser($user, $data);
-        $user->save();
-        $datas['user']=$user;
-
-        $param['type']=1;
-        $param['user_id']=$data['user_id'];
-        $integral_record=self::addIntegralRecord($param);
-        if($integral_record){
-            $datas['integral_record']=$integral_record;
-        }
         /////获取最后一次的签到信息
-        $sign_time=self::getLastSign($data['user_id']);
-        $sign_created_time=date('Y-m-d',strtotime($sign_time['created_at']));
-        $nowtime=date("Y-m-d",time()+8*3600);
-        $sign_status=$sign_created_time==$nowtime;
-        $sign=array(
-            'sign'=>$user['sign'],
-            'status'=>$sign_status
+        $sign_time = self::getLastSign($data['user_id']);
+        $sign_created_time = date('Y-m-d', strtotime($sign_time['created_at']));
+        $nowtime = date("Y-m-d", time());
+//        Log::info('sign_created_time is ' . json_encode($sign_created_time));
+//        Log::info('nowtime ' . json_encode($nowtime));
+        $sign_status = $sign_created_time == $nowtime;
+        $user = UserManager::getUserInfoById($data['user_id']);
+        if (!$sign_status){
+            $data['sign'] = $user['sign'] + 1;
+            $data['integral'] = $user['integral'] + self::SIGN_INTEGRAL;
+            $user = UserManager::setUser($user, $data);
+            $user->save();
+            $datas['user'] = $user;
+
+            $param['type'] = 1;
+            $param['user_id'] = $data['user_id'];
+            $integral_record = self::addIntegralRecord($param);
+            if ($integral_record) {
+                $datas['integral_record'] = $integral_record;
+            }
+        }
+        $sign = array(
+            'sign' => $user['sign'],
+            'status' => $sign_status
         );
-        $user['sign']=$sign;
+        $user['sign'] = $sign;
         ////////////////
         return $user;
     }
@@ -297,17 +310,17 @@ class IntegralManager
      */
     public static function updateShareUserIntegral($user_id)
     {
-        $user=UserManager::getUserInfoByIdWithToken($user_id);
-        $data['integral']=$user['integral']+self::INVITATION_INTEGRAL;
+        $user = UserManager::getUserInfoByIdWithToken($user_id);
+        $data['integral'] = $user['integral'] + self::INVITATION_INTEGRAL;
         $user = UserManager::setUser($user, $data);
         $user->save();
-        $datas['user']=$user;
+        $datas['user'] = $user;
 
-        $param['type']=2;
-        $param['user_id']=$user_id;
-        $integral_record=self::addIntegralRecord($param);
-        if($integral_record){
-            $datas['integral_record']=$integral_record;
+        $param['type'] = 2;
+        $param['user_id'] = $user_id;
+        $integral_record = self::addIntegralRecord($param);
+        if ($integral_record) {
+            $datas['integral_record'] = $integral_record;
         }
         return $datas;
     }
@@ -320,12 +333,13 @@ class IntegralManager
      * 2018-01-10
      *
      */
-    public static function getLastSign($user_id){
-        $where=array(
-            'user_id'=>$user_id,
-            'type'=>1
+    public static function getLastSign($user_id)
+    {
+        $where = array(
+            'user_id' => $user_id,
+            'type' => 1
         );
-        $sign=IntegralRecord::where($where)->orderBy('id','desc')->first();
+        $sign = IntegralRecord::where($where)->orderBy('id', 'desc')->first();
         return $sign;
     }
 }
