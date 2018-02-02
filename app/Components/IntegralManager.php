@@ -274,7 +274,6 @@ class IntegralManager
         $sign_created_time = date('Y-m-d', strtotime($sign_time['created_at']));
         $nowtime = date("Y-m-d", time());
 //        Log::info('sign_created_time is ' . json_encode($sign_created_time));
-//        Log::info('nowtime ' . json_encode($nowtime));
         $sign_status = $sign_created_time == $nowtime;
         $user = UserManager::getUserInfoById($data['user_id']);
         if (!$sign_status){

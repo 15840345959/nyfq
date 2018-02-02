@@ -13,15 +13,7 @@ class ordersController extends Controller
     {
         $data = $request->all();
         $orders = OrderManager::getAllOrders($data);
-//        $admin = $request->session()->get('admin');
-//        if(!array_key_exists('search',$data)){
-//            $data['search']="";
-//        }
-//        $comments = OrderManager::get($data);
-//        $param=array(
-//            'admin'=>$admin,
-//            'datas'=>$comments
-//        );
-        return $orders;
+        return view('admin.orders.index', ['orders' => $orders]);
+//        return $orders;
     }
 }

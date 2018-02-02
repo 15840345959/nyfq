@@ -31,7 +31,7 @@ class OrderController extends Controller
         $data = $request->all();
         $user_id=$data['user_id'];
         $orders=OrderManager::getUserIdListsByUserId($user_id);
-        LOG:info("order : " . $orders);
+//        LOG:info("order : " . $orders);
         if ($orders) {
             return ApiResponse::makeResponse(true, $orders, ApiResponse::SUCCESS_CODE);
         } else {

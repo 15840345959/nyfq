@@ -10,6 +10,7 @@ namespace App\Components;
 
 use App\Models\Orders;
 use App\Models\TourGoods;
+use App\Models\User;
 use Illuminate\Contracts\Logging\Log;
 
 class OrderManager
@@ -29,17 +30,16 @@ class OrderManager
         if ($tour_goods->surplus > 0) {
             $Orders = new Orders();
             $Orders = self::setOrder($Orders, $data);
+            $Orders->status = 1;
             $Orders->save();
             $tour_goods->surplus = $tour_goods->surplus - 1;
             $tour_goods->save();
             $Orders["tour_goods"] = $tour_goods;
-
             $Orders["surplus"] = true;
-            LOG:
-            info("Orders : " . $Orders);
         } else {
             $Orders["surplus"] = false;
         }
+//        LOG:info("orders : " . json_encode($Orders));
         return $Orders;
     }
 
@@ -55,29 +55,15 @@ class OrderManager
     {
         $orders = Orders::all();
         foreach ($orders as $order) {
-            $goods_id = $order->goos_is;
+            $goods_id = $order->goods_id;
+            $user_id = $order->user_id;
             $tour_goods = TourGoods::where('id', $goods_id)->first(); //旅游信息
-            $user = TourGoods::where('id', $goods_id)->first(); //用户信息
+            $user = User::where('id', $user_id)->first(); //用户信息
             $order['tour_goods'] = $tour_goods;
+            $order['user'] = $user;
         }
-        LOG:info($orders);
+//        LOG:info("orders111 : " .$orders);
         return $orders;
-//        $goods_id = $data['goods_id'];
-//        $tour_goods = TourGoods::where('id', $goods_id)->first(); //旅游信息
-//        if ($tour_goods->surplus > 0) {
-//            $Orders = new Orders();
-//            $Orders = self::setOrder($Orders, $data);
-//            $Orders->save();
-//            $tour_goods->surplus = $tour_goods->surplus - 1;
-//            $tour_goods->save();
-//            $Orders["tour_goods"] = $tour_goods;
-//
-//            $Orders["surplus"] = true;
-//            LOG:info("Orders : " . $Orders);
-//        } else {
-//            $Orders["surplus"] = false;
-//        }
-//        return $Orders;
     }
 
     /*
@@ -149,15 +135,19 @@ class OrderManager
         if (array_key_exists('user_id', $data)) {
             $Orders->user_id = array_get($data, 'user_id');
         }
+        if (array_key_exists('date', $data)) {
+            $Orders->start_time = array_get($data, 'date');
+        }
+        if (array_key_exists('price', $data)) {
+            $Orders->price = array_get($data, 'price');
+        }
         if (array_key_exists('goods_id', $data)) {
             $Orders->goods_id = array_get($data, 'goods_id');
         }
         if (array_key_exists('goods_type', $data)) {
             $Orders->goods_type = array_get($data, 'goods_type');
         }
-        if (array_key_exists('start_time', $data)) {
-            $Orders->start_time = array_get($data, 'start_time');
-        }
+//        LOG:info("Orders :" .json_encode($Orders));
         return $Orders;
     }
 }
