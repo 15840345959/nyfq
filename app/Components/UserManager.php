@@ -11,6 +11,7 @@ namespace App\Components;
 
 use App\Models\Organization;
 use App\Models\User;
+use Illuminate\Contracts\Logging\Log;
 
 class UserManager
 {
@@ -170,7 +171,7 @@ class UserManager
         $user = self::getUserInfoByIdWithToken($user->id);
 
         ////判断是否有分享人
-        if($user['share_user']){
+        if ($user['share_user']) {
             IntegralManager::updateShareUserIntegral($user['share_user']);
         }
         ////////////////////
@@ -241,10 +242,10 @@ class UserManager
      */
     public static function getAllAdminByName($search)
     {
-        $users = User::where('type',2)->where(function ($users) use ($search) {
-            $users->where('nick_name'  , 'like', '%'.$search.'%')
-                ->orwhere('telephone', 'like', '%'.$search.'%');
-        })->orderBy('id','asc')->get();
+        $users = User::where('type', 2)->where(function ($users) use ($search) {
+            $users->where('nick_name', 'like', '%' . $search . '%')
+                ->orwhere('telephone', 'like', '%' . $search . '%');
+        })->orderBy('id', 'asc')->get();
 
         return $users;
     }
@@ -256,14 +257,14 @@ class UserManager
      *
      * 2018-01-23
      */
-    public static function getAllOrganizationAdminByName($search,$organization_id)
+    public static function getAllOrganizationAdminByName($search, $organization_id)
     {
-        $users = User::where('type',1)->where('organization_id',$organization_id)->where(function ($users) use ($search) {
-            $users->where('nick_name'  , 'like', '%'.$search.'%')
-                ->orwhere('telephone', 'like', '%'.$search.'%');
-        })->orderBy('id','asc')->get();
-        if($users){
-            foreach ($users as $user){
+        $users = User::where('type', 1)->where('organization_id', $organization_id)->where(function ($users) use ($search) {
+            $users->where('nick_name', 'like', '%' . $search . '%')
+                ->orwhere('telephone', 'like', '%' . $search . '%');
+        })->orderBy('id', 'asc')->get();
+        if ($users) {
+            foreach ($users as $user) {
                 unset($user['password']);
                 unset($user['open_id']);
                 unset($user['token']);
@@ -282,12 +283,12 @@ class UserManager
      */
     public static function getAllOrganizationSpareAdminByName($search)
     {
-        $users = User::where('type',0)->where(function ($users) use ($search) {
-            $users->where('nick_name'  , 'like', '%'.$search.'%')
-                ->orwhere('telephone', 'like', '%'.$search.'%');
-        })->orderBy('id','asc')->get();
-        if($users){
-            foreach ($users as $user){
+        $users = User::where('type', 0)->where(function ($users) use ($search) {
+            $users->where('nick_name', 'like', '%' . $search . '%')
+                ->orwhere('telephone', 'like', '%' . $search . '%');
+        })->orderBy('id', 'asc')->get();
+        if ($users) {
+            foreach ($users as $user) {
                 unset($user['password']);
                 unset($user['open_id']);
                 unset($user['token']);
@@ -304,29 +305,28 @@ class UserManager
      *
      * 2018-01-23
      */
-    public static function getAllMembersByName($search,$organization_id)
+    public static function getAllMembersByName($search, $organization_id)
     {
-        if($organization_id!=''){
-            $users = User::where('organization_id',$organization_id)
+        if ($organization_id != '') {
+            $users = User::where('organization_id', $organization_id)
                 ->where(function ($users) use ($search) {
-                $users->where('nick_name'  , 'like', '%'.$search.'%')
-                    ->orwhere('telephone', 'like', '%'.$search.'%');
-            })->orderBy('id','asc')->get();
-        }
-        else{
+                    $users->where('nick_name', 'like', '%' . $search . '%')
+                        ->orwhere('telephone', 'like', '%' . $search . '%');
+                })->orderBy('id', 'asc')->get();
+        } else {
             $users = User::where(function ($users) use ($search) {
-                    $users->where('nick_name'  , 'like', '%'.$search.'%')
-                        ->orwhere('telephone', 'like', '%'.$search.'%');
-                })->orderBy('id','asc')->get();
+                $users->where('nick_name', 'like', '%' . $search . '%')
+                    ->orwhere('telephone', 'like', '%' . $search . '%');
+            })->orderBy('id', 'asc')->get();
         }
-        if($users){
-            foreach ($users as $user){
+        if ($users) {
+            foreach ($users as $user) {
                 unset($user['password']);
                 unset($user['open_id']);
                 unset($user['token']);
                 unset($user['admin']);
-                if($user['organization_id']!=0){
-                    $user['organization']=Organization::find($user['organization_id']);
+                if ($user['organization_id'] != 0) {
+                    $user['organization'] = Organization::find($user['organization_id']);
                 }
             }
         }
@@ -343,10 +343,10 @@ class UserManager
     public static function getUserInfoByIdForPassword($id)
     {
         $user = self::getUserInfoByIdWithToken($id);
-        $admin=null;
+        $admin = null;
         if ($user) {
-            $admin['password']=$user['password'];
-            $admin['id']=$user['id'];
+            $admin['password'] = $user['password'];
+            $admin['id'] = $user['id'];
         }
         return $admin;
     }
@@ -360,7 +360,7 @@ class UserManager
      */
     public static function getUserInfoByTel($telephone)
     {
-        $user = User::where('telephone',$telephone)->first();
+        $user = User::where('telephone', $telephone)->first();
         if ($user) {
             unset($user['token']);
 //            unset($user['remember_token']);
@@ -378,10 +378,11 @@ class UserManager
      */
     public static function getMyInvitationById($data)
     {
-        $user_id=$data['user_id'];
-        $users = User::where('share_user',$user_id)->get();
-        foreach ($users as $user){
+        $user_id = $data['user_id'];
+        $users = User::where('share_user', $user_id)->get();
+        foreach ($users as $user) {
             unset($user['open_id']);
+
             unset($user['password']);
             unset($user['token']);
 //            unset($user['remember_token']);
@@ -397,4 +398,5 @@ class UserManager
         }
         return $users;
     }
+
 }

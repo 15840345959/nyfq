@@ -112,39 +112,38 @@ class IntegralManager
         return $integral;
     }
 
-
     /*
      * 游客端——添加积分兑换历史
      *
-     * by zm
+     * by Acker
      *
-     * 2018-01-09
+     * 2018-02-08
      *
      */
     public static function addIntegral($data)
     {
-        $integral = new IntegralHistory();
-        $user = UserManager::getUserInfoById($data['user_id']);
-        $data['organization_id'] = $user['organization_id'];
-        $integral_goods = IntegralManager::getIntegralGoodsById($data['goods_id']);
-        $data['goods_name'] = $integral_goods['name'];
-        $data['goods_price'] = $integral_goods['price'];
-        $data['goods_image'] = $integral_goods['image'];
-        $integral = self::setIntegralHistoryStatus($integral, $data);
-        $integral->save();
-        $integral = self::getIntegralHistoryById($integral->id);
-        $datas['integral'] = $integral;
-        if ($integral) {
-            $goods = self::getIntegralGoodsById($data['goods_id']);
-            $user->integral = $user->integral - $goods->price;
-            $user->save();
-            $datas['user'] = $user;
-            $param['type'] = 0;
-            $param['content'] = '兑换' . $goods['name'] . ' -' . $goods['price'];
-            $param['user_id'] = $data['user_id'];
-            $integral_record = self::addIntegralRecord($param);
-            if ($integral_record) {
-                $datas['integral_record'] = $integral_record;
+        $integral = new IntegralHistory();  //创建积分记录
+        $user = UserManager::getUserInfoById($data['user_id']); //获取用户
+        $data['organization_id'] = $user['organization_id'];  //用户旅行社编号
+        $integral_goods = IntegralManager::getIntegralGoodsById($data['goods_id']); //兑换积分商品
+        $data['goods_name'] = $integral_goods['name'];    //商品名字
+        $data['goods_price'] = $integral_goods['price'];  //商品价格
+        $data['goods_image'] = $integral_goods['image'];  //商品图片
+        $integral = self::setIntegralHistoryStatus($integral, $data);  //设置兑换历史
+        $integral->save();  //保存兑换历史
+        $integral = self::getIntegralHistoryById($integral->id);  //取出兑换历史
+        $datas['integral'] = $integral;   //兑换历史存入datas
+        if ($integral) {   //如有有兑换历史
+            $goods = self::getIntegralGoodsById($data['goods_id']);  //兑换积分商品
+            $user->integral = $user->integral - $goods->price;  //用户积分减去兑换商品积分
+            $user->save();  //保存
+            $datas['user'] = $user; //用户记录存入datas
+            $param['type'] = 0;    //添加积分类型
+            $param['content'] = '兑换' . $goods['name'] . ' -' . $goods['price'];  //前端提示语
+            $param['user_id'] = $data['user_id'];  //用户id
+            $integral_record = self::addIntegralRecord($param);  //添加积分记录
+            if ($integral_record) {  //如有有积分记录
+                $datas['integral_record'] = $integral_record;  // 用户记录存入datas
             }
         }
         return $datas;
@@ -213,7 +212,7 @@ class IntegralManager
         } else {
             $content = $data['content'];
         }
-        $data['content'] = $content;
+        $data['content'] = $content;   //提示语
         $integral_record = new IntegralRecord();
         $integral_record = self::setIntegralRecord($integral_record, $data);
         $integral_record->save();
@@ -276,7 +275,7 @@ class IntegralManager
 //        Log::info('sign_created_time is ' . json_encode($sign_created_time));
         $sign_status = $sign_created_time == $nowtime;
         $user = UserManager::getUserInfoById($data['user_id']);
-        if (!$sign_status){
+        if (!$sign_status) {
             $data['sign'] = $user['sign'] + 1;
             $data['integral'] = $user['integral'] + self::SIGN_INTEGRAL;
             $user = UserManager::setUser($user, $data);
@@ -296,6 +295,37 @@ class IntegralManager
         );
         $user['sign'] = $sign;
         ////////////////
+        return $user;
+    }
+    /*
+     * 添加邀请
+     *
+     * By Acker
+     *
+     * 2018-02-08
+     */
+    public static function addInvitation($data)
+    {
+        $user = UserManager::getUserInfoById($data['user_id']);
+        $share_user = UserManager::getUserInfoById($data['share_user']);
+//        LOG:info("user  :" . json_encode(isset($user->share_user)));
+        if ($user['share_user'] === 0) {
+            $share_user_data['integral'] = $share_user['integral'] + self::INVITATION_INTEGRAL; //分享者加20积分
+            $user = UserManager::setUser($user,$data);  //用户表存入分享人
+            $share_user = UserManager::setUser($share_user,$share_user_data);  // 分享人积分增加
+            $user->save();
+            $share_user->save();
+            $datas['user'] = $user; //用户记录存入datas
+            $datas['$share_user'] = $share_user; //分享人信息存入datas
+            $param['type'] = 2;    //添加积分类型
+            $param['content'] = '邀请'.$user['nick_name'].'成功。';  //积分记录
+            $param['user_id'] = $share_user['id'];  //分享人id
+            $integral_record = self::addIntegralRecord($param);  //添加积分记录
+            if ($integral_record) {  //如有有积分记录
+                $datas['integral_record'] = $integral_record;  // 用户记录存入datas
+            }
+            return $datas;
+        }
         return $user;
     }
 

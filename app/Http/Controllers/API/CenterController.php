@@ -18,64 +18,86 @@ use Illuminate\Http\Request;
 
 class CenterController extends Controller
 {
-
     /*
      * 查看收藏夹
      */
-    public function getCollectionLists(Request $request){
+    public function getCollectionLists(Request $request)
+    {
         $data = $request->all();
-        $user_id=$data['user_id'];
-        $collections=CollectionManager::getCollectionListsByUserId($user_id);
+        $user_id = $data['user_id'];
+        $collections = CollectionManager::getCollectionListsByUserId($user_id);
         if ($collections) {
-            $rows['count']=count($collections);
-            $rows['collections']=$collections;
+            $rows['count'] = count($collections);
+            $rows['collections'] = $collections;
             return ApiResponse::makeResponse(true, $rows, ApiResponse::SUCCESS_CODE);
         } else {
             return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM], ApiResponse::MISSING_PARAM);
         }
     }
+
     /*
      * 添加收藏
      */
-    public function addCollectionGoods(Request $request){
+    public function addCollectionGoods(Request $request)
+    {
         $data = $request->all();
-        $collection=CollectionManager::addCollectionGoods($data);
+        $collection = CollectionManager::addCollectionGoods($data);
         if ($collection) {
             return ApiResponse::makeResponse(true, $collection, ApiResponse::SUCCESS_CODE);
         } else {
             return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM], ApiResponse::MISSING_PARAM);
         }
     }
+
     /*
      *  删除收藏夹里的产品
      */
-    public function deleteCollectionLists(Request $request){
+    public function deleteCollectionLists(Request $request)
+    {
         $data = $request->all();
-        $result=CollectionManager::deleteCollectionGoods($data);
+        $result = CollectionManager::deleteCollectionGoods($data);
         if ($result) {
             return ApiResponse::makeResponse(true, $result, ApiResponse::SUCCESS_CODE);
         } else {
             return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM], ApiResponse::MISSING_PARAM);
         }
     }
+
     /*
      * 签到
      */
-    public function addSign(Request $request){
+    public function addSign(Request $request)
+    {
         $data = $request->all();
-        $user=IntegralManager::updateUserSign($data);
+        $user = IntegralManager::updateUserSign($data);
         if ($user) {
             return ApiResponse::makeResponse(true, $user, ApiResponse::SUCCESS_CODE);
         } else {
             return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM], ApiResponse::MISSING_PARAM);
         }
     }
+
     /*
      * 我的邀请
      */
-    public function getMyInvitation(Request $request){
+    public function getMyInvitation(Request $request)
+    {
         $data = $request->all();
-        $users=UserManager::getMyInvitationById($data);
+        $users =  UserManager::getMyInvitationById($data);
+        if ($users) {
+            return ApiResponse::makeResponse(true, $users, ApiResponse::SUCCESS_CODE);
+        } else {
+            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM], ApiResponse::MISSING_PARAM);
+        }
+    }
+
+    /*
+     *  添加邀请
+     */
+    public function addInvitation(Request $request)
+    {
+        $data = $request->all();
+        $users = IntegralManager::addInvitation($data);
         if ($users) {
             return ApiResponse::makeResponse(true, $users, ApiResponse::SUCCESS_CODE);
         } else {

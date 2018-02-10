@@ -17,7 +17,6 @@ use Illuminate\Http\Request;
 //    return $request->user();
 //});
 
-
 //用户类路由
 Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
 
@@ -87,6 +86,8 @@ Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
     Route::post('center/addSign', 'API\CenterController@addSign')->middleware('CheckToken');
     //我的邀请
     Route::get('center/getMyInvitation', 'API\CenterController@getMyInvitation')->middleware('CheckToken');
+    //邀请其他用户
+    Route::get('center/addInvitation', 'API\CenterController@addInvitation')->middleware('CheckToken');
 
     //获取积分商城列表
     Route::get('integral/getIntegralLists', 'API\IntegralController@getIntegralLists')->middleware('CheckToken');
