@@ -15,7 +15,7 @@ class OrderController extends Controller
     public function tourOrder(Request $request)
     {
         $data = $request->all();
-        $TourOrder = OrderManager::addTourOrders($data);
+        $TourOrder = OrderManager::addOrders($data);
         if ($TourOrder) {
             return ApiResponse::makeResponse(true, $TourOrder, ApiResponse::SUCCESS_CODE);
         } else {

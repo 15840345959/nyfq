@@ -101,4 +101,7 @@ Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
     Route::get('integral/getIntegralHistoryListsForOrganization', 'API\IntegralController@getIntegralHistoryListsForOrganization')->middleware('CheckToken');
     //旅行社端——修改兑换状态
     Route::post('integral/updateIntegralStatusById', 'API\IntegralController@updateIntegralStatusById')->middleware('CheckToken');
+
+    //旅游定制——机票
+    Route::get('airplane/getTicket', 'API\airplaneController@getTicket')->middleware('CheckToken');
 });

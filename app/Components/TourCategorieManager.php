@@ -45,19 +45,21 @@ class TourCategorieManager
      *
      * by zm
      *
+     * by Acker alter 02-13
+     *
      * 2017-12-22
      *
      */
     public static function getTourGoodsLists($data){
         $offset=$data["offset"];
         $page=$data["page"];
-        if($data['tour_category_id']){
+        if($data['tour_category_id']){   //如果有类别id
             $tour_category_id=$data["tour_category_id"];
             $tour_goodses=TourGoods::where('tour_category_id',$tour_category_id)->orderBy('sort','desc')
-                ->offset($offset)->limit($page)->get();
+                ->offset($offset)->limit($page)->get();   //查询该类别下列表
         }
         else{
-            $tour_goodses=TourGoods::orderBy('sort','desc')->offset($offset)->limit($page)->get();
+            $tour_goodses=TourGoods::orderBy('sort','desc')->offset($offset)->limit($page)->get();  //查询全部
         }
         foreach ($tour_goodses as $tour_goods){
             $tour_goods['categorie']=self::getTourCategorieById($tour_goods['tour_category_id']);

@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class PlanGoods extends Model
 {
     use SoftDeletes;
-    protected $table = 'plan_goodses';
+    protected $table = 'plane_goodses';
     public $timestamps = true;
     protected $dates=['deleted_at'];
 }

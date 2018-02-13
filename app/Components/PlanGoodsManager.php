@@ -10,9 +10,22 @@ namespace App\Components;
 
 
 use App\Models\PlanGoods;
-
 class PlanGoodsManager
 {
+     /*
+      * 获取飞机票列表
+      *
+      * by Acker
+      *
+      * 2018-02-13
+      *
+      */
+    public static function getPlaneGoodsList($data){
+        $airPlane=$data["offset"];  //开始位置
+        $page=$data["page"];        //数量
+        $plane_goodses=PlanGoods::orderBy('id','desc')->offset($airPlane)->limit($page)->get();// 查询全部列表
+        return $plane_goodses;
+    }
     /*
      * 根据Id获取飞机票产品信息
      *
