@@ -10,22 +10,25 @@ namespace App\Components;
 
 
 use App\Models\PlanGoods;
+
 class PlanGoodsManager
 {
-     /*
-      * 获取飞机票列表
-      *
-      * by Acker
-      *
-      * 2018-02-13
-      *
-      */
-    public static function getPlaneGoodsList($data){
-        $airPlane=$data["offset"];  //开始位置
-        $page=$data["page"];        //数量
-        $plane_goodses=PlanGoods::orderBy('id','desc')->offset($airPlane)->limit($page)->get();// 查询全部列表
+    /*
+     * 获取飞机票列表
+     *
+     * by Acker
+     *
+     * 2018-02-13
+     *
+     */
+    public static function getPlaneGoodsList($data)
+    {
+        $airPlane = $data["offset"];  //开始位置
+        $page = $data["page"];        //数量
+        $plane_goodses = PlanGoods::orderBy('id', 'desc')->offset($airPlane)->limit($page)->get();// 查询全部列表
         return $plane_goodses;
     }
+
     /*
      * 根据Id获取飞机票产品信息
      *
@@ -34,9 +37,10 @@ class PlanGoodsManager
      * 2017-12-22
      *
      */
-    public static function getPlanGoodsById($id){
+    public static function getPlanGoodsById($id)
+    {
         //基本信息
-        $plan_goods=PlanGoods::where('id',$id)->first();
+        $plan_goods = PlanGoods::where('id', $id)->first();
         return $plan_goods;
     }
 
@@ -48,9 +52,10 @@ class PlanGoodsManager
      * 2017-01-08
      *
      */
-    public static function getPlanGoodsWhereArray($data){
+    public static function getPlanGoodsWhereArray($data)
+    {
         //基本信息
-        $plan_goods=PlanGoods::where($data)->first();
+        $plan_goods = PlanGoods::where($data)->first();
         return $plan_goods;
     }
 }

@@ -104,4 +104,8 @@ Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
 
     //旅游定制——机票
     Route::get('airplane/getTicket', 'API\airplaneController@getTicket')->middleware('CheckToken');
+    //旅游定制——酒店
+    Route::get('hotel/getHotel', 'API\hotelController@getHotel')->middleware('CheckToken');
+    //旅游定制——车导
+    Route::get('car/carHotel', 'API\carController@getCar')->middleware('CheckToken');
 });

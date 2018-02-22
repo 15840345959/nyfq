@@ -14,6 +14,20 @@ use App\Models\CarGoods;
 class CarGoodsManager
 {
     /*
+     * 获取车导列表
+     *
+     * by Acker
+     *
+     * 2018-02-22
+     *
+     */
+    public static function getCarGoodsList($data){
+        $offset=$data["offset"];  //开始位置
+        $page=$data["page"];        //数量
+        $CarGoodsList=CarGoods::orderBy('id','desc')->offset($offset)->limit($page)->get();// 查询全部列表
+        return $CarGoodsList;
+    }
+    /*
      * 根据Id获取车导产品信息
      *
      * by zm
