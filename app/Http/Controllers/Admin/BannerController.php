@@ -172,6 +172,7 @@ class BannerController
         $result=$banner_detail->save();
         if($result){
             $return['result']=true;
+            $return['ret']= BannerManager::getBannerDetailById($banner_detail->id);
             $return['msg']='编辑Banner详情成功';
         }
         else{

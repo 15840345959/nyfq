@@ -58,13 +58,6 @@ Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
     //获取旅游产品的详细信息
     Route::get('tour/getTourGoodsDetail', 'API\TourController@getTourGoodsDetail')->middleware('CheckToken');
 
-    //旅游产品下单接口
-    Route::post('order/tourOrder', 'API\OrderController@tourOrder')->middleware('CheckToken');
-    //查询订单接口
-    Route::get('order/getTourOrder', 'API\OrderController@getTourOrder')->middleware('CheckToken');
-    //删除订单接口
-    Route::get('order/deleteTourOrder', 'API\OrderController@deleteTourOrder')->middleware('CheckToken');
-
     //获取产品的评论详情
     Route::get('comment/getGoodsCommentLists', 'API\CommentController@getGoodsCommentLists')->middleware('CheckToken');
     //获取所有评论的详情
@@ -102,10 +95,21 @@ Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
     //旅行社端——修改兑换状态
     Route::post('integral/updateIntegralStatusById', 'API\IntegralController@updateIntegralStatusById')->middleware('CheckToken');
 
+    //所有产品下单接口
+    Route::post('order/order', 'API\OrderController@order')->middleware('CheckToken');
+    //查询订单接口
+    Route::get('order/getTourOrder', 'API\OrderController@getTourOrder')->middleware('CheckToken');
+    //删除订单接口
+    Route::get('order/deleteTourOrder', 'API\OrderController@deleteTourOrder')->middleware('CheckToken');
+
     //旅游定制——机票
     Route::get('airplane/getTicket', 'API\airplaneController@getTicket')->middleware('CheckToken');
     //旅游定制——酒店
     Route::get('hotel/getHotel', 'API\hotelController@getHotel')->middleware('CheckToken');
     //旅游定制——车导
-    Route::get('car/carHotel', 'API\carController@getCar')->middleware('CheckToken');
+    Route::get('car/getCar', 'API\carController@getCar')->middleware('CheckToken');
+    //旅游定制——成型套餐
+    Route::get('Customization/getCustomization', 'API\customizationController@getCustomization')->middleware('CheckToken');
+    //旅游定制——根据id成型套餐
+    Route::get('Customization/getByIdCustomization', 'API\customizationController@getByIdCustomization')->middleware('CheckToken');
 });

@@ -10,9 +10,9 @@ use App\Http\Controllers\Controller;
 class OrderController extends Controller
 {
     /*
-     * 旅游产品下单
+     * 所有产品下单
      */
-    public function tourOrder(Request $request)
+    public function order(Request $request)
     {
         $data = $request->all();
         $TourOrder = OrderManager::addOrders($data);

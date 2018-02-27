@@ -156,12 +156,23 @@
             </dl>
 
             <dl id="menu-comment">
-                <dt><i class="Hui-iconfont">&#xe6b3;</i> 订单管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+                <dt><i class="Hui-iconfont">&#xe687;</i> 订单管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
                 </dt>
                 <dd>
                     <ul>
                         <li><a data-href="{{ URL::asset('/admin/orders/index') }}" data-title="订单管理"
                                href="javascript:void(0)">订单管理</a></li>
+                    </ul>
+                </dd>
+            </dl>
+
+            <dl id="menu-comment">
+                <dt><i class="Hui-iconfont">&#xe623</i> 旅游定制<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+                </dt>
+                <dd>
+                    <ul>
+                        <li><a data-href="{{ URL::asset('/admin/orders/index') }}" data-title="订单管理"
+                               href="javascript:void(0)">成型套餐管理</a></li>
                     </ul>
                 </dd>
             </dl>

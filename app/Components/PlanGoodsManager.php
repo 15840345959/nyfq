@@ -9,6 +9,7 @@
 namespace App\Components;
 
 
+use App\Models\Customization;
 use App\Models\PlanGoods;
 
 class PlanGoodsManager
@@ -27,6 +28,23 @@ class PlanGoodsManager
         $page = $data["page"];        //数量
         $plane_goodses = PlanGoods::orderBy('id', 'desc')->offset($airPlane)->limit($page)->get();// 查询全部列表
         return $plane_goodses;
+    }
+
+    /*
+   * 获取成型套餐列表
+   *
+   * by Acker
+   *
+   * 2018-02-25
+   *
+   */
+    public static function getCustomizationList($data)
+    {
+        $offset = $data["offset"];  //开始位置
+        $page = $data["page"];        //数量
+        $customization = Customization::orderBy('id', 'desc')->offset($offset)->limit($page)->get();// 查询全部列表
+//        dd(json_encode($customization));
+        return $customization;
     }
 
     /*

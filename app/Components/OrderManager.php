@@ -8,9 +8,13 @@
 
 namespace App\Components;
 
+use App\Models\CarGoods;
+use App\Models\HotelGoods;
 use App\Models\Orders;
+use App\Models\PlanGoods;
 use App\Models\TourGoods;
 use App\Models\User;
+
 //use Illuminate\Contracts\Logging\Log;
 
 class OrderManager
@@ -26,14 +30,59 @@ class OrderManager
     public static function addOrders($data)
     {
         $goods_type = $data['goods_type'];
-        if ($goods_type == 0) {
+        if ($goods_type == 1) {
             $Orders = self::addTourOrders($data);
             return $Orders;
-        } else if ($goods_type == 1) {
+        } else if ($goods_type == 2) {
             $Orders = self::addAirplaneOrders($data);
+            return $Orders;
+        } else if ($goods_type == 3) {
+            $Orders = self::addHotelOrders($data);
+            return $Orders;
+        } else if ($goods_type == 4) {
+            $Orders = self::addCarOrders($data);
             return $Orders;
         }
 //        LOG:info("orders : " . json_encode($Orders));
+    }
+
+    /*
+    * 添加车导订单
+    *
+    * by Acker
+    *
+    * 2018-02-22
+    */
+    public static function addCarOrders($data)
+    {
+        $goods_id = $data['goods_id'];
+        $car_goods = CarGoodsManager::getCarGoodsById($goods_id);
+        $Orders = new Orders();
+        $data['status'] = 1;
+        $Orders = self::setOrder($Orders, $data);
+        $Orders->save();
+        $Orders["car_goods"] = $car_goods;
+        return $Orders;
+    }
+
+    /*
+    * 添加酒店订单
+    *
+    * by Acker
+    *
+    * 2018-02-22
+    *
+    */
+    public static function addHotelOrders($data)
+    {
+        $goods_id = $data['goods_id'];
+        $hotel_goods = HotelGoodsManager::getHotelGoodsById($goods_id);
+        $Orders = new Orders();
+        $data['status'] = 1;
+        $Orders = self::setOrder($Orders, $data);
+        $Orders->save();
+        $Orders["hotel_goods"] = $hotel_goods;
+        return $Orders;
     }
 
     /*
@@ -49,7 +98,7 @@ class OrderManager
         $goods_id = $data['goods_id'];
         $plan_goods = PlanGoodsManager::getPlanGoodsById($goods_id);
         $Orders = new Orders();
-        $data['status'] = 3;
+        $data['status'] = 1;
         $Orders = self::setOrder($Orders, $data);
         $Orders->save();
         $Orders["plan_goods"] = $plan_goods;
@@ -62,7 +111,6 @@ class OrderManager
      * by Acker
      *
      * 2018-02-13
-     *
      */
     public static function addTourOrders($data)
     {
@@ -77,7 +125,8 @@ class OrderManager
             $Orders->save();
             $tour_goods->surplus = $tour_goods->surplus - 1;
             $tour_goods->save();
-            $Orders["tour_goods"] = $tour_goods;
+//            $Orders["tour_goods"] = $tour_goods;
+            $Orders["detail"] = $tour_goods;
             $Orders["surplus"] = true;
         } else {
             $Orders["surplus"] = false;
@@ -94,19 +143,38 @@ class OrderManager
      * 2018-01-31
      *
      */
-    public static function getAllOrders($data)
+    public static function getAllOrders()
     {
         $orders = Orders::all();
         foreach ($orders as $order) {
-            $goods_id = $order->goods_id;
+//            $goods_id = $order->goods_id;
             $user_id = $order->user_id;
-            $tour_goods = TourGoods::where('id', $goods_id)->first(); //旅游信息
+            $orderDetail = self::getOrderDetail($order);
+//            $tour_goods = TourGoods::where('id', $goods_id)->first(); //旅游信息
             $user = User::where('id', $user_id)->first(); //用户信息
-            $order['tour_goods'] = $tour_goods;
+//            $order['tour_goods'] = $tour_goods;
+            $order['orderDetail'] = $orderDetail;
             $order['user'] = $user;
         }
 //        LOG:info("orders111 : " .$orders);
+//        dd(json_encode($orders));
         return $orders;
+    }
+    //获取订单商品详情
+    public static function getOrderDetail($order)
+    {
+        $goods_id = $order['goods_id'];
+        $orderDetail = '';
+        if ($order['goods_type'] === 1) {
+            $orderDetail = TourGoods::where('id', $goods_id)->first(); //旅游信息
+        } elseif ($order['goods_type'] === 2) {
+            $orderDetail = PlanGoods::where('id', $goods_id)->first();
+        } elseif ($order['goods_type'] === 3) {
+            $orderDetail = CarGoods::where('id', $goods_id)->first();
+        } elseif ($order['goods_type'] === 4) {
+            $orderDetail = HotelGoods::where('id', $goods_id)->first();
+        }
+        return $orderDetail;
     }
 
     /*

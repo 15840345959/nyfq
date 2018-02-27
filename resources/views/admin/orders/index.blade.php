@@ -15,7 +15,7 @@
                     <th width="80">ID</th>
                     <th width="150">商品</th>
                     <th>类型</th>
-                    <th width ="150">出行时间</th>
+                    <th width="150">出行时间</th>
                     <th>价格</th>
                     <th width="150">订单状态</th>
                     <th width="150">更新时间</th>
@@ -26,9 +26,27 @@
                 @foreach($orders as $data)
                     <tr class="text-c">
                         <td>{{$data['id']}}</td>
-                        <td>{{$data['tour_goods']->name}}</td>
+                        @if($data['goods_type'] == 1)
+                            <td>{{$data['orderDetail']['name']}}</td>
+                        @elseif($data['goods_type'] == 2)
+                            <td>飞机票产品</td>
+                        @elseif($data['goods_type'] == 3)
+                            <td>{{$data['orderDetail']['name']}}</td>
+                        @elseif($data['goods_type'] == 4)
+                            <td>{{$data['orderDetail']['name']}}</td>
+                        @elseif($data['goods_type'] == 5)
+                            <td>{{$data['orderDetail']['name']}}</td>
+                        @endif
                         @if($data['goods_type'] == 1)
                             <td>旅游产品</td>
+                        @elseif($data['goods_type'] == 2)
+                            <td>飞机票产品</td>
+                        @elseif($data['goods_type'] == 3)
+                            <td>酒店产品</td>
+                        @elseif($data['goods_type'] == 4)
+                            <td>车导产品</td>
+                        @elseif($data['goods_type'] == 5)
+                            <td>抢票产品</td>
                         @endif
                         <td>{{$data['start_time']}}</td>
                         <td>{{$data['price']}}</td>
@@ -44,7 +62,7 @@
                         <td>{{$data['updated_at']}}</td>
                         <td class="td-manage">
                             <a title="查看详情" href="javascript:;"
-                               onclick="comment_edit('查看详情','{{URL::asset('/admin/comment/edit')}}?id={{$data['id']}}',{{$data['id']}})"
+                               onclick="order_edit('查看详情','{{URL::asset('/admin/orders/edit')}}?id={{$data['id']}}',{{$data['id']}})"
                                class="ml-5" style="text-decoration:none">
                                 <i class="Hui-iconfont">&#xe695;</i>
                             </a>
@@ -65,19 +83,19 @@
 @section('script')
     <script type="text/javascript">
         $('.table-sort').dataTable({
-            "aaSorting": [[1, "desc"]],//默认第几个排序
+            "aaSorting": [[0, "desc"]],//默认第几个排序
             "bStateSave": true,//状态保存
             "pading": false,
             "searching": false, //去掉搜索框
             "bLengthChange": false,   //去掉每页显示多少条数据方法
             "aoColumnDefs": [
                 //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-                {"orderable": false, "aTargets": [0, 1, 6]}// 不参与排序的列
+                {"orderable": false, "aTargets": [,1,7]}// 不参与排序的列
             ]
         });
 
         /*查看评价详情*/
-        function comment_edit(title, url, id) {
+        function order_edit(title, url, id) {
             // console.log("comment_edit url:" + url);
             var index = layer.open({
                 type: 2,

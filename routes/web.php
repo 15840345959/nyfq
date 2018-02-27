@@ -72,6 +72,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin.login']], function ()
 
     //订单管理
     Route::get('/orders/index', 'Admin\ordersController@index');  //订单管理首页
+    Route::get('/orders/edit', 'Admin\ordersController@edit');  //查看订单详情
 
 });
 Auth::routes();
