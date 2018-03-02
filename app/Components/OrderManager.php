@@ -191,9 +191,9 @@ class OrderManager
         foreach ($Orders as $order) {
             if ($order['goods_type'] == 1) {
                 $order['goods_id'] = TourGoodsManager::getTourGoodsById($order['goods_id']);
-            } else if ($order['goods_type'] == 2) {
-                $order['goods_id'] = HotelGoodsManager::getHotelGoodsById($order['goods_id']);
             } else if ($order['goods_type'] == 3) {
+                $order['goods_id'] = HotelGoodsManager::getHotelGoodsById($order['goods_id']);
+            } else if ($order['goods_type'] == 2) {
                 $order['goods_id'] = PlanGoodsManager::getPlanGoodsById($order['goods_id']);
             } else if ($order['goods_type'] == 4) {
                 $order['goods_id'] = CarGoodsManager::getCarGoodsById($order['goods_id']);
@@ -279,4 +279,57 @@ class OrderManager
 //        LOG:info("Orders :" .json_encode($Orders));
         return $Orders;
     }
+
+    /*
+     * 根据订单id获取订单详情
+     *
+     * By mtt
+     *
+     * 2018-2-28
+     */
+    public static function getOrderDetailsByLevel($orderDetail,$level){
+        //根据订单中的商品类型获取商品信息
+        if ($orderDetail['goods_type'] == 1) {
+            $orderDetail -> tourGoods = TourGoodsManager::getTourGoodsById($orderDetail['goods_id']);
+        } else if ($orderDetail['goods_type'] == 3) {
+            $orderDetail -> hotelGoods = HotelGoodsManager::getHotelGoodsById($orderDetail['goods_id']);
+        } else if ($orderDetail['goods_type'] == 2) {
+            $orderDetail -> planGoods = PlanGoodsManager::getPlanGoodsById($orderDetail['goods_id']);
+        } else if ($orderDetail['goods_type'] == 4) {
+            $orderDetail -> carGoods = CarGoodsManager::getCarGoodsById($orderDetail['goods_id']);
+        }
+        //根据user_id获取用户信息
+        $orderDetail -> user = User::where('id', $orderDetail['user_id'])->first();
+        return $orderDetail;
+    }
+
+    /*
+     * 查询订单所有信息
+     *
+     * By mtt
+     *
+     * 2018-3-2
+     */
+    public static function getOrders(){
+        $orders = Orders::all();
+        return $orders;
+    }
+
+    /*
+     * 根据id获取订单详情
+     *
+     * By mtt
+     *
+     * 2018-3-2
+     */
+    public static function getOrdersById($id){
+        $order = Orders::where('id', $id)->first();
+        return $order;
+    }
+
+
+
+
+
+
 }

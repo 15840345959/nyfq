@@ -64,6 +64,10 @@ function examineComment(url, param, callBack) {
 function delComment(url, param, callBack) {
     ajaxRequest(url + "admin/comment/del/" + param.id, param, "GET", callBack);
 }
+//设置订单状态
+function setStatus(url, param, callBack) {
+    ajaxRequest(url + "admin/orders/setStatus/" + param.id, param, "GET", callBack);
+}
 
 
 
