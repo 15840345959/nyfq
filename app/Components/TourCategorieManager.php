@@ -66,4 +66,76 @@ class TourCategorieManager
         }
         return $tour_goodses;
     }
+
+    /*
+     * 查询所有旅游产品分类信息
+     *
+     * By mtt
+     *
+     * 2018-3-2
+     */
+    public static function getTourCategories(){
+        $tourCategories = TourCategorie::orderby('sort','desc')->get();
+        return $tourCategories;
+    }
+
+    /*
+     * 设置旅游产品分类信息，用于编辑
+     *
+     * By mtt
+     *
+     * 2018-3-2
+     */
+    public static function setTourCategories($tourCategories,$data){
+        if (array_key_exists('name', $data)) {
+            $tourCategories->name = array_get($data, 'name');
+        }
+        if (array_key_exists('sort', $data)) {
+            $tourCategories->sort = array_get($data, 'sort');
+        }
+        if (array_key_exists('image', $data)) {
+            $tourCategories->image = array_get($data, 'image');
+        }
+        if (array_key_exists('type', $data)) {
+            $tourCategories->type = array_get($data, 'type');
+        }
+        return $tourCategories;
+    }
+
+    /*
+     * 模糊查询产品分类
+     *
+     * By mtt
+     *
+     * 2018-3-4
+     */
+    public static function getAllTourCategoriesLists($search_word){
+        $tourCategories = TourCategorie::where('name','like','%'.$search_word.'%')->orderby('sort','desc')->get();
+        return $tourCategories;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

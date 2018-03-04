@@ -68,6 +68,10 @@ function delComment(url, param, callBack) {
 function setStatus(url, param, callBack) {
     ajaxRequest(url + "admin/orders/setStatus/" + param.id, param, "GET", callBack);
 }
+//删除产品分类
+function delTourCategories(url, param, callBack) {
+    ajaxRequest(url + "admin/product/tourCategories/del/" + param.id, param, "GET", callBack);
+}
 
 
 

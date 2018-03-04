@@ -83,38 +83,41 @@
                     </ul>
                 </dd>
             </dl>
-            {{--<dl id="menu-product">--}}
-            {{--<dt><i class="Hui-iconfont">&#xe648;</i> 产品管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>--}}
-            {{--</dt>--}}
-            {{--<dd>--}}
-            {{--<ul>--}}
-            {{--<li><a data-href="product-brand.html" data-title="产品分类" href="javascript:void(0)">产品分类</a></li>--}}
-            {{--<li><a data-href="product-category.html" data-title="产品管理" href="javascript:void(0)">产品管理</a>--}}
-            {{--</ul>--}}
-            {{--</dd>--}}
-            {{--</dl>--}}
+            <dl id="menu-product">
+                <dt>
+                    <i class="Hui-iconfont">&#xe620;</i> 旅游产品管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+                </dt>
+                <dd>
+                    <ul>
+                        <li><a data-href="{{ URL::asset('/admin/product/tourCategories/index') }}" data-title="旅游产品分类" href="javascript:void(0)">旅游产品分类</a></li>
+                        <li><a data-href="{{ URL::asset('/admin/product/tourGoodses/index') }}" data-title="旅游产品管理" href="javascript:void(0)">旅游产品管理</a>
+                    </ul>
+                </dd>
+            </dl>
             {{--<dl id="menu-goods">--}}
-            {{--<dt><i class="Hui-iconfont">&#xe649;</i> 旅游定制管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>--}}
-            {{--</dt>--}}
-            {{--<dd>--}}
-            {{--<ul>--}}
-            {{--<li><a data-href="product-brand.html" data-title="酒店" href="javascript:void(0)">酒店</a></li>--}}
-            {{--<li><a data-href="product-category.html" data-title="航班" href="javascript:void(0)">航班</a></li>--}}
-            {{--<li><a data-href="product-category.html" data-title="套餐" href="javascript:void(0)">套餐</a></li>--}}
-            {{--<li><a data-href="product-category.html" data-title="车导" href="javascript:void(0)">车导</a></li>--}}
-            {{--<li><a data-href="product-category.html" data-title="成型套餐" href="javascript:void(0)">成型套餐</a></li>--}}
-            {{--</ul>--}}
-            {{--</dd>--}}
+                {{--<dt>--}}
+                    {{--<i class="Hui-iconfont">&#xe649;</i> 旅游定制管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>--}}
+                {{--</dt>--}}
+                {{--<dd>--}}
+                {{--<ul>--}}
+                    {{--<li><a data-href="{{ URL::asset('/admin/madeTour/hotel/index') }}"  data-title="酒店" href="javascript:void(0)">酒店</a></li>--}}
+                    {{--<li><a data-href="product-category.html" data-title="航班" href="javascript:void(0)">航班</a></li>--}}
+                    {{--<li><a data-href="product-category.html" data-title="套餐" href="javascript:void(0)">套餐</a></li>--}}
+                    {{--<li><a data-href="product-category.html" data-title="车导" href="javascript:void(0)">车导</a></li>--}}
+                    {{--<li><a data-href="product-category.html" data-title="成型套餐" href="javascript:void(0)">成型套餐</a></li>--}}
+                {{--</ul>--}}
+                {{--</dd>--}}
             {{--</dl>--}}
-            {{--<dl id="menu-order">--}}
-            {{--<dt><i class="Hui-iconfont">&#xe670;</i> 订单管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>--}}
-            {{--</dt>--}}
-            {{--<dd>--}}
-            {{--<ul>--}}
-            {{--<li><a data-href="product-brand.html" data-title="订单管理" href="javascript:void(0)">订单管理</a></li>--}}
-            {{--</ul>--}}
-            {{--</dd>--}}
-            {{--</dl>--}}
+            <dl id="menu-order">
+                <dt><i class="Hui-iconfont">&#xe687;</i> 订单管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+                </dt>
+                <dd>
+                    <ul>
+                        <li><a data-href="{{ URL::asset('/admin/orders/index') }}" data-title="订单管理"
+                               href="javascript:void(0)">订单管理</a></li>
+                    </ul>
+                </dd>
+            </dl>
             <dl id="menu-member">
                 <dt><i class="Hui-iconfont">&#xe62b;</i> 会员管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
                 </dt>
@@ -155,27 +158,6 @@
                 </dd>
             </dl>
 
-            <dl id="menu-comment">
-                <dt><i class="Hui-iconfont">&#xe687;</i> 订单管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
-                </dt>
-                <dd>
-                    <ul>
-                        <li><a data-href="{{ URL::asset('/admin/orders/index') }}" data-title="订单管理"
-                               href="javascript:void(0)">订单管理</a></li>
-                    </ul>
-                </dd>
-            </dl>
-
-            <dl id="menu-comment">
-                <dt><i class="Hui-iconfont">&#xe623</i> 旅游定制<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
-                </dt>
-                <dd>
-                    <ul>
-                        <li><a data-href="{{ URL::asset('/admin/orders/index') }}" data-title="订单管理"
-                               href="javascript:void(0)">成型套餐管理</a></li>
-                    </ul>
-                </dd>
-            </dl>
 
         </div>
     </aside>
