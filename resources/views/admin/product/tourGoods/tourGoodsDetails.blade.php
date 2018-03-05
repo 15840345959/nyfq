@@ -88,7 +88,7 @@
                 <tr>
                     <td>图片</td>
                     <td>
-                        <img src="{{ $data['tourCategories']['image'] ? $data['tourCategories']['image'].'?imageView2/1/w/200/h/100/interlace/1/q/75|imageslim' : URL::asset('/img/upload.png')}}"
+                        <img src="{{ $data['tourCategories']['image'] ? $data['tourCategories']['image'].'?imageView2/1/w/200/h/300/interlace/1/q/75|imageslim' : URL::asset('/img/upload.png')}}"
                              class=" radius-5">
                     </td>
                 </tr>
@@ -111,7 +111,7 @@
 
 @section('script')
     <script type="text/javascript">
-        
+
         $(function () {
 
         });
