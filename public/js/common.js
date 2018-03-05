@@ -72,7 +72,10 @@ function setStatus(url, param, callBack) {
 function delTourCategories(url, param, callBack) {
     ajaxRequest(url + "admin/product/tourCategories/del/" + param.id, param, "GET", callBack);
 }
-
+//删除产品分类
+function delTourGoods(url, param, callBack) {
+    ajaxRequest(url + "admin/product/tourGoods/del/" + param.id, param, "GET", callBack);
+}
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////

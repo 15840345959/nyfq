@@ -137,4 +137,142 @@ class TourGoodsManager
         $tour_goods=TourGoods::where($data)->first();
         return $tour_goods;
     }
+
+    /*
+     * 查询所有旅游产品信息
+     *
+     * By mtt
+     *
+     * 2018-3-4
+     */
+    public static function getTourGoodsList($search_word){
+        $tourGoods = TourGoods::where('name','like','%'.$search_word.'%')->orderby('id','desc')->get();
+        return $tourGoods;
+    }
+
+    /*
+     * 根据tour_goods_id获取旅游产品日期价格详情信息
+     *
+     * By mtt
+     *
+     * 2018-3-4
+     */
+    public static function getTourGoodsCalendarsByTourGoodsId($tour_goods_id){
+        $tourGoodsCalendars = TourGoodsCalendar::where('tour_goods_id',$tour_goods_id)->get();
+        return $tourGoodsCalendars;
+    }
+
+    /*
+     * 获取旅游产品信息详情
+     *
+     * By mtt
+     *
+     * 2018-3-4
+     */
+    public static function getTourGoodsDetails($tourGoods,$level){
+        //旅游产品日期价格详情信息
+        $tourGoods -> tourGoodsCalendars = self::getTourGoodsCalendarsByTourGoodsId($tourGoods->id);
+        //查询旅游产品分类
+        $tourGoods -> tourCategories = TourCategorieManager::getTourCategorieById($tourGoods->tour_category_id);
+        //图片集信息
+        $tourGoods -> tourGoodsImages=self::getTourGoodsImages($tourGoods->id);
+        //路线详情
+        $tourGoods->tourGoodsRoutes=self::getTourGoodsRoutes($tourGoods->id);
+        //内容页详情
+        $tourGoods->tourGoodsDetails=self::getTourGoodsContents($tourGoods->id);
+        return $tourGoods;
+    }
+
+    /*
+     * 设置旅游产品，用于添加，编辑
+     *
+     * By mtt
+     *
+     * 2018-3-4
+     */
+    public static function setTourGoods($tourGoods,$data){
+        if (array_key_exists('name', $data)) {
+            $tourGoods->name = array_get($data, 'name');
+        }
+        if (array_key_exists('title', $data)) {
+            $tourGoods->title = array_get($data, 'title');
+        }
+        if (array_key_exists('image', $data)) {
+            $tourGoods->image = array_get($data, 'image');
+        }
+        if (array_key_exists('content_image', $data)) {
+            $tourGoods->content_image = array_get($data, 'content_image');
+        }
+        if (array_key_exists('drimecost', $data)) {
+            $tourGoods->drimecost = array_get($data, 'drimecost');
+        }
+        if (array_key_exists('price', $data)) {
+            $tourGoods->price = array_get($data, 'price');
+        }
+        if (array_key_exists('sale', $data)) {
+            $tourGoods->sale = array_get($data, 'sale');
+        }
+        if (array_key_exists('unit', $data)) {
+            $tourGoods->unit = array_get($data, 'unit');
+        }
+        if (array_key_exists('total', $data)) {
+            $tourGoods->total = array_get($data, 'total');
+        }
+        if (array_key_exists('surplus', $data)) {
+            $tourGoods->surplus = array_get($data, 'surplus');
+        }
+        if (array_key_exists('start_place', $data)) {
+            $tourGoods->start_place = array_get($data, 'start_place');
+        }
+        if (array_key_exists('tour_category_id', $data)) {
+            $tourGoods->tour_category_id = array_get($data, 'tour_category_id');
+        }
+        return $tourGoods;
+    }
+
+    /*
+     * 根据id查询旅游产品信息
+     *
+     * By mtt
+     *
+     * 2018-3-5
+     */
+    public static function getTourGoodsesById($id){
+        $tourGoodses = TourGoods::where('id',$id)->get();
+        return $tourGoodses;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

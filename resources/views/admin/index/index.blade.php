@@ -90,7 +90,7 @@
                 <dd>
                     <ul>
                         <li><a data-href="{{ URL::asset('/admin/product/tourCategories/index') }}" data-title="旅游产品分类" href="javascript:void(0)">旅游产品分类</a></li>
-                        <li><a data-href="{{ URL::asset('/admin/product/tourGoodses/index') }}" data-title="旅游产品管理" href="javascript:void(0)">旅游产品管理</a>
+                        <li><a data-href="{{ URL::asset('/admin/product/tourGoods/index') }}" data-title="旅游产品管理" href="javascript:void(0)">旅游产品管理</a>
                     </ul>
                 </dd>
             </dl>

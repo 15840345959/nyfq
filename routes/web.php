@@ -75,12 +75,20 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin.login']], function ()
     Route::get('/orders/orderDetails', 'Admin\ordersController@getOrderDetails');  //查看订单详情
     Route::get('/orders/setStatus/{id}', 'Admin\ordersController@setOrderStatus');  //设置订单状态
 
-    //产品管理
+    //产品分类管理
     Route::get('/product/tourCategories/index', 'Admin\tourCategoriesController@index');  //产品分类管理首页
     Route::get('/product/tourCategories/edit', 'Admin\tourCategoriesController@edit');  //产品分类管理新建或编辑get
     Route::post('/product/tourCategories/edit', 'Admin\tourCategoriesController@editPost');  //产品分类管理新建或编辑post
     Route::get('/product/tourCategories/del/{id}', 'Admin\tourCategoriesController@del');  //删除产品分类
     Route::post('/product/tourCategories/index', 'Admin\tourCategoriesController@index');  //产品分类搜索
+
+    //旅游产品管理
+    Route::get('/product/tourGoods/index', 'Admin\TourGoodsController@index');  //产品管理首页
+    Route::post('/product/tourGoods/index', 'Admin\TourGoodsController@index');  //产品管理搜索
+    Route::get('/product/tourGoods/add', 'Admin\TourGoodsController@add');  //添加产品get
+    Route::post('/product/tourGoods/add', 'Admin\TourGoodsController@addPost');  //添加产品post
+    Route::get('/product/tourGoods/del/{id}', 'Admin\TourGoodsController@del');  //删除旅游产品
+    Route::get('/product/tourGoods/tourGoodsDetails', 'Admin\TourGoodsController@getTourGoodsDetails');  //查看旅游产品详情
 
 
 });

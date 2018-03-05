@@ -53,15 +53,9 @@
                         <a title="编辑" href="javascript:;" onclick="tourCategories_edit('旅游产品分类编辑','{{URL::asset('/admin/product/tourCategories/edit')}}?id={{$data['id']}}',{{$data['id']}})"  class="ml-5" style="text-decoration:none">
                             <i class="Hui-iconfont">&#xe6df;</i>
                         </a>
-                        @if($data['admin']==0)
-                            <a title="删除" href="javascript:;" onclick="tourCategories_del(this,'{{$data['id']}}')" class="ml-5" style="text-decoration:none">
-                                <i class="Hui-iconfont">&#xe6e2;</i>
-                            </a>
-                        @else
-                            <span class="ml-5">
-                                <i class="Hui-iconfont no_click">&#xe6e2;</i>
-                            </span>
-                        @endif
+                        <a title="删除" href="javascript:;" onclick="tourCategories_del(this,'{{$data['id']}}')" class="ml-5" style="text-decoration:none">
+                            <i class="Hui-iconfont">&#xe6e2;</i>
+                        </a>
                     </td>
                 </tr>
             @endforeach
