@@ -16,14 +16,16 @@ class TicketGoodsManager
     /*
      * 根据Id获取抢票产品信息
      *
-     * by zm
+     * by Acker
      *
-     * 2017-12-22
+     * 2018-03-08
      *
      */
     public static function getTicketGoodsById($id){
         //基本信息
+//        dd($id);
         $ticket_goods=TicketGoods::where('id',$id)->first();
+//        dd($ticket_goods);
         return $ticket_goods;
     }
 

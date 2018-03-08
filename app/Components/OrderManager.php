@@ -42,8 +42,30 @@ class OrderManager
         } else if ($goods_type == 4) {
             $Orders = self::addCarOrders($data);
             return $Orders;
+        } else if ($goods_type == 5) {
+            $Orders = self::addTicketOrders($data);
+            return $Orders;
         }
 //        LOG:info("orders : " . json_encode($Orders));
+    }
+
+    /*
+    * 添加抢票订单
+    *
+    * by Acker
+    *
+    * 2018-03-08
+    */
+    public static function addTicketOrders($data)
+    {
+        $goods_id = $data['goods_id'];
+        $ticket_goods = TicketGoodsManager::getTicketGoodsById($goods_id);
+        $Orders = new Orders();
+        $data['status'] = 1;
+        $Orders = self::setOrder($Orders, $data);
+        $Orders->save();
+        $Orders["ticket_goods"] = $ticket_goods;
+        return $Orders;
     }
 
     /*
@@ -160,6 +182,7 @@ class OrderManager
 //        dd(json_encode($orders));
         return $orders;
     }
+
     //获取订单商品详情
     public static function getOrderDetail($order)
     {
@@ -287,19 +310,20 @@ class OrderManager
      *
      * 2018-2-28
      */
-    public static function getOrderDetailsByLevel($orderDetail,$level){
+    public static function getOrderDetailsByLevel($orderDetail, $level)
+    {
         //根据订单中的商品类型获取商品信息
         if ($orderDetail['goods_type'] == 1) {
-            $orderDetail -> tourGoods = TourGoodsManager::getTourGoodsById($orderDetail['goods_id']);
+            $orderDetail->tourGoods = TourGoodsManager::getTourGoodsById($orderDetail['goods_id']);
         } else if ($orderDetail['goods_type'] == 3) {
-            $orderDetail -> hotelGoods = HotelGoodsManager::getHotelGoodsById($orderDetail['goods_id']);
+            $orderDetail->hotelGoods = HotelGoodsManager::getHotelGoodsById($orderDetail['goods_id']);
         } else if ($orderDetail['goods_type'] == 2) {
-            $orderDetail -> planGoods = PlanGoodsManager::getPlanGoodsById($orderDetail['goods_id']);
+            $orderDetail->planGoods = PlanGoodsManager::getPlanGoodsById($orderDetail['goods_id']);
         } else if ($orderDetail['goods_type'] == 4) {
-            $orderDetail -> carGoods = CarGoodsManager::getCarGoodsById($orderDetail['goods_id']);
+            $orderDetail->carGoods = CarGoodsManager::getCarGoodsById($orderDetail['goods_id']);
         }
         //根据user_id获取用户信息
-        $orderDetail -> user = User::where('id', $orderDetail['user_id'])->first();
+        $orderDetail->user = User::where('id', $orderDetail['user_id'])->first();
         return $orderDetail;
     }
 
@@ -310,7 +334,8 @@ class OrderManager
      *
      * 2018-3-2
      */
-    public static function getOrders(){
+    public static function getOrders()
+    {
         $orders = Orders::all();
         return $orders;
     }
@@ -322,14 +347,11 @@ class OrderManager
      *
      * 2018-3-2
      */
-    public static function getOrdersById($id){
+    public static function getOrdersById($id)
+    {
         $order = Orders::where('id', $id)->first();
         return $order;
     }
-
-
-
-
 
 
 }
