@@ -208,9 +208,11 @@ class OrderManager
      * 2018-01-30
      *
      */
-    public static function getUserIdListsByUserId($user_id)
+    public static function getUserIdListsByUserId($data)
     {
-        $Orders = Orders::where('user_id', $user_id)->orderBy('id', 'desc')->get();
+        $user_id = $data['user_id'];
+        $goods_type = $data['goods_type'];
+        $Orders = Orders::where('user_id', $user_id)->where('goods_type', $goods_type)->orderBy('id', 'desc')->get();
         foreach ($Orders as $order) {
             if ($order['goods_type'] == 1) {
                 $order['goods_id'] = TourGoodsManager::getTourGoodsById($order['goods_id']);
@@ -220,6 +222,8 @@ class OrderManager
                 $order['goods_id'] = PlanGoodsManager::getPlanGoodsById($order['goods_id']);
             } else if ($order['goods_type'] == 4) {
                 $order['goods_id'] = CarGoodsManager::getCarGoodsById($order['goods_id']);
+            }else if ($order['goods_type'] == 5) {
+                $order['goods_id'] = TicketGoodsManager::getTicketGoodsById($order['goods_id']);
             }
         }
 //        LOG:info("orders " . $Orders);
