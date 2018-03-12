@@ -76,6 +76,17 @@ function delTourCategories(url, param, callBack) {
 function delTourGoods(url, param, callBack) {
     ajaxRequest(url + "admin/product/tourGoods/del/" + param.id, param, "GET", callBack);
 }
+//修改旅游产品详情
+function editTourGoodsDetails(url, param, callBack) {
+    $.post(url + "admin/product/tourGoods/editTourGoodsDetails",param,callBack);
+}
+
+//删除旅游产品详情
+function delTourGoodsDetails(url, param, callBack) {
+    ajaxRequest(url + "admin/product/tourGoods/delTourGoodsDetails/" + param.id, param, "GET", callBack);
+}
+
+
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////

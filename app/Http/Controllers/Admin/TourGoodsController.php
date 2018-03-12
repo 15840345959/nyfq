@@ -15,6 +15,7 @@ use App\Components\TourGoodsManager;
 use App\Components\Utils;
 use App\Http\Controllers\ApiResponse;
 use App\Models\TourGoods;
+use App\Models\TourGoodsDetail;
 use Illuminate\Http\Request;
 
 class TourGoodsController
@@ -104,6 +105,94 @@ class TourGoodsController
             return redirect()->action('\App\Http\Controllers\Admin\IndexController@error', ['msg' => '非法访问']);
         }
     }
+
+    //编辑商品详情get
+    public function edit(Request $request){
+        $data = $request->all();
+        $tourGoods = new TourGoods();
+        if(array_key_exists('id',$data)){
+            $tourGoods = TourGoodsManager::getTourGoodsById($data['id']);
+            $tourGoodsDetails = TourGoodsDetail::where('tour_goods_id',$data['id'])->orderby('sort','asc')->get();
+            $tourGoods['details'] = $tourGoodsDetails;
+        }else{
+            $tourGoods = new TourGoods();
+        }
+        //获取旅游产品分类
+        $tourCategories = TourCategorieManager::getTourCategories();
+        $admin = $request->session()->get('admin');
+        //生成七牛token
+        $upload_token = QNManager::uploadToken();
+        return view('admin.product.tourGoods.edit',['admin' => $admin,'tourCategories' => $tourCategories,'data' => $tourGoods, 'upload_token' => $upload_token]);
+    }
+
+    //编辑旅游产品post
+    public function editPost(Request $request){
+        $data = $request->all();
+        $admin = $request->session()->get('admin');
+        $return = null;
+        $tourGoods = new TourGoods();
+        if (array_key_exists("id", $data) && !Utils::isObjNull($data["id"])) {
+            $tourGoods = TourGoods::find($data['id']);
+        }
+        if(!$tourGoods){
+            $tourGoods = new TourGoods();
+        }
+        $tourGoods = TourGoodsManager::setTourGoods($tourGoods,$data);
+        $result = $tourGoods->save();
+        if($result){
+            $return['result'] = true;
+            $return['msg'] = '编辑旅游产品成功';
+        }else{
+            $return['result'] = false;
+            $return['msg'] = '编辑旅游产品失败';
+        }
+        return $return;
+    }
+
+    //编辑旅游产品详情Post
+    public function editTourGoodsDetails(Request $request){
+        $data = $request->all();
+        $admin = $request->session()->get('admin');
+        $return=null;
+        if(array_key_exists('id',$data)){
+            $tourGoods_details = TourGoodsManager::getTourGoodsDetailsById($data['id']);
+        }else{
+            $tourGoods_details = new TourGoodsDetail();
+        }
+        $tourGoods_details = TourGoodsManager::setTourGoodsDetails($tourGoods_details,$data);
+        $result = $tourGoods_details->save();
+        if($result){
+            $return['result'] = true;
+            $return['ret'] = TourGoodsManager::getTourGoodsDetailsById($tourGoods_details->id);
+            $return['msg'] = '编辑旅游产品详情成功';
+        }else{
+            $return['result'] = false;
+            $return['msg'] = '编辑旅游产品详情失败';
+        }
+        return $return;
+    }
+
+    //删除活动详情
+    public function delTourGoodsDetails(Request $request,$id){
+        $data = $request->all();
+        $return = null;
+        //判断
+        if (is_numeric($id) !== true) {
+            return redirect()->action('\App\Http\Controllers\Admin\IndexController@error', ['msg' => '合规校验失败，请检查参数广告id$id']);
+        }
+        //查询旅游产品详情
+        $tourGoods_details = TourGoodsDetail::find($id);
+        $result = $tourGoods_details->delete();
+        if($result){
+            $return['result'] = true;
+            $return['msg'] = '删除成功';
+        }else{
+            $return['result'] = false;
+            $return['msg'] = '删除旅游产品失败';
+        }
+        return $return;
+    }
+
 
 
 

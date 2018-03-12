@@ -42,4 +42,36 @@ class TicketGoodsManager
         $ticket_goods=TicketGoods::where($data)->first();
         return $ticket_goods;
     }
+
+    /*
+     * 获取抢票信息
+     *
+     * By mtt
+     *
+     * 2018-3-12
+     */
+    public static function getTicketGoodsList($data){
+        $offset=$data["offset"];  //开始位置
+        $page=$data["page"];        //数量
+        $ticketGoodsList = TicketGoods::orderby('id','desc')->offset($offset)->limit($page)->get();//获取抢票信息
+        return $ticketGoodsList;
+    }
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -112,4 +112,12 @@ Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
     Route::get('Customization/getCustomization', 'API\customizationController@getCustomization')->middleware('CheckToken');
     //旅游定制——根据id成型套餐
     Route::get('Customization/getByIdCustomization', 'API\customizationController@getByIdCustomization')->middleware('CheckToken');
+
+    //获取抢票商品信息
+    Route::get('ticket/getTicketGoods', 'API\TicketGoodsController@getTicketGoodsList');
+
+
+
+
+
 });

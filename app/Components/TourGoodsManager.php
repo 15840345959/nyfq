@@ -242,6 +242,40 @@ class TourGoodsManager
         return $tourGoodses;
     }
 
+    /*
+     * 根据id获取TourGoodsDetail
+     *
+     * By mtt
+     *
+     * 2018-3-6
+     */
+    public static function getTourGoodsDetailsById($id){
+        $tourGoodsDetails = TourGoodsDetail::where('id',$id)->first();
+        return $tourGoodsDetails;
+    }
+
+    /*
+     * 设置旅游产品详情
+     *
+     * By mtt
+     *
+     * 2018-3-6
+     */
+    public static function setTourGoodsDetails($tourGoodsDetails,$data){
+        if (array_key_exists('tour_goods_id', $data)) {
+            $tourGoodsDetails->tour_goods_id = array_get($data, 'tour_goods_id');
+        }
+        if (array_key_exists('content', $data)) {
+            $tourGoodsDetails->content = array_get($data, 'content');
+        }
+        if (array_key_exists('type', $data)) {
+            $tourGoodsDetails->type = array_get($data, 'type');
+        }
+        if (array_key_exists('sort', $data)) {
+            $tourGoodsDetails->sort = array_get($data, 'sort');
+        }
+        return $tourGoodsDetails;
+    }
 
 
 
