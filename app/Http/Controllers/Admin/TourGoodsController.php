@@ -172,7 +172,7 @@ class TourGoodsController
         return $return;
     }
 
-    //删除活动详情
+    //删除旅游产品详情
     public function delTourGoodsDetails(Request $request,$id){
         $data = $request->all();
         $return = null;

@@ -855,23 +855,30 @@
                 refresh(jsonObj)
             }
         }
+
         //删除这条数据
-        function delDetial(index,id){
-            layer.confirm('确认要删除这条数据吗？',function(index){
+        function delDetial(index, id) {
+            console.log('index:'+index);
+            console.log('jsonObj.length:'+jsonObj.length)
+            layer.confirm('确认要删除这条数据吗？', function () {
                 //进行后台删除
                 var param = {
                     id: id,
                     _token: "{{ csrf_token() }}"
                 }
+//                console.log('param is : ' + JSON.stringify(param))
                 delTourGoodsDetails('{{URL::asset('')}}', param, function (ret) {
                     if (ret.result == true) {
                         layer.msg(ret.msg, {icon: 1, time: 1000});
-                         console.log('del index is : ' + JSON.stringify((jsonObj[index])))
-                        for(var i=0;i<jsonObj.length;i++){
-                            if(i==index){
-                                jsonObj.splice(i,1);//从下标为i的元素开始，连续删除1个元素
+//                         console.log('sortDown index is : ' + JSON.stringify((jsonObj[index-1])))
+                        for (var i = 0; i < jsonObj.length; i++) {
+//                            console.log('jsonObj.length : ' + JSON.stringify((jsonObj.length)))
+                            if (i == index) {
+                                console.log('jsonObj.splice : ' + JSON.stringify(jsonObj[i]))
+                                jsonObj.splice(i, 1);//从下标为i的元素开始，连续删除1个元素
                             }
                         }
+                        console.log('jsonObj  : ' + JSON.stringify(jsonObj))
                         //重新展示
                         refresh(jsonObj)
                     } else {
@@ -880,6 +887,7 @@
                 })
             });
         }
+
         //提交修改后的文本
         function updateTextDetial(index){
             var content=$('#text_detail_'+index).val();
