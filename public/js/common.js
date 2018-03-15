@@ -86,7 +86,15 @@ function delTourGoodsDetails(url, param, callBack) {
     ajaxRequest(url + "admin/product/tourGoods/delTourGoodsDetails/" + param.id, param, "GET", callBack);
 }
 
+//添加旅游产品图片
+function addTourGoodsImage(url, param, callBack) {
+    $.post(url + "admin/product/tourGoods/addImage",param,callBack);
+}
 
+//删除旅游产品图片
+function delTourGoodsImage(url, param, callBack) {
+    ajaxRequest(url + "admin/product/tourGoods/delTourGoodsImage/" + param.id, param, "GET", callBack);
+}
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////

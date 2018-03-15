@@ -163,13 +163,15 @@ class TourGoodsManager
     }
 
     /*
-     * 获取旅游产品信息详情
+     * 根据产品获取旅游产品信息详情
      *
      * By mtt
      *
      * 2018-3-4
      */
     public static function getTourGoodsDetails($tourGoods,$level){
+        //查询旅游产品信息
+        $tourGoods -> tourGoods = self::getTourGoodsById($tourGoods->tour_goods_id);
         //旅游产品日期价格详情信息
         $tourGoods -> tourGoodsCalendars = self::getTourGoodsCalendarsByTourGoodsId($tourGoods->id);
         //查询旅游产品分类
@@ -243,6 +245,18 @@ class TourGoodsManager
     }
 
     /*
+     * 查询是所有旅游产品信息
+     *
+     * By mtt
+     *
+     * 2018-3-13
+     */
+    public static function getTourGoods(){
+        $tourGoods = TourGoods::orderby('id','asc')->get();
+        return $tourGoods;
+    }
+
+    /*
      * 根据id获取TourGoodsDetail
      *
      * By mtt
@@ -275,6 +289,38 @@ class TourGoodsManager
             $tourGoodsDetails->sort = array_get($data, 'sort');
         }
         return $tourGoodsDetails;
+    }
+
+    /*
+     * 根据id查询旅游产品图片信息
+     *
+     * By mtt
+     *
+     * 2018-3-13
+     */
+    public static function getTourGoodsImageById($id){
+        $tourGoodsImage = TourGoodsImage::where('id',$id)->first();
+        return $tourGoodsImage;
+    }
+
+    /*
+     * 设置旅游产品信息，用于编辑
+     *
+     * By mtt
+     *
+     * 2018-3-13
+     */
+    public static function setTourGoodsImage($tourGoodsImage,$data){
+        if (array_key_exists('tour_goods_id', $data)) {
+            $tourGoodsImage->tour_goods_id = array_get($data, 'tour_goods_id');
+        }
+        if (array_key_exists('image', $data)) {
+            $tourGoodsImage->image = array_get($data, 'image');
+        }
+        if (array_key_exists('sort', $data)) {
+            $tourGoodsImage->sort = array_get($data, 'sort');
+        }
+        return $tourGoodsImage;
     }
 
 

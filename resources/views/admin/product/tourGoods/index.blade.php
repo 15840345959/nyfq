@@ -42,7 +42,7 @@
                 <th width="40">共有位子（默认）</th>
                 <th width="40">剩余空位（默认）</th>
                 <th width="40">出发地</th>
-                <th width="60">出发线路</th>
+                <th width="90">出发线路</th>
                 <th width="100">操作</th>
             </tr>
             </thead>
@@ -73,12 +73,26 @@
                         @endforeach
                     </td>
                     <td class="td-manage">
+                        <a title="添加产品图片" href="javascript:;" onclick="tourGoods_addImage('添加产品图片','{{URL::asset('/admin/product/tourGoods/addImage')}}?id={{$data['id']}}',{{$data['id']}})"
+                           class="ml-5" style="text-decoration:none">
+                            <span class="label label-success radius">添加产品图片</span>
+                        </a>
+                        <a title="添加产品线路" href="javascript:;" onclick="tourGoods_addRoutes('添加产品线路','{{URL::asset('/admin/product/tourGoods/addRoutes')}}?id={{$data['id']}}',{{$data['id']}})"
+                           class="ml-5" style="text-decoration:none">
+                            <span class="label label-success radius">添加产品线路</span>
+                        </a>
+                        <a title="添加产品日期价钱" href="javascript:;" onclick="tourGoods_addCalendars('添加产品日期价钱','{{URL::asset('/admin/product/tourGoods/addCalendars')}}?id={{$data['id']}}',{{$data['id']}})"
+                           class="ml-5" style="text-decoration:none">
+                            <span class="label label-success radius">添加产品日期价钱</span>
+                        </a>
+                        </br>
                         <a title="查看详情" href="javascript:;"
                            onclick="tourGoodsDetails_edit('查看详情','{{URL::asset('/admin/product/tourGoods/tourGoodsDetails')}}?id={{$data['id']}}',{{$data['id']}})"
                            class="ml-5" style="text-decoration:none">
                             <i class="Hui-iconfont">&#xe695;</i>
                         </a>
-                        <a title="编辑" href="javascript:;" onclick="tourGoods_edit('旅游产品编辑','{{URL::asset('/admin/product/tourGoods/edit')}}?id={{$data['id']}}',{{$data['id']}})"  class="ml-5" style="text-decoration:none">
+                        <a title="编辑" href="javascript:;" onclick="tourGoods_edit('旅游产品编辑','{{URL::asset('/admin/product/tourGoods/edit')}}?id={{$data['id']}}',{{$data['id']}})"
+                           class="ml-5" style="text-decoration:none">
                             <i class="Hui-iconfont">&#xe6df;</i>
                         </a>
                         <a title="删除" href="javascript:;" onclick="tourGoods_del(this,'{{$data['id']}}')" class="ml-5" style="text-decoration:none">
@@ -163,6 +177,39 @@
         /*旅游产品-编辑*/
         function tourGoods_edit(title, url, id) {
             console.log("admin_edit url:" + url);
+            var index = layer.open({
+                type: 2,
+                title: title,
+                content: url
+            });
+            layer.full(index);
+        }
+
+        /*添加旅游产品图片*/
+        function tourGoods_addImage(title, url, id) {
+            console.log("tourGoods_addImage url:" + url);
+            var index = layer.open({
+                type: 2,
+                title: title,
+                content: url
+            });
+            layer.full(index);
+        }
+
+        /*添加旅游产品路线*/
+        function tourGoods_addRoutes(title, url, id) {
+            console.log("tourGoods_addImage url:" + url);
+            var index = layer.open({
+                type: 2,
+                title: title,
+                content: url
+            });
+            layer.full(index);
+        }
+
+        /*添加旅游产品日期价钱*/
+        function tourGoods_addCalendars(title, url, id) {
+            console.log("tourGoods_addImage url:" + url);
             var index = layer.open({
                 type: 2,
                 title: title,
