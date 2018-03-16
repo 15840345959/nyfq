@@ -323,6 +323,20 @@ class TourGoodsManager
         return $tourGoodsImage;
     }
 
+    /*
+     * 根据type获取旅游产品信息
+     *
+     * By mtt
+     *
+     * 2018-3-16
+     */
+    public static function getTourGoodsByType($type,$data){
+        $offset=$data["offset"];
+        $page=$data["page"];
+        $tourGoods = TourGoods::where('type',$type)->orderby('sort','desc') ->offset($offset)->limit($page)->get();
+        return $tourGoods;
+    }
+
 
 
 

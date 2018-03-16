@@ -57,6 +57,8 @@ Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
     Route::get('tour/getTourGoodsLists', 'API\TourController@getTourGoodsLists')->middleware('CheckToken');
     //获取旅游产品的详细信息
     Route::get('tour/getTourGoodsDetail', 'API\TourController@getTourGoodsDetail')->middleware('CheckToken');
+    //根据产品类型获取旅游产品
+    Route::get('tour/getTourGoods', 'API\TourController@getTourGoods');
 
     //获取产品的评论详情
     Route::get('comment/getGoodsCommentLists', 'API\CommentController@getGoodsCommentLists')->middleware('CheckToken');

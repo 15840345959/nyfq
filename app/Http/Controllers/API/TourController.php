@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Components\RequestValidator;
 use App\Components\TourCategorieManager;
 use App\Components\TourGoodsManager;
 use App\Http\Controllers\ApiResponse;
@@ -54,4 +55,30 @@ class TourController extends Controller
             return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM], ApiResponse::MISSING_PARAM);
         }
     }
+
+    //根据旅游产品类型获取旅游产品信息
+    public function getTourGoods(Request $request){
+        $data = $request->all();
+        //合规校验types
+        $requestValidationResult = RequestValidator::validator($request->all(), [
+            'type' => 'required',
+            'offset' => 'required',
+            'page' => 'required',
+        ]);
+        if ($requestValidationResult !== true) {
+            return ApiResponse::makeResponse(false, $requestValidationResult, ApiResponse::MISSING_PARAM);
+        }
+        $tour_goods = TourGoodsManager::getTourGoodsByType($data['type'],$data);
+        if($tour_goods){
+            return ApiResponse::makeResponse(true,$tour_goods,ApiResponse::SUCCESS_CODE);
+        }else{
+            return ApiResponse::makeResponse(false,ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM],ApiResponse::MISSING_PARAM);
+        }
+    }
+
+
+
+
+
+
 }
