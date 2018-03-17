@@ -98,6 +98,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin.login']], function ()
     Route::get('/product/tourGoods/delTourGoodsImage/{id}', 'Admin\TourGoodsController@delTourGoodsImage');  //删除旅游产品图片
     Route::get('/product/tourGoods/addRoutes', 'Admin\TourGoodsController@addRoutes');  //添加旅游产品路线首页
     Route::get('/product/tourGoods/editRoutes', 'Admin\TourGoodsController@editRoutes');  //添加旅游产品路线编辑和添加get
+    Route::post('/product/tourGoods/editRoutes', 'Admin\TourGoodsController@editRoutesPost');  //添加旅游产品路线编辑和添加post
+    Route::get('/product/tourGoods/delRoutes/{id}', 'Admin\TourGoodsController@delRoutes');  //删除旅游产品路线
 
 
 

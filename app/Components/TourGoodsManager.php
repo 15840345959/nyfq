@@ -304,7 +304,7 @@ class TourGoodsManager
     }
 
     /*
-     * 设置旅游产品信息，用于编辑
+     * 设置旅游产品图片信息，用于编辑
      *
      * By mtt
      *
@@ -335,6 +335,41 @@ class TourGoodsManager
         $page=$data["page"];
         $tourGoods = TourGoods::where('type',$type)->orderby('sort','desc') ->offset($offset)->limit($page)->get();
         return $tourGoods;
+    }
+
+    /*
+     * 设置旅游产品路线信息
+     *
+     * By mtt
+     *
+     * 2018-3-16
+     */
+    public static function setTourGoodsRoutes($tourGoodsRoutes,$data){
+        if (array_key_exists('tour_goods_id', $data)) {
+            $tourGoodsRoutes->tour_goods_id = array_get($data, 'tour_goods_id');
+        }
+        if (array_key_exists('name', $data)) {
+            $tourGoodsRoutes->name = array_get($data, 'name');
+        }
+        if (array_key_exists('place', $data)) {
+            $tourGoodsRoutes->place = array_get($data, 'place');
+        }
+        if (array_key_exists('content', $data)) {
+            $tourGoodsRoutes->content = array_get($data, 'content');
+        }
+        return $tourGoodsRoutes;
+    }
+
+    /*
+     * 根据id查询旅游产品路线
+     *
+     * By mtt
+     *
+     * 2018-3-16
+     */
+    public static function getTourGoodsRoutesById($id){
+        $tourGoodsRoutes = TourGoodsRoute::where('id',$id)->first();
+        return $tourGoodsRoutes;
     }
 
 

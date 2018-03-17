@@ -254,7 +254,7 @@ class TourGoodsController
         return $return;
     }
 
-    //添加旅游产品线路get
+    //产品管理首页添加旅游产品线路get
     public function addRoutes(Request $request){
         $data = $request->all();
         $admin = $request->session()->get('admin');
@@ -266,13 +266,13 @@ class TourGoodsController
             foreach ($tourGoodsRoutes as $tourGoodsRoute){
                 $tourGoodsRoute = TourGoodsManager::getTourGoodsDetails($tourGoodsRoute,'2');
             }
-            return view('admin.product.tourGoods.addRoutesIndex',['admin' => $admin,'datas' => $tourGoodsRoutes, 'upload_token' => $upload_token]);
+            return view('admin.product.tourGoods.addRoutesIndex',['admin' => $admin,'datas' => $tourGoodsRoutes, 'upload_token' => $upload_token,'tour_goods_id'=>$data['id']]);
         }else{
             return redirect()->action('\App\Http\Controllers\Admin\IndexController@error', ['msg' => '非法访问']);
         }
     }
 
-    //编辑旅游产品线路get
+    //路线管理首页添加、编辑旅游产品线路get
     public function editRoutes(Request $request){
         $data = $request->all();
         $tourGoodsRoute = new TourGoodsRoute();
@@ -287,9 +287,47 @@ class TourGoodsController
         return view('admin.product.tourGoods.addRoutesEdit',['admin' => $admin, 'tourGoods' => $tourGoods,'data' => $tourGoodsRoute, 'upload_token' => $upload_token]);
     }
 
-    //编辑旅游产品线路post
+    //路线管理首页添加、编辑旅游产品线路post
     public function editRoutesPost(Request $request){
-        
+        $data = $request->all();
+        $return = null;
+        $tourGoodsRoutes = new TourGoodsRoute();
+        if(array_key_exists('id',$data) && !Utils::isObjNull($data["id"])){
+            $tourGoodsRoutes = TourGoodsManager::getTourGoodsRoutesById($data['id']);
+        }
+        if (!$tourGoodsRoutes) {
+            $tourGoodsRoutes = new TourGoodsRoute();
+        }
+        $tourGoodsRoutes = TourGoodsManager::setTourGoodsRoutes($tourGoodsRoutes,$data);
+        $result = $tourGoodsRoutes->save();
+        if($result){
+            $return['result'] = true;
+            $return['msg'] = '添加成功';
+        }else{
+            $return['result'] = false;
+            $return['msg'] = '添加失败';
+        }
+        return $return;
+    }
+
+    //删除旅游产品路线
+    public function delRoutes(Request $request,$id){
+        $data = $request->all();
+        $return = null;
+        //判断
+        if (is_numeric($id) !== true) {
+            return redirect()->action('\App\Http\Controllers\Admin\IndexController@error', ['msg' => '合规校验失败，请检查参数广告id$id']);
+        }
+        $tourGoodsRoutes = TourGoodsRoute::find($id);
+        $result = $tourGoodsRoutes->delete();
+        if($result){
+            $return['result'] = true;
+            $return['msg'] = '删除成功';
+        }else{
+            $return['result'] = false;
+            $return['msg'] = '删除失败';
+        }
+        return $return;
     }
 
 

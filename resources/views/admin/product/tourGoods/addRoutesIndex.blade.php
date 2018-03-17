@@ -6,12 +6,12 @@
                 class="c-gray en">&gt;</span> 旅游产品线路列表 <a class="btn btn-success radius r btn-refresh"
                                                        style="line-height:1.6em;margin-top:3px"
                                                        href="javascript:location.replace(location.href);" title="刷新"
-                                                       onclick="location.replace('{{URL::asset('/admin/product/tourGoods/addRoutesIndex')}}');"><i
+                                                       onclick="location.replace('{{URL::asset('/admin/product/tourGoods/addRoutes?id='.$tour_goods_id)}}')"><i
                     class="Hui-iconfont">&#xe68f;</i></a></nav>
     <div class="page-container">
         <div class="cl pd-5 bg-1 bk-gray mt-20">
             <span class="l">
-                 <a href="javascript:;" onclick="tourCategories_add('添加旅游产品路线','{{URL::asset('/admin/product/tourGoods/editRoutes')}}')"
+                 <a href="javascript:;" onclick="tourRoutes_add('添加旅游产品路线','{{URL::asset('/admin/product/tourGoods/editRoutes')}}')"
                     class="btn btn-primary radius">
                      <i class="Hui-iconfont">&#xe600;</i> 添加旅游产品路线
                  </a>
@@ -36,10 +36,10 @@
                     <td>{{$data['place']}}</td>
                     <td>{{$data['content']}}</td>
                     <td class="td-manage">
-                        <a title="编辑" href="javascript:;" onclick="tourCategories_edit('旅游产品路线编辑','{{URL::asset('/admin/product/tourGoods/editRoutes')}}?id={{$data['id']}}',{{$data['id']}})"  class="ml-5" style="text-decoration:none">
+                        <a title="编辑" href="javascript:;" onclick="tourRoutes_edit('旅游产品路线编辑','{{URL::asset('/admin/product/tourGoods/editRoutes')}}?id={{$data['id']}}',{{$data['id']}})"  class="ml-5" style="text-decoration:none">
                             <i class="Hui-iconfont">&#xe6df;</i>
                         </a>
-                        <a title="删除" href="javascript:;" onclick="tourCategories_del(this,'{{$data['id']}}')" class="ml-5" style="text-decoration:none">
+                        <a title="删除" href="javascript:;" onclick="tourRoutes_del(this,'{{$data['id']}}')" class="ml-5" style="text-decoration:none">
                             <i class="Hui-iconfont">&#xe6e2;</i>
                         </a>
                     </td>
@@ -79,7 +79,7 @@
          h		弹出层高度（缺省调默认值）
          */
         /*旅游产品路线-增加*/
-        function tourCategories_add(title, url) {
+        function tourRoutes_add(title, url) {
             var index = layer.open({
                 type: 2,
                 title: title,
@@ -88,14 +88,14 @@
             layer.full(index);
         }
         /*旅游产品路线-删除*/
-        function tourCategories_del(obj, id) {
+        function tourRoutes_del(obj, id) {
             layer.confirm('确认要删除吗？', function (index) {
                 //进行后台删除
                 var param = {
                     id: id,
                     _token: "{{ csrf_token() }}"
                 }
-                delTourCategories('{{URL::asset('')}}', param, function (ret) {
+                delTourRoutes('{{URL::asset('')}}', param, function (ret) {
                     if (ret.result == true) {
                         $(obj).parents("tr").remove();
                         layer.msg(ret.msg, {icon: 1, time: 1000});
@@ -107,7 +107,7 @@
         }
 
         /*旅游产品路线-编辑*/
-        function tourCategories_edit(title, url, id) {
+        function tourRoutes_edit(title, url, id) {
             console.log("admin_edit url:" + url);
             var index = layer.open({
                 type: 2,

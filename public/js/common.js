@@ -96,6 +96,11 @@ function delTourGoodsImage(url, param, callBack) {
     ajaxRequest(url + "admin/product/tourGoods/delTourGoodsImage/" + param.id, param, "GET", callBack);
 }
 
+//删除产品分类
+function delTourRoutes(url, param, callBack) {
+    ajaxRequest(url + "admin/product/tourGoods/delRoutes/" + param.id, param, "GET", callBack);
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
