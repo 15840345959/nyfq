@@ -126,6 +126,11 @@ function delHotelRooms(url, param, callBack) {
     ajaxRequest(url + "admin/madeTour/hotel/delHotelRooms/" + param.id, param, "GET", callBack);
 }
 
+//旅游定制-飞机票管理-删除飞机票信息
+function delPlane(url, param, callBack) {
+    ajaxRequest(url + "admin/madeTour/plane/del/" + param.id, param, "GET", callBack);
+}
+
 
 
 

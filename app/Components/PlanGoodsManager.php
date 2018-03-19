@@ -76,4 +76,91 @@ class PlanGoodsManager
         $plan_goods = PlanGoods::where($data)->first();
         return $plan_goods;
     }
+
+    /*
+     * 模糊查询分机票产品
+     *
+     * By mtt
+     *
+     * 2018-3-19
+     */
+    public static function getPlaneGoods($search_word){
+        $planeGoods = PlanGoods::where('company','like','%'.$search_word.'%')->orderby('id','desc')->get();
+        return $planeGoods;
+    }
+
+    /*
+     * 设置飞机票信息，用于添加、编辑
+     *
+     * By mtt
+     *
+     * 2018-3-19
+     */
+    public static function setPlaneGoods($planeGoods,$data){
+        if (array_key_exists('start_place', $data)) {
+            $planeGoods->start_place = array_get($data, 'start_place');
+        }
+        if (array_key_exists('end_place', $data)) {
+            $planeGoods->end_place = array_get($data, 'end_place');
+        }
+        if (array_key_exists('start_time', $data)) {
+            $planeGoods->start_time = array_get($data, 'start_time');
+        }
+        if (array_key_exists('end_time', $data)) {
+            $planeGoods->end_time = array_get($data, 'end_time');
+        }
+        if (array_key_exists('primecast', $data)) {
+            $planeGoods->primecast = array_get($data, 'primecast');
+        }
+        if (array_key_exists('price', $data)) {
+            $planeGoods->price = array_get($data, 'price');
+        }
+        if (array_key_exists('sale', $data)) {
+            $planeGoods->sale = array_get($data, 'sale');
+        }
+        if (array_key_exists('unit', $data)) {
+            $planeGoods->unit = array_get($data, 'unit');
+        }
+        if (array_key_exists('company', $data)) {
+            $planeGoods->company = array_get($data, 'company');
+        }
+        return $planeGoods;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
