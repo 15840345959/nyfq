@@ -97,9 +97,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin.login']], function ()
     Route::post('/product/tourGoods/addImage', 'Admin\TourGoodsController@addImagePost');  //添加旅游产品图片post
     Route::get('/product/tourGoods/delTourGoodsImage/{id}', 'Admin\TourGoodsController@delTourGoodsImage');  //删除旅游产品图片
     Route::get('/product/tourGoods/addRoutes', 'Admin\TourGoodsController@addRoutes');  //添加旅游产品路线首页
-    Route::get('/product/tourGoods/editRoutes', 'Admin\TourGoodsController@editRoutes');  //添加旅游产品路线编辑和添加get
-    Route::post('/product/tourGoods/editRoutes', 'Admin\TourGoodsController@editRoutesPost');  //添加旅游产品路线编辑和添加post
+    Route::get('/product/tourGoods/editRoutes', 'Admin\TourGoodsController@editRoutes');  //旅游产品路线编辑和添加get
+    Route::post('/product/tourGoods/editRoutes', 'Admin\TourGoodsController@editRoutesPost');  //旅游产品路线编辑和添加post
     Route::get('/product/tourGoods/delRoutes/{id}', 'Admin\TourGoodsController@delRoutes');  //删除旅游产品路线
+    Route::get('/product/tourGoods/addCalendars', 'Admin\TourGoodsController@addCalendars');  //添加旅游产品日期价格详情信息首页
+    Route::get('/product/tourGoods/editCalendars', 'Admin\TourGoodsController@editCalendars');  //旅游产品日期价格详情信息编辑和添加get
+    Route::post('/product/tourGoods/editCalendars', 'Admin\TourGoodsController@editCalendarsPost');  //旅游产品日期价格详情信息编辑和添加post
+    Route::get('/product/tourGoods/delCalendars/{id}', 'Admin\TourGoodsController@delCalendars');  //删除旅游产品日期价格详情信息
 
 
 

@@ -96,9 +96,14 @@ function delTourGoodsImage(url, param, callBack) {
     ajaxRequest(url + "admin/product/tourGoods/delTourGoodsImage/" + param.id, param, "GET", callBack);
 }
 
-//删除产品分类
+//删除产品路线
 function delTourRoutes(url, param, callBack) {
     ajaxRequest(url + "admin/product/tourGoods/delRoutes/" + param.id, param, "GET", callBack);
+}
+
+//删除旅游产品日期价格详情信息
+function delCalendars(url, param, callBack) {
+    ajaxRequest(url + "admin/product/tourGoods/delCalendars/" + param.id, param, "GET", callBack);
 }
 
 

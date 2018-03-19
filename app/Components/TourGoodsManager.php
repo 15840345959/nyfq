@@ -372,6 +372,52 @@ class TourGoodsManager
         return $tourGoodsRoutes;
     }
 
+    /*
+     * 根据id查询旅游产品日期价格详情信息
+     *
+     * By mtt
+     *
+     * 2018-3-17
+     */
+    public static function getTourGoodsCalendarsById($id){
+        $tourGoodsCalendars = TourGoodsCalendar::where('id',$id)->first();
+        return $tourGoodsCalendars;
+    }
+
+    /*
+     * 设置旅游产品日期价格详情信息
+     *
+     * By mtt
+     *
+     * 2018-3-17
+     */
+    public static function setTourGoodsCalendars($tourGoodsCalendars,$data){
+        if (array_key_exists('tour_goods_id', $data)) {
+            $tourGoodsCalendars->tour_goods_id = array_get($data, 'tour_goods_id');
+        }
+        if (array_key_exists('primecast', $data)) {
+            $tourGoodsCalendars->primecast = array_get($data, 'primecast');
+        }
+        if (array_key_exists('price', $data)) {
+            $tourGoodsCalendars->price = array_get($data, 'price');
+        }
+        if (array_key_exists('sale', $data)) {
+            $tourGoodsCalendars->sale = array_get($data, 'sale');
+        }
+        if (array_key_exists('total', $data)) {
+            $tourGoodsCalendars->total = array_get($data, 'total');
+        }
+        if (array_key_exists('surplus', $data)) {
+            $tourGoodsCalendars->surplus = array_get($data, 'surplus');
+        }
+        if (array_key_exists('date', $data)) {
+            $tourGoodsCalendars->date = array_get($data, 'date');
+        }
+        return $tourGoodsCalendars;
+    }
+
+
+
 
 
 

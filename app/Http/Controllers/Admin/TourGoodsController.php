@@ -14,7 +14,9 @@ use App\Components\TourCategorieManager;
 use App\Components\TourGoodsManager;
 use App\Components\Utils;
 use App\Http\Controllers\ApiResponse;
+use App\Models\TourCategorie;
 use App\Models\TourGoods;
+use App\Models\TourGoodsCalendar;
 use App\Models\TourGoodsDetail;
 use App\Models\TourGoodsImage;
 use App\Models\TourGoodsRoute;
@@ -330,6 +332,81 @@ class TourGoodsController
         return $return;
     }
 
+    //产品管理首页添加旅游产品日期价格get
+    public function addCalendars(Request $request){
+        $data = $request->all();
+        $admin = $request->session()->get('admin');
+        //生成七牛token
+        $upload_token = QNManager::uploadToken();
+        if(array_key_exists('id',$data)){
+            //获取旅游产品日期价格详情信息
+            $tourGoodsCalendars = TourGoodsManager::getTourGoodsCalendarsByTourGoodsId($data['id']);
+            foreach ($tourGoodsCalendars as $tourGoodsCalendar){
+                $tourGoodsCalendar = TourGoodsManager::getTourGoodsDetails($tourGoodsCalendar,'3');
+            }
+            return view('admin.product.tourGoods.addCalendarsIndex',['admin' => $admin,'datas' => $tourGoodsCalendars, 'upload_token' => $upload_token,'tour_goods_id'=>$data['id']]);
+        }else{
+            return redirect()->action('\App\Http\Controllers\Admin\IndexController@error', ['msg' => '非法访问']);
+        }
+    }
+
+    //产品管理添加、编辑旅游产品日期价格get
+    public function editCalendars(Request $request){
+        $data = $request->all();
+        $tourGoodsCalendars = new TourGoodsCalendar();
+        if(array_key_exists('id', $data)){
+            $tourGoodsCalendars = TourGoodsCalendar::find($data['id']);
+        }
+        //获取旅游产品信息
+        $tourGoods = TourGoodsManager::getTourGoods();
+        $admin = $request->session()->get('admin');
+        //生成七牛token
+        $upload_token = QNManager::uploadToken();
+        return view('admin.product.tourGoods.addCalendarsEdit',['admin' => $admin, 'tourGoods' => $tourGoods,'data' => $tourGoodsCalendars, 'upload_token' => $upload_token]);
+    }
+
+    //产品管理添加、编辑旅游产品日期价格post
+    public function editCalendarsPost(Request $request){
+        $data = $request->all();
+        $return = null;
+        $tourGoodsCalendars = new TourGoodsCalendar();
+        if(array_key_exists('id',$data)){
+            $tourGoodsCalendars = TourGoodsManager::getTourGoodsCalendarsById($data['id']);
+        }
+        if(!$tourGoodsCalendars){
+            $tourGoodsCalendars = new TourGoodsCalendar();
+        }
+        $tourGoodsCalendars = TourGoodsManager::setTourGoodsCalendars($tourGoodsCalendars,$data);
+        $result = $tourGoodsCalendars->save();
+        if($result){
+            $return['result'] = true;
+            $return['msg'] = '添加成功';
+        }else{
+            $return['result'] = false;
+            $return['msg'] = '添加失败';
+        }
+        return $return;
+    }
+
+    //删除旅游产品路线
+    public function delCalendars(Request $request,$id){
+        $data = $request->all();
+        $return = null;
+        //判断
+        if (is_numeric($id) !== true) {
+            return redirect()->action('\App\Http\Controllers\Admin\IndexController@error', ['msg' => '合规校验失败，请检查参数广告id$id']);
+        }
+        $tourCalendars = TourGoodsCalendar::find($id);
+        $result = $tourCalendars->delete();
+        if($result){
+            $return['result'] = true;
+            $return['msg'] = '删除成功';
+        }else{
+            $return['result'] = false;
+            $return['msg'] = '删除失败';
+        }
+        return $return;
+    }
 
 
 
