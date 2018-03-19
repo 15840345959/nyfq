@@ -106,6 +106,29 @@ function delCalendars(url, param, callBack) {
     ajaxRequest(url + "admin/product/tourGoods/delCalendars/" + param.id, param, "GET", callBack);
 }
 
+//旅游定制-酒店管理-删除
+function delHotel(url, param, callBack) {
+    ajaxRequest(url + "admin/madeTour/hotel/del/" + param.id, param, "GET", callBack);
+}
+
+//旅游定制-酒店管理-添加酒店图片
+function addHotelImage(url, param, callBack) {
+    $.post(url + "admin/madeTour/hotel/addImage",param,callBack);
+}
+
+//旅游定制-酒店管理-删除酒店图片
+function delHotelImage(url, param, callBack) {
+    ajaxRequest(url + "admin/madeTour/hotel/delHotelImage/" + param.id, param, "GET", callBack);
+}
+
+//旅游定制-酒店管理-删除酒店房间信息
+function delHotelRooms(url, param, callBack) {
+    ajaxRequest(url + "admin/madeTour/hotel/delHotelRooms/" + param.id, param, "GET", callBack);
+}
+
+
+
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 

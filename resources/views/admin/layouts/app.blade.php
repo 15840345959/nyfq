@@ -13,6 +13,10 @@
     <script type="text/javascript" src="{{ URL::asset('dist/lib/html5shiv.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('dist/lib/respond.min.js') }}"></script>
     <![endif]-->
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ URL::asset('bower_components/iconfont/iconfont.css') }}">
+
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('dist/static/h-ui/css/H-ui.min.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('dist/static/h-ui.admin/css/H-ui.admin.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('dist/lib/Hui-iconfont/1.0.8/iconfont.css') }}"/>

@@ -105,6 +105,21 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin.login']], function ()
     Route::post('/product/tourGoods/editCalendars', 'Admin\TourGoodsController@editCalendarsPost');  //旅游产品日期价格详情信息编辑和添加post
     Route::get('/product/tourGoods/delCalendars/{id}', 'Admin\TourGoodsController@delCalendars');  //删除旅游产品日期价格详情信息
 
+    //旅游定制管理-酒店管理
+    Route::get('/madeTour/hotel/index', 'Admin\HotelController@index');  //旅游定制-酒店管理
+    Route::post('/madeTour/hotel/index', 'Admin\HotelController@index');  //旅游定制-酒店管理搜索
+    Route::get('/madeTour/hotel/edit', 'Admin\HotelController@edit');  //旅游定制-酒店管理-添加，编辑get
+    Route::post('/madeTour/hotel/edit', 'Admin\HotelController@editPost');  //旅游定制-酒店管理-添加，编辑post
+    Route::get('/madeTour/hotel/del/{id}', 'Admin\HotelController@del');  //旅游定制-酒店管理-删除
+    Route::get('/madeTour/hotel/addImage', 'Admin\HotelController@addImage');  //旅游定制-酒店管理-添加图片-get
+    Route::post('/madeTour/hotel/addImage', 'Admin\HotelController@addImagePost');  //旅游定制-酒店管理-添加图片-post
+    Route::get('/madeTour/hotel/delHotelImage/{id}', 'Admin\HotelController@delHotelImage');  //旅游定制-酒店管理-删除图片
+    Route::get('/madeTour/hotel/addHotelRoomsIndex', 'Admin\HotelController@addHotelRoomsIndex');  //旅游定制酒店管理首页添加酒店房间get
+    Route::get('/madeTour/hotel/editHotelRooms', 'Admin\HotelController@editHotelRooms');  //旅游定制酒店管理添加、编辑酒店房间get
+    Route::post('/madeTour/hotel/editHotelRooms', 'Admin\HotelController@editHotelRoomsPost');  //旅游定制酒店管理添加、编辑酒店房间post
+    Route::get('/madeTour/hotel/delHotelRooms/{id}', 'Admin\HotelController@delHotelRooms');  //旅游定制-酒店管理-删除酒店房间信息
+
+
 
 
 

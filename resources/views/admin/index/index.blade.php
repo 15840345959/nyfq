@@ -85,7 +85,7 @@
             </dl>
             <dl id="menu-product">
                 <dt>
-                    <i class="Hui-iconfont">&#xe620;</i> 旅游产品管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+                    <i class="icon iconfont">&#xe63b;</i> 旅游产品管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
                 </dt>
                 <dd>
                     <ul>
@@ -94,20 +94,20 @@
                     </ul>
                 </dd>
             </dl>
-            {{--<dl id="menu-goods">--}}
-                {{--<dt>--}}
-                    {{--<i class="Hui-iconfont">&#xe649;</i> 旅游定制管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>--}}
-                {{--</dt>--}}
-                {{--<dd>--}}
-                {{--<ul>--}}
-                    {{--<li><a data-href="{{ URL::asset('/admin/madeTour/hotel/index') }}"  data-title="酒店" href="javascript:void(0)">酒店</a></li>--}}
-                    {{--<li><a data-href="product-category.html" data-title="航班" href="javascript:void(0)">航班</a></li>--}}
-                    {{--<li><a data-href="product-category.html" data-title="套餐" href="javascript:void(0)">套餐</a></li>--}}
-                    {{--<li><a data-href="product-category.html" data-title="车导" href="javascript:void(0)">车导</a></li>--}}
-                    {{--<li><a data-href="product-category.html" data-title="成型套餐" href="javascript:void(0)">成型套餐</a></li>--}}
-                {{--</ul>--}}
-                {{--</dd>--}}
-            {{--</dl>--}}
+            <dl id="menu-goods">
+                <dt>
+                    <i class="icon iconfont">&#xe676;</i> 旅游定制管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+                </dt>
+                <dd>
+                <ul>
+                    <li><a data-href="{{ URL::asset('/admin/madeTour/hotel/index') }}"  data-title="酒店" href="javascript:void(0)">酒店</a></li>
+                    <li><a data-href="{{ URL::asset('/admin/madeTour/plane/index') }}" data-title="航班" href="javascript:void(0)">航班</a></li>
+{{--                    <li><a data-href="{{ URL::asset('/admin/madeTour/hotel/index') }}" data-title="套餐" href="javascript:void(0)">套餐</a></li>--}}
+                    <li><a data-href="{{ URL::asset('/admin/madeTour/car/index') }}" data-title="车导" href="javascript:void(0)">车导</a></li>
+                    <li><a data-href="{{ URL::asset('/admin/madeTour/customization/index') }}" data-title="成型套餐" href="javascript:void(0)">成型套餐</a></li>
+                </ul>
+                </dd>
+            </dl>
             <dl id="menu-order">
                 <dt><i class="Hui-iconfont">&#xe687;</i> 订单管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
                 </dt>
@@ -129,7 +129,7 @@
                 </dd>
             </dl>
             {{--<dl id="menu-integral">--}}
-            {{--<dt><i class="Hui-iconfont">&#xe6b5;</i> 积分商城管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>--}}
+            {{--<dt><i class="icon iconfont">&#xe607;</i> 积分商城管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>--}}
             {{--</dt>--}}
             {{--<dd>--}}
             {{--<ul>--}}
@@ -139,7 +139,7 @@
             {{--</dd>--}}
             {{--</dl>--}}
             {{--<dl id="menu-ticket">--}}
-            {{--<dt><i class="Hui-iconfont">&#xe628;</i> 抢票模块管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>--}}
+            {{--<dt><i class="icon iconfont">&#xe643;</i> 抢票模块管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>--}}
             {{--</dt>--}}
             {{--<dd>--}}
             {{--<ul>--}}
