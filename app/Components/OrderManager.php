@@ -325,6 +325,8 @@ class OrderManager
             $orderDetail->planGoods = PlanGoodsManager::getPlanGoodsById($orderDetail['goods_id']);
         } else if ($orderDetail['goods_type'] == 4) {
             $orderDetail->carGoods = CarGoodsManager::getCarGoodsById($orderDetail['goods_id']);
+        } else if ($orderDetail['goods_type'] == 5) {
+            $orderDetail->ticket = TicketGoodsManager::getTicketGoodsById($orderDetail['goods_id']);
         }
         //根据user_id获取用户信息
         $orderDetail->user = User::where('id', $orderDetail['user_id'])->first();

@@ -371,4 +371,133 @@ class IntegralManager
         $sign = IntegralRecord::where($where)->orderBy('id', 'desc')->first();
         return $sign;
     }
+
+    /*
+     * 获取所有积分商城商品
+     *
+     * By mtt
+     *
+     * 2018-3-20
+     */
+    public static function getIntegralGoods($search_word){
+        $integralGoods = IntegralGoods::where('name','like','%'.$search_word.'%')->orderBy('id','asc')->get();
+        return $integralGoods;
+    }
+
+    /*
+     * 设置积分商城商品，用于添加、编辑
+     *
+     * By mtt
+     *
+     * 2018-3-20
+     */
+    public static function setIntegralGoods($integralGoods,$data){
+        if(array_key_exists('name',$data)){
+            $integralGoods -> name = array_get($data,'name');
+        }
+        if(array_key_exists('image',$data)){
+            $integralGoods -> image = array_get($data,'image');
+        }
+        if(array_key_exists('price',$data)){
+            $integralGoods -> price = array_get($data,'price');
+        }
+        if(array_key_exists('status',$data)){
+            $integralGoods -> status = array_get($data,'status');
+        }
+        return $integralGoods;
+    }
+
+    /*
+     * 获取所有积分兑换历史
+     *
+     * By mtt
+     *
+     * 2018-3-20
+     */
+    public static function getIntegralHistories(){
+        $integralHistories = IntegralHistory::orderby('id','desc')->get();
+        return $integralHistories;
+    }
+
+    /*
+     * 根据level获取积分商城兑换历史相关信息
+     *
+     * By mtt
+     *
+     * 2018-3-20
+     */
+    public static function getIntegralHistoriesByLevel($integralHistories,$level){
+        //获取用户信息
+        $integralHistories -> user = UserManager::getUserInfoByIdWithToken($integralHistories->user_id);
+        //获取旅行社信息
+        $integralHistories -> organization = OrganizationManager::getOrganizationById($integralHistories->organization_id);
+        return $integralHistories;
+    }
+
+    /*
+     * 获取所有的用户积分记录
+     *
+     * By mtt
+     *
+     * mtt
+     */
+    public static function getIntegralRecords(){
+        $integralRecords = IntegralRecord::orderby('id','desc')->get();
+        return $integralRecords;
+    }
+
+    /*
+     * 根据level获取积分商城用户积分记录
+     *
+     * By mtt
+     *
+     * 2018-3-20
+     */
+    public static function getIntegralRecordsByLevel($integralRecords,$level){
+        //获取用户信息
+        $integralRecords -> user = UserManager::getUserInfoByIdWithToken($integralRecords->user_id);
+        return $integralRecords;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

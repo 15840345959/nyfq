@@ -57,6 +57,47 @@ class TicketGoodsManager
         return $ticketGoodsList;
     }
 
+    /*
+     * 查询所有抢票信息
+     *
+     * By mtt
+     *
+     * 2018-3-20
+     */
+    public static function getTicketGoods($search_word){
+        $ticketGoods = TicketGoods::where('name','like','%'.$search_word.'%')->orderby('id','desc')->get();
+        return $ticketGoods;
+    }
+
+    /*
+     * 设置抢票商品，用于编辑、添加
+     *
+     * By mtt
+     *
+     * 2018-3-20
+     */
+    public static function setTicketGoods($ticketGoods,$data){
+        if(array_key_exists('name',$data)){
+            $ticketGoods -> name = array_get($data,'name');
+        }
+        if(array_key_exists('image',$data)){
+            $ticketGoods -> image = array_get($data,'image');
+        }
+        if(array_key_exists('label',$data)){
+            $ticketGoods -> label = array_get($data,'label');
+        }
+        if(array_key_exists('primecast',$data)){
+            $ticketGoods -> primecast = array_get($data,'primecast');
+        }
+        if(array_key_exists('price',$data)){
+            $ticketGoods -> price = array_get($data,'price');
+        }
+        if(array_key_exists('unit',$data)){
+            $ticketGoods -> unit = array_get($data,'unit');
+        }
+        return $ticketGoods;
+    }
+
 
 
 }

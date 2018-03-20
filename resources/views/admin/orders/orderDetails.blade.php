@@ -373,7 +373,43 @@
                     <td>{{$data->carGoods->unit}}</td>
                 </tr>
                 </tbody>
+            @elseif($data->goods_type == '5')
+                <thead>
+                <tr>
+                    <th colspan="2" scope="col">抢票产品详情</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>标题</td>
+                    <td>{{$data->ticket->name}}</td>
+                </tr>
+                <tr>
+                    <td>图片</td>
+                    <td>
+                        <img src="{{ $data['ticket']['image'] ? $data['ticket']['image'].'?imageView2/1/w/200/h/200/interlace/1/q/75|imageslim' : URL::asset('/img/default_headicon.png')}}"
+                             class="img-rect-30 radius-5">
+                    </td>
+                </tr>
+                <tr>
+                    <td>标签</td>
+                    <td>{{$data->ticket->label}}</td>
+                </tr>
+                <tr>
+                    <td>原价</td>
+                    <td>{{$data->ticket->primecost}}</td>
+                </tr>
+                <tr>
+                    <td>实际价格</td>
+                    <td>{{$data->ticket->price}}</td>
+                </tr>
+                <tr>
+                    <td>单位</td>
+                    <td>{{$data->ticket->unit}}</td>
+                </tr>
+                </tbody>
             @endif
+
             @endforeach
         </table>
         <div style="text-align: center;margin-top: 3rem;margin-bottom: 4rem;">

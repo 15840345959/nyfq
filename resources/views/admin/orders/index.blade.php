@@ -32,6 +32,8 @@
                             <td>{{$data['hotelGoods']['name']}}</td>
                         @elseif($data['goods_type'] == 4)
                             <td>{{$data['carGoods']['name']}}</td>
+                        @elseif($data['goods_type'] == 5)
+                            <td>{{$data['ticket']['name']}}</td>
                         @endif
                         @if($data['goods_type'] == 1)
                             <td>旅游产品</td>
@@ -41,6 +43,8 @@
                             <td>酒店产品</td>
                         @elseif($data['goods_type'] == 4)
                             <td>车导产品</td>
+                        @elseif($data['goods_type'] == 5)
+                            <td>抢票产品</td>
                         @endif
                         <td>{{$data['start_time']}}</td>
                         <td>{{$data['price']}}</td>
@@ -88,7 +92,7 @@
             "bLengthChange": false,   //去掉每页显示多少条数据方法
             "aoColumnDefs": [
                 //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-                {"orderable": false, "aTargets": [1,2,6]}// 不参与排序的列
+                {"orderable": false, "aTargets": [1,2]}// 不参与排序的列
             ]
         });
 

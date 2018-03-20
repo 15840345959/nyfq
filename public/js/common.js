@@ -141,6 +141,16 @@ function delCustomization(url, param, callBack) {
     ajaxRequest(url + "admin/madeTour/customization/del/" + param.id, param, "GET", callBack);
 }
 
+//积分商城管理-积分兑换商品-删除
+function delIntegral(url, param, callBack) {
+    ajaxRequest(url + "admin/integral/goods/del/" + param.id, param, "GET", callBack);
+}
+
+//抢票管理-抢票商品-删除
+function delTicket(url, param, callBack) {
+    ajaxRequest(url + "admin/ticket/del/" + param.id, param, "GET", callBack);
+}
+
 
 
 

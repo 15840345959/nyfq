@@ -133,21 +133,21 @@
                 </dt>
                 <dd>
                     <ul>
-                        <li><a data-href="product-brand.html" data-title="积分兑换商品" href="javascript:void(0)">积分兑换商品</a></li>
-                        <li><a data-href="product-brand.html" data-title="商品兑换历史" href="javascript:void(0)">商品兑换历史</a></li>
-                        <li><a data-href="product-brand.html" data-title="用户兑换记录" href="javascript:void(0)">用户兑换记录</a></li>
+                        <li><a data-href="{{ URL::asset('/admin/integral/goods/index') }}" data-title="积分兑换商品" href="javascript:void(0)">积分兑换商品</a></li>
+                        <li><a data-href="{{ URL::asset('/admin/integral/histories/index') }}" data-title="商品兑换历史" href="javascript:void(0)">商品兑换历史</a></li>
+                        <li><a data-href="{{ URL::asset('/admin/integral/records/index') }}" data-title="用户兑换记录" href="javascript:void(0)">用户积分记录</a></li>
                     </ul>
                 </dd>
             </dl>
-            {{--<dl id="menu-ticket">--}}
-                {{--<dt><i class="icon iconfont">&#xe643;</i> 抢票模块管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>--}}
-                {{--</dt>--}}
-                {{--<dd>--}}
-                    {{--<ul>--}}
-                        {{--<li><a data-href="product-brand.html" data-title="抢票模块管理" href="javascript:void(0)">抢票模块管理</a></li>--}}
-                    {{--</ul>--}}
-                {{--</dd>--}}
-            {{--</dl>--}}
+            <dl id="menu-ticket">
+                <dt><i class="icon iconfont">&#xe643;</i> 抢票模块管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+                </dt>
+                <dd>
+                    <ul>
+                        <li><a data-href="{{ URL::asset('/admin/ticket/index') }}" data-title="抢票模块管理" href="javascript:void(0)">抢票模块管理</a></li>
+                    </ul>
+                </dd>
+            </dl>
             <dl id="menu-comment">
                 <dt><i class="Hui-iconfont">&#xe6b3;</i> 评论管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
                 </dt>

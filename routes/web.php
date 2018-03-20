@@ -140,6 +140,27 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin.login']], function ()
     Route::post('/madeTour/customization/edit', 'Admin\CustomizationController@editPost');  //旅游定制-成型套餐管理-添加、编辑-post
     Route::get('/madeTour/customization/del/{id}', 'Admin\CustomizationController@del');  //旅游定制-成型套餐管理-删除
 
+    //积分商城管理-商品管理
+    Route::get('/integral/goods/index', 'Admin\IntegralController@index');  //积分商城管理-积分商品
+    Route::post('/integral/goods/index', 'Admin\IntegralController@index');  //积分商城管理-积分商品-搜索
+    Route::get('/integral/goods/edit', 'Admin\IntegralController@edit');  //积分商城管理-积分商品添加、编辑-get
+    Route::post('/integral/goods/edit', 'Admin\IntegralController@editPost');  //积分商城管理-积分商品添加、编辑-post
+    Route::get('/integral/goods/del/{id}', 'Admin\IntegralController@del');  //积分商城管理-积分商品-删除
+
+    //积分商城管理-商品兑换历史
+    Route::get('/integral/histories/index', 'Admin\IntegralController@historiesIndex');  //积分商城管理-商品兑换历史-首页
+
+    //积分商城管理-用户积分记录
+    Route::get('/integral/records/index', 'Admin\IntegralController@recordsIndex');  //积分商城管理-用户积分记录-首页
+
+    //抢票管理-抢票商品
+    Route::get('/ticket/index', 'Admin\TicketController@index');  //抢票管理-抢票商品
+    Route::post('/ticket/index', 'Admin\TicketController@index');  //抢票管理-抢票商品-搜索
+    Route::get('/ticket/edit', 'Admin\TicketController@edit');  //抢票管理-抢票商品添加、编辑-get
+    Route::post('/ticket/edit', 'Admin\TicketController@editPost');  //抢票管理-抢票商品添加、编辑-post
+    Route::get('/ticket/del/{id}', 'Admin\TicketController@del');  //抢票管理-抢票商品-删除
+
+
 
 
 
