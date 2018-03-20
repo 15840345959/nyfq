@@ -127,6 +127,17 @@ class PlanGoodsManager
         return $planeGoods;
     }
 
+    /*
+     * 获取所有的飞机票信息
+     *
+     * By mtt
+     *
+     * 2018-3-20
+     */
+    public static function getPlane(){
+        $plane = PlanGoods::orderby('id','asc')->get();
+        return $plane;
+    }
 
 
 

@@ -102,7 +102,17 @@ class CarGoodsManager
         return $carGoods;
     }
 
-
+    /*
+     * 获取所有的车导信息
+     *
+     * By mtt
+     *
+     * 2018-3-20
+     */
+    public static function getCar(){
+        $car = CarGoods::orderby('id','asc')->get();
+        return $car;
+    }
 
 
 
