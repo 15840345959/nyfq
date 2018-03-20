@@ -131,6 +131,11 @@ function delPlane(url, param, callBack) {
     ajaxRequest(url + "admin/madeTour/plane/del/" + param.id, param, "GET", callBack);
 }
 
+//旅游定制-车导管理-删除
+function delCar(url, param, callBack) {
+    ajaxRequest(url + "admin/madeTour/car/del/" + param.id, param, "GET", callBack);
+}
+
 
 
 

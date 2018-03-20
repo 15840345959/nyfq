@@ -126,6 +126,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin.login']], function ()
     Route::post('/madeTour/plane/edit', 'Admin\PlaneController@editPost');  //旅游定制-分机票管理-添加，编辑post
     Route::get('/madeTour/plane/del/{id}', 'Admin\PlaneController@del');  //旅游定制-酒店管理-删除酒店房间信息
 
+    //旅游定制管理-车导管理
+    Route::get('/madeTour/car/index', 'Admin\CarController@index');  //旅游定制-分机票管理
+    Route::post('/madeTour/car/index', 'Admin\CarController@index');  //旅游定制-分机票管理搜索
+    Route::get('/madeTour/car/edit', 'Admin\CarController@edit');  //旅游定制-车导管理-添加、编辑-get
+    Route::post('/madeTour/car/edit', 'Admin\CarController@editPost');  //旅游定制-车导管理-添加、编辑-post
+    Route::get('/madeTour/car/del/{id}', 'Admin\CarController@del');  //旅游定制-车导管理-删除
+
 
 
 
