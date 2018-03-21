@@ -76,11 +76,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin.login']], function ()
     Route::get('/orders/setStatus/{id}', 'Admin\ordersController@setOrderStatus');  //设置订单状态
 
     //产品分类管理
-    Route::get('/product/tourCategories/index', 'Admin\tourCategoriesController@index');  //产品分类管理首页
-    Route::get('/product/tourCategories/edit', 'Admin\tourCategoriesController@edit');  //产品分类管理新建或编辑get
-    Route::post('/product/tourCategories/edit', 'Admin\tourCategoriesController@editPost');  //产品分类管理新建或编辑post
-    Route::get('/product/tourCategories/del/{id}', 'Admin\tourCategoriesController@del');  //删除产品分类
-    Route::post('/product/tourCategories/index', 'Admin\tourCategoriesController@index');  //产品分类搜索
+    Route::get('/product/tourCategories/index', 'Admin\TourCategoriesController@index');  //产品分类管理首页
+    Route::get('/product/tourCategories/edit', 'Admin\TourCategoriesController@edit');  //产品分类管理新建或编辑get
+    Route::post('/product/tourCategories/edit', 'Admin\TourCategoriesController@editPost');  //产品分类管理新建或编辑post
+    Route::get('/product/tourCategories/del/{id}', 'Admin\TourCategoriesController@del');  //删除产品分类
+    Route::post('/product/tourCategories/index', 'Admin\TourCategoriesController@index');  //产品分类搜索
 
     //旅游产品管理
     Route::get('/product/tourGoods/index', 'Admin\TourGoodsController@index');  //产品管理首页
