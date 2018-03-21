@@ -38,6 +38,7 @@
                 <th width="40">原价（默认）</th>
                 <th width="50">实际价格（默认）</th>
                 <th width="30">是否为特价产品</th>
+                <th width="30">旅游产品类型</th>
                 <th width="40">单位</th>
                 <th width="40">共有位子（默认）</th>
                 <th width="40">剩余空位（默认）</th>
@@ -62,6 +63,11 @@
                         <td>不是</td>
                     @elseif($data['sale']==1)
                         <td>是</td>
+                    @endif
+                    @if($data['type']==0)
+                        <td>普通旅游产品</td>
+                    @elseif($data['type']==1)
+                        <td>一日游旅游产品</td>
                     @endif
                     <td>{{$data['unit']}}</td>
                     <td>{{$data['total']}}</td>

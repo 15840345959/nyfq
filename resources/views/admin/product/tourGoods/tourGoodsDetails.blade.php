@@ -58,6 +58,16 @@
                     @endif
                 </tr>
                 <tr>
+                    <td>旅游产品类型</td>
+                    @if($data->type=="0")
+                        <td>普通旅游产品</td>
+                    @elseif($data->type=="1")
+                        <td>一日游旅游产品</td>
+                    @else
+                        <td>暂无</td>
+                    @endif
+                </tr>
+                <tr>
                     <td>产品单位</td>
                     <td>{{$data->unit}}</td>
                 </tr>
