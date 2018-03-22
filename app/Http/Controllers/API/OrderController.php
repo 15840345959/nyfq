@@ -62,4 +62,26 @@ class OrderController extends Controller
         }
     }
 
+    //根据user_id和goods_type获取订单信息
+    public function getOrdersByUserIdAndGoodsTye(Request $request){
+        $data = $request->all();
+        //合规校验types
+        $requestValidationResult = RequestValidator::validator($request->all(), [
+            'user_id' => 'required',
+            'goods_type' => 'required',
+        ]);
+        if ($requestValidationResult !== true) {
+            return ApiResponse::makeResponse(false, $requestValidationResult, ApiResponse::MISSING_PARAM);
+        }
+        $orders = OrderManager::getOrderByUserIdAndgoods_type($data['user_id'],$data['goods_type']);
+        foreach ($orders as $order){
+            $order = OrderManager::getOrderDetailsByLevel($order,'1');
+        }
+        if ($orders) {
+            return ApiResponse::makeResponse(true, $orders, ApiResponse::SUCCESS_CODE);
+        } else {
+            return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM], ApiResponse::MISSING_PARAM);
+        }
+    }
+
 }

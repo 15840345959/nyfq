@@ -101,6 +101,8 @@ Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
     Route::post('order/order', 'API\OrderController@order')->middleware('CheckToken');
     //查询订单接口
     Route::get('order/getTourOrder', 'API\OrderController@getTourOrder')->middleware('CheckToken');
+    //根据user_id和goods_type获取订单信息
+    Route::get('order/getOrders', 'API\OrderController@getOrdersByUserIdAndGoodsTye')->middleware('CheckToken');
     //删除订单接口
     Route::get('order/deleteTourOrder', 'API\OrderController@deleteTourOrder')->middleware('CheckToken');
 
