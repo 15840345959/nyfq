@@ -41,7 +41,7 @@
                 </div>
             </div>
             <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>旅游产品分类名称：</label>
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>选择旅游产品名称：</label>
                 <div class="formControls col-xs-8 col-sm-9">
                     <select id="tour_goods_id" name="tour_goods_id" class="select">
                         @foreach($tourGoods as $tourGoods)
