@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Components\OrderManager;
+use App\Components\RequestValidator;
 use App\Http\Controllers\ApiResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -29,9 +30,17 @@ class OrderController extends Controller
     public function getTourOrder(Request $request)
     {
         $data = $request->all();
-//        $user_id = $data['user_id'];
-        $orders = OrderManager::getUserIdListsByUserId($data);
-//        LOG:info("order : " . $orders);
+        //合规校验types
+        $requestValidationResult = RequestValidator::validator($request->all(), [
+            'user_id' => 'required',
+        ]);
+        if ($requestValidationResult !== true) {
+            return ApiResponse::makeResponse(false, $requestValidationResult, ApiResponse::MISSING_PARAM);
+        }
+        $orders = OrderManager::getOrderByUserId($data['user_id']);
+        foreach ($orders as $order){
+            $order = OrderManager::getOrderDetailsByLevel($order,'0');
+        }
         if ($orders) {
             return ApiResponse::makeResponse(true, $orders, ApiResponse::SUCCESS_CODE);
         } else {

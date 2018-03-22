@@ -359,5 +359,17 @@ class OrderManager
         return $order;
     }
 
+    /*
+     * 根据user_id获取所有订单信息
+     *
+     * By mtt
+     *
+     * 2018-3-22
+     */
+    public static function getOrderByUserId($user_id){
+        $order = Orders::where('user_id',$user_id)->get();
+        return $order;
+    }
+
 
 }
