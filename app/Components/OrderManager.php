@@ -383,5 +383,33 @@ class OrderManager
         return $order;
     }
 
+    /*
+    * 根据订单id获取订单详情
+    *
+    * By mtt
+    *
+    * 2018-2-28
+    */
+    public static function getOrderDetails($orderDetail)
+    {
+        //根据订单中的商品类型获取商品信息
+        if ($orderDetail['goods_type'] == 1) {
+            $orderDetail->tourGoods = TourGoodsManager::getTourGoodsById($orderDetail['goods_id']);
+            //获取商品分类信息
+            $orderDetail->categories = TourCategorieManager::getTourCategorieById($orderDetail->tourGoods->tour_category_id);
+        } else if ($orderDetail['goods_type'] == 3) {
+            $orderDetail->hotelGoods = HotelGoodsManager::getHotelGoodsById($orderDetail['goods_id']);
+        } else if ($orderDetail['goods_type'] == 2) {
+            $orderDetail->planGoods = PlanGoodsManager::getPlanGoodsById($orderDetail['goods_id']);
+        } else if ($orderDetail['goods_type'] == 4) {
+            $orderDetail->carGoods = CarGoodsManager::getCarGoodsById($orderDetail['goods_id']);
+        } else if ($orderDetail['goods_type'] == 5) {
+            $orderDetail->ticket = TicketGoodsManager::getTicketGoodsById($orderDetail['goods_id']);
+        }
+        //根据user_id获取用户信息
+        $orderDetail->user = User::where('id', $orderDetail['user_id'])->first();
+        return $orderDetail;
+    }
+
 
 }

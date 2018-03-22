@@ -75,7 +75,7 @@ class OrderController extends Controller
         }
         $orders = OrderManager::getOrderByUserIdAndgoods_type($data['user_id'],$data['goods_type']);
         foreach ($orders as $order){
-            $order = OrderManager::getOrderDetailsByLevel($order,'1');
+            $order = OrderManager::getOrderDetails($order);
         }
         if ($orders) {
             return ApiResponse::makeResponse(true, $orders, ApiResponse::SUCCESS_CODE);
