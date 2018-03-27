@@ -229,6 +229,9 @@ class TourGoodsManager
         if (array_key_exists('tour_category_id', $data)) {
             $tourGoods->tour_category_id = array_get($data, 'tour_category_id');
         }
+        if (array_key_exists('sort', $data)) {
+            $tourGoods->sort = array_get($data, 'sort');
+        }
         if (array_key_exists('type', $data)) {
             $tourGoods->type = array_get($data, 'type');
         }

@@ -18,6 +18,12 @@
                 </div>
             </div>
             <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>排序(值越大越靠前)：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input id="sort" name="sort" type="text" class="input-text" value="{{ isset($data['sort']) ? $data['sort'] : '' }}" placeholder="值越大越靠前">
+                </div>
+            </div>
+            <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>	短标题：</label>
                 <div class="formControls col-xs-8 col-sm-9">
                     <input id="title" name="title" type="text" class="input-text" value="{{ isset($data['title']) ? $data['title'] : '' }}" placeholder="请输入短标题">
