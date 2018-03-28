@@ -59,6 +59,11 @@ Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
     Route::get('tour/getTourGoodsDetail', 'API\TourController@getTourGoodsDetail')->middleware('CheckToken');
     //根据产品类型获取旅游产品
     Route::get('tour/getTourGoods', 'API\TourController@getTourGoods');
+    //根据旅游产品id获取产品日期
+    Route::get('tour/getTourGoodsByTourGoodsId', 'API\TourController@getTourGoodsCalendarsByTourGoodsId');
+    //根据旅游产品id获取产品日期
+    Route::get('tour/getTourGoodsByGoodsIdAndDate', 'API\TourController@getTourGoodsCalendarsByTourGoodsIdAndDate');
+
 
     //获取产品的评论详情
     Route::get('comment/getGoodsCommentLists', 'API\CommentController@getGoodsCommentLists')->middleware('CheckToken');

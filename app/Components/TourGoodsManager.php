@@ -422,6 +422,18 @@ class TourGoodsManager
         return $tourGoodsCalendars;
     }
 
+    /*
+     * 根据产品id和日期获得产品日期等信息
+     *
+     * By mtt
+     *
+     * 2018-3-28
+     */
+    public static function getTourGoodsCalendarsByTourGoodsIdAndDate($tour_goods_id,$date){
+        $goodsCalendars = TourGoodsCalendar::where('tour_goods_id',$tour_goods_id)->where('date',$date)->get();
+        return $goodsCalendars;
+    }
+
 
 
 

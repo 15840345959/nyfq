@@ -76,6 +76,43 @@ class TourController extends Controller
         }
     }
 
+    //根据旅游产品id获取产品日期
+    public function getTourGoodsCalendarsByTourGoodsId(Request $request){
+        $data = $request->all();
+        //合规校验types
+        $requestValidationResult = RequestValidator::validator($request->all(), [
+            'tour_goods_id' => 'required'
+        ]);
+        if ($requestValidationResult !== true) {
+            return ApiResponse::makeResponse(false, $requestValidationResult, ApiResponse::MISSING_PARAM);
+        }
+        $goodsCalendars = TourGoodsManager::getTourGoodsCalendarsByTourGoodsId($data['tour_goods_id']);
+        if($goodsCalendars){
+            return ApiResponse::makeResponse(true,$goodsCalendars,ApiResponse::SUCCESS_CODE);
+        }else{
+            return ApiResponse::makeResponse(false,ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM],ApiResponse::MISSING_PARAM);
+        }
+    }
+
+    //根据产品id和日期获得产品日期等信息
+    public function getTourGoodsCalendarsByTourGoodsIdAndDate(Request $request){
+        $data = $request->all();
+        //合规校验types
+        $requestValidationResult = RequestValidator::validator($request->all(), [
+            'tour_goods_id' => 'required',
+            'date' => 'required'
+        ]);
+        if ($requestValidationResult !== true) {
+            return ApiResponse::makeResponse(false, $requestValidationResult, ApiResponse::MISSING_PARAM);
+        }
+        $goodsCalendars = TourGoodsManager::getTourGoodsCalendarsByTourGoodsIdAndDate($data['tour_goods_id'],$data['date']);
+        if($goodsCalendars){
+            return ApiResponse::makeResponse(true,$goodsCalendars,ApiResponse::SUCCESS_CODE);
+        }else{
+            return ApiResponse::makeResponse(false,ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM],ApiResponse::MISSING_PARAM);
+        }
+    }
+
 
 
 
