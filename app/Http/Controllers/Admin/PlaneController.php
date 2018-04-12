@@ -9,9 +9,11 @@
 namespace App\Http\Controllers\Admin;
 
 
+use App\Components\GoodsesManager;
 use App\Components\PlanGoodsManager;
 use App\Components\QNManager;
 use App\Components\Utils;
+use App\Models\Goods;
 use App\Models\PlanGoods;
 use Illuminate\Http\Request;
 
@@ -59,6 +61,18 @@ class PlaneController
         $planeGoods = PlanGoodsManager::setPlaneGoods($planeGoods,$data);
         $result = $planeGoods->save();
         if($result){
+            //查产品汇总表中是否存在数据
+            $goods = GoodsesManager::getByGoodsId($planeGoods->id);
+            if(!$goods){
+            //操作旅游产品汇总表
+            $goods = new Goods();
+            $goods -> goods_id = $planeGoods->id;
+//            dd($result['id']);
+            $goods -> goods_type = '3';
+            $goods -> save();
+            }else{
+
+            }
             $return['result'] = true;
             $return['msg'] = '添加成功';
         }else{

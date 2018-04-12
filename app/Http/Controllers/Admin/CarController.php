@@ -9,10 +9,12 @@
 namespace App\Http\Controllers\Admin;
 
 
+use App\Components\GoodsesManager;
 use App\Components\CarGoodsManager;
 use App\Components\QNManager;
 use App\Components\Utils;
 use App\Models\CarGoods;
+use App\Models\Goods;
 use Illuminate\Http\Request;
 
 class CarController
@@ -59,6 +61,18 @@ class CarController
         $carGoods = CarGoodsManager::setCarGoods($carGoods,$data);
         $result = $carGoods->save();
         if($result){
+            //操作旅游产品汇总表
+//            $goods = new Goods();
+            //查产品汇总表中是否存在数据
+            $goods = GoodsesManager::getByGoodsId($carGoods->id);
+            if(!$goods){
+                $goods = new Goods();
+                $goods -> goods_id = $carGoods->id;
+                $goods -> goods_type = '4';
+                $goods -> save();
+            }else{
+
+            }
             $return['result'] = true;
             $return['msg'] = '添加成功';
         }else{

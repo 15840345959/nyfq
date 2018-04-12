@@ -14,6 +14,7 @@ use App\Components\TourCategorieManager;
 use App\Components\TourGoodsManager;
 use App\Components\Utils;
 use App\Http\Controllers\ApiResponse;
+use App\Models\Goods;
 use App\Models\TourCategorie;
 use App\Models\TourGoods;
 use App\Models\TourGoodsCalendar;
@@ -69,8 +70,16 @@ class TourGoodsController
             $tourGoods = new TourGoods();
         }
         $tourGoods = TourGoodsManager::setTourGoods($tourGoods,$data);
-        $tourGoods->save();
-        return ApiResponse::makeResponse(true,$tourGoods,ApiResponse::SUCCESS_CODE);
+        $result = $tourGoods->save();
+        if($result){
+            //操作旅游产品汇总表
+            $goods = new Goods();
+            $goods -> goods_id = $tourGoods->id;
+//            dd($result['id']);
+            $goods -> goods_type = '1';
+            $goods -> save();
+        }
+        return ApiResponse::makeResponse(true,$result,ApiResponse::SUCCESS_CODE);
     }
 
     //删除旅游产品

@@ -9,9 +9,11 @@
 namespace App\Http\Controllers\Admin;
 
 
+use App\Components\GoodsesManager;
 use App\Components\HotelGoodsManager;
 use App\Components\QNManager;
 use App\Components\Utils;
+use App\Models\Goods;
 use App\Models\HotelGoods;
 use App\Models\HotelGoodsImage;
 use App\Models\HotelGoodsRooms;
@@ -61,6 +63,18 @@ class HotelController
         $hotelGoods = HotelGoodsManager::setHotelGoods($hotelGoods,$data);
         $result = $hotelGoods -> save();
         if($result){
+            //操作旅游产品汇总表
+//            $goods = new Goods();
+            //查产品汇总表中是否存在数据
+            $goods = GoodsesManager::getByGoodsId($hotelGoods->id);
+            if(!$goods){
+                $goods = new Goods();
+                $goods -> goods_id = $hotelGoods->id;
+                $goods -> goods_type = '2';
+                $goods -> save();
+            }else{
+
+            }
             $return['result'] = true;
             $return['msg'] = '添加成功';
         }else{
