@@ -31,7 +31,16 @@ class OrganizationManager
             return $organization['name'];
         }
     }
-
+    public static function getOrganization($id)
+    {
+//        if ($id==0) {
+//            return '南洋风情小程序';
+//        } else {
+//            $organization=Organization::where('id','=',$id)->first();
+//            return $organization['name'];
+//        }
+        return $id;
+    }
 
     /*
      * 模糊查询旅行社列表

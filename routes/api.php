@@ -125,6 +125,9 @@ Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
     //获取抢票商品信息
     Route::get('ticket/getTicketGoods', 'API\TicketGoodsController@getTicketGoodsList');
 
+    //根据路行社id获取路行社信息
+    Route::get('organizations/getOrganizations', 'API\OrganizationsController@getOrganizations');//根据id获取旅行社信息
+
 
 
 
