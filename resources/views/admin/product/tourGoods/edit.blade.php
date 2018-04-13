@@ -511,7 +511,7 @@
                         var res = JSON.parse(info);
                         //获取上传成功后的文件的Url
                         var sourceLink = domain + res.key;
-                        $("#imgae").val(sourceLink);
+                        $("#image").val(sourceLink);
                         $("#pickfiles").attr('src', qiniuUrlTool(sourceLink, "head_icon"));
 //                        console.log($("#pickfiles").attr('src'));
                     },
