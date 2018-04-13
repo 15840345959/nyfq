@@ -102,9 +102,9 @@ class UserManager
      */
     public static function setUser($user, $data)
     {
-        if (array_key_exists('nick_name', $data)) {
-            $user->nick_name = array_get($data, 'nick_name');
-        }
+//        if (array_key_exists('nick_name', $data)) {
+//            $user->nick_name = array_get($data, 'nick_name');
+//        }
         if (array_key_exists('password', $data)) {
             $user->password = array_get($data, 'password');
         }
@@ -165,6 +165,13 @@ class UserManager
         } else {
             return null;
         }
+        
+        //处理微信表情
+        $nick_name = $data['nick_name'];
+        $name = self::filterEmoji($nick_name);
+        $user -> nick_name = $name;
+        //处理微信表情
+
         $user = self::setUser($user, $data);
         $user->token = self::getGUID();
         $user->save();
@@ -191,9 +198,33 @@ class UserManager
     {
         //配置用户信息
         $user = self::getUserInfoByIdWithToken($data['id']);
+        //处理微信表情
+        $nick_name = $data['nick_name'];
+        $name = self::filterEmoji($nick_name);
+        $user -> nick_name = $name;
+        //处理微信表情
         $user = self::setUser($user, $data);
         $user->save();
         return $user;
+    }
+
+
+
+    /*
+     * 处理微信表情
+     *
+     * By mtt
+     *
+     * 2018-4-13
+     */
+    public static function filterEmoji($str)
+    {
+        $str = preg_replace_callback( '/./u',
+            function (array $match) {
+                return strlen($match[0]) >= 4 ? '' : $match[0];
+            },
+            $str);
+        return $str;
     }
 
 
