@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>联系方式：</label>
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red"></span>联系方式：</label>
                 <div class="formControls col-xs-8 col-sm-9">
                     <input id="telephone" name="telephone" type="text" class="input-text" value="{{ isset($data['telephone']) ? $data['telephone'] : '' }}" placeholder="请输入联系方式">
                 </div>
@@ -75,7 +75,7 @@
                 </div>
             </div>
             <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>酒店地点：</label>
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red"></span>酒店地点：</label>
                 <div class="formControls col-xs-8 col-sm-9">
                     <input id="address" name="address" type="text" class="input-text" style="width:50%;" value="{{ isset($data['address']) ? $data['address'] : '' }}" placeholder="请输入旅行社地址">
                     <button type="button" class="btn btn-primary" onclick="searchByStationName()">定位</button>
@@ -146,18 +146,18 @@
                     name: {
                         required: true,
                     },
-                    address: {
-                        required: true,
-                    },
-                    lon: {
-                        required: true,
-                    },
-                    lat: {
-                        required: true,
-                    },
-                    telephone: {
-                        required: true,
-                    },
+//                    address: {
+//                        required: true,
+//                    },
+//                    lon: {
+//                        required: true,
+//                    },
+//                    lat: {
+//                        required: true,
+//                    },
+//                    telephone: {
+//                        required: true,
+//                    },
                     image: {
                         required: true,
                     },
