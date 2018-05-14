@@ -23,7 +23,7 @@
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('dist/static/h-ui.admin/skin/default/skin.css') }}" id="skin"/>
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('/css/common.css') }}"/>
     {{--编辑详情时用--}}
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/graphicEditing/graphicEditing.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('/css/graphicEditing/graphicEditing.css') }}"/>
     <!--[if IE 6]>
     <script type="text/javascript" src="{{ URL::asset('dist/lib/DD_belatedPNG_0.0.8a-min.js') }}"></script>
     <script>DD_belatedPNG.fix('*');</script>
