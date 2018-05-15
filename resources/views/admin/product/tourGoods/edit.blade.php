@@ -162,7 +162,7 @@
                     </div>
                 </div>
 
-                <div class="tabCon" id="details_black">
+                <div class="tabCon" id="graphic_black">
                     <div class="row cl" id="container">
                         <div class="formControls col-xs-6 col-sm-6" id="peration-area">
                             <div id="prefix_graphic_content"></div>
@@ -269,6 +269,7 @@
     </script>
 
 @endsection
+
 
 @section('script')
     <script type="text/javascript" src="{{ URL::asset('/js/graphicEditing/graphicEditing_f.js') }}"></script>
@@ -439,16 +440,6 @@
         }
 
         //控制基本信息和内容详情切换
-        $(function () {
-            $('.skin-minimal input').iCheck({
-                checkboxClass: 'icheckbox-blue',
-                radioClass: 'iradio-blue',
-                increaseArea: '20%'
-            });
-            $("#tab-system").Huitab({
-                index: 0
-            });
-
             $(function () {
 
                 $('.skin-minimal input').iCheck({
@@ -534,7 +525,7 @@
                     }
                 });
             });
-        });
+
         //初始化七牛上传模块
         function initQNUploader() {
             var uploader = Qiniu.uploader({
@@ -805,6 +796,8 @@
                 }
             });
         }
+
+
 
 
     </script>

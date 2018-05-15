@@ -47,6 +47,7 @@ function initializationOfGraphicEditing(data){
             }
         }
         config_graphic_usingurationFunctional(config_graphic_using['number'],module)
+        // console.log("config_graphic_usingurationFunctional is : "+JSON.stringify(module))
     }
 }
 //赋值配置
@@ -80,6 +81,7 @@ function assignmentConfig(data){
  * module：如果是全都显示，传入空值；如果显示2个，传入的值为隐藏模块的名称；如果只显示一个，传入的值为显示模块的名称
  */
 function config_graphic_usingurationFunctional(number,module) {
+    console.log("number is : "+JSON.stringify(number))
     var str='';
     var col=12/number;
     if(number==1){
