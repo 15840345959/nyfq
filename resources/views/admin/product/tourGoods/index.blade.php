@@ -104,6 +104,12 @@
                         <a title="删除" href="javascript:;" onclick="tourGoods_del(this,'{{$data['id']}}')" class="ml-5" style="text-decoration:none">
                             <i class="Hui-iconfont">&#xe6e2;</i>
                         </a>
+                        <a title="企业二维码" href="javascript:;"
+                           onclick="tourGoods_show_ewm('{{$data->name}}小程序码','{{URL::asset('/admin/product/tourGoods/ewm')}}?id={{$data->id}}',{{$data->id}})"
+                           class="ml-5"
+                           style="text-decoration:none">
+                            <i class="icon iconfont">&#xe6d7;</i>
+                        </a>
                     </td>
                 </tr>
             @endforeach
@@ -222,6 +228,26 @@
                 content: url
             });
             layer.full(index);
+        }
+
+        /*
+         *
+         * 展示企业二维码
+         *
+         * By TerryQi
+         *
+         * 2018-03-29
+         */
+        function tourGoods_show_ewm(title, url) {
+            console.log("url:" + url);
+            var index = layer.open({
+                type: 2,
+                area: ['520px', '520px'],
+                fixed: false,
+                maxmin: true,
+                title: title,
+                content: url
+            });
         }
 
 

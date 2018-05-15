@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Components\QNManager;
+use App\Components\RequestValidator;
 use App\Components\TourCategorieManager;
 use App\Components\TourGoodsManager;
 use App\Components\Utils;
@@ -417,7 +418,35 @@ class TourGoodsController
         return $return;
     }
 
-
+        /*
+        * 获取旅游产品的二维码
+        *
+        * By mtt
+        *
+        * 2018-05-14
+        */
+        public function ewm(Request $request){
+            $data = $request->all();
+            $admin = $request->session()->get('admin');
+//        dd($data);
+            //合规校验
+            $requestValidationResult = RequestValidator::validator($request->all(), [
+                'id' => 'required',
+            ]);
+            if ($requestValidationResult !== true) {
+                return redirect()->action('\App\Http\Controllers\Admin\IndexController@error', ['msg' => '合规校验失败，请检查参数' . $requestValidationResult]);
+            }
+            $filename = 'tourGoods_' . $data['id'] . '.png';
+            //判断文件是否存在
+            if (file_exists(public_path('img/') . $filename)) {
+//            dd("file exists");
+            } else {
+                $app = app('wechat.mini_program');
+                $response = $app->app_code->get('pages/travelDetails/travelDetails?travelid=' . $data['id']);
+                $response->saveAs(public_path('img'), 'tourGoods_' . $data['id'] . '.png');
+            }
+            return view('admin.product.tourGoods.ewm', ['admin' => $admin, 'filename' => $filename]);
+        }
 
 
 

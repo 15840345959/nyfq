@@ -104,6 +104,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin.login']], function ()
     Route::get('/product/tourGoods/editCalendars', 'Admin\TourGoodsController@editCalendars');  //旅游产品日期价格详情信息编辑和添加get
     Route::post('/product/tourGoods/editCalendars', 'Admin\TourGoodsController@editCalendarsPost');  //旅游产品日期价格详情信息编辑和添加post
     Route::get('/product/tourGoods/delCalendars/{id}', 'Admin\TourGoodsController@delCalendars');  //删除旅游产品日期价格详情信息
+    Route::get('/product/tourGoods/ewm', 'Admin\TourGoodsController@ewm');  //获取旅游产品的二维码
 
     //旅游定制管理-酒店管理
     Route::get('/madeTour/hotel/index', 'Admin\HotelController@index');  //旅游定制-酒店管理
