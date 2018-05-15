@@ -43,7 +43,7 @@
                 <th width="40">共有位子（默认）</th>
                 <th width="40">剩余空位（默认）</th>
                 <th width="40">出发地</th>
-                {{--<th width="90">出发线路</th>--}}
+                <th width="90">出发线路</th>
                 <th width="100">操作</th>
             </tr>
             </thead>
@@ -73,11 +73,11 @@
                     <td>{{$data['total']}}</td>
                     <td>{{$data['surplus']}}</td>
                     <td>{{$data['start_place']}}</td>
-                    {{--<td>--}}
-                        {{--@foreach($data['tourGoodsRoutes'] as $tourGoodsRoutes)--}}
-                            {{--&nbsp;&nbsp;名称（第几天）：{{$tourGoodsRoutes['name']}}出发线路：{{$tourGoodsRoutes['place']}}内容：{{$tourGoodsRoutes['content']}}</br>--}}
-                        {{--@endforeach--}}
-                    {{--</td>--}}
+                    <td>
+                        @foreach($data['tourGoodsRoutes'] as $tourGoodsRoutes)
+                            &nbsp;&nbsp;名称（第几天）：{{$tourGoodsRoutes['name']}}出发线路：{{$tourGoodsRoutes['place']}}内容：{{$tourGoodsRoutes['content']}}</br>
+                        @endforeach
+                    </td>
                     <td class="td-manage">
                         <a title="添加产品图片" href="javascript:;" onclick="tourGoods_addImage('添加产品图片','{{URL::asset('/admin/product/tourGoods/addImage')}}?id={{$data['id']}}',{{$data['id']}})"
                            class="ml-5" style="text-decoration:none">
