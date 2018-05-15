@@ -75,6 +75,8 @@ Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
     Route::post('comment/addComment', 'API\CommentController@addComment')->middleware('CheckToken');
     //添加评论回复
     Route::post('comment/addCommentReplie', 'API\CommentController@addCommentReplie')->middleware('CheckToken');
+    //删除评论回复
+    Route::post('comment/delCommentReplie', 'API\CommentController@delCommentReplie')->middleware('CheckToken');
 
     //查看收藏夹
     Route::get('center/getCollectionLists', 'API\CenterController@getCollectionLists')->middleware('CheckToken');

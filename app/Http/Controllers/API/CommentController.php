@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Components\CommentManager;
+use App\Components\RequestValidator;
 use App\Http\Controllers\ApiResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -78,4 +79,28 @@ class CommentController extends Controller
             return ApiResponse::makeResponse(false, ApiResponse::$errorMassage[ApiResponse::MISSING_PARAM], ApiResponse::MISSING_PARAM);
         }
     }
+
+    /*
+     * 删除评论回复
+     *
+     * By mtt
+     *
+     * 2018-5-15
+     */
+    public function delCommentReplie(Request $request){
+        $data = $request->all();
+        $requestValidationResult = RequestValidator::validator($request->all(), [
+            'id' => 'required',//评论回复id
+        ]);
+        if ($requestValidationResult !== true) {
+            return ApiResponse::makeResponse(false, $requestValidationResult, ApiResponse::MISSING_PARAM);
+        }
+        //根据评论回复id查询评论回复信息
+        $commentReplie = CommentManager::getCommentReplieByIdFirst($data['id']);
+        $commentReplie->delete();
+        return ApiResponse::makeResponse(true,$commentReplie,ApiResponse::SUCCESS_CODE);
+    }
+
+
+
 }

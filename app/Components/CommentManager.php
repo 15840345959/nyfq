@@ -518,4 +518,16 @@ class CommentManager
         }
         return $result;
     }
+
+    /*
+     * 根据id获取回复的评论信息
+     *
+     * By mtt
+     *
+     * 2018-05-15
+     */
+    public static function getCommentReplieByIdFirst($id){
+        $comment_replie=CommentReplie::where('id',$id)->first();
+        return $comment_replie;
+    }
 }
