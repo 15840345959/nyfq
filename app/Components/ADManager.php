@@ -20,6 +20,7 @@ class ADManager
      *
      * By TerryQi
      *
+     *
      */
     public static function setAD($ad, $data)
     {
