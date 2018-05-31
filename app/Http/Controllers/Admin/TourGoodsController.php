@@ -398,6 +398,80 @@ class TourGoodsController
         return $return;
     }
 
+    //产品管理批量添加旅游产品日期价格get
+    public function editMoreCalendars(Request $request){
+        $data = $request->all();
+        $tourGoodsCalendars = new TourGoodsCalendar();
+        if(array_key_exists('id', $data)){
+            $tourGoodsCalendars = TourGoodsCalendar::find($data['id']);
+        }
+        //获取旅游产品信息
+        $tourGoods = TourGoodsManager::getTourGoods();
+        $admin = $request->session()->get('admin');
+        //生成七牛token
+        $upload_token = QNManager::uploadToken();
+        return view('admin.product.tourGoods.addMoreCalendarsEdit',['admin' => $admin, 'tourGoods' => $tourGoods,'data' => $tourGoodsCalendars, 'upload_token' => $upload_token]);
+    }
+
+    //产品管理批量添加旅游产品日期价格post
+    public function editMoreCalendarsPost(Request $request){
+        $data = $request->all();
+        $return = null;
+        if(array_key_exists('date_start',$data)&&array_key_exists('date_end',$data)){
+            if($data['date_start']==$data['date_end']){
+                $data['date']=$data['date_start'];
+                $tourGoodsCalendars = new TourGoodsCalendar();
+                if(array_key_exists('id',$data)){
+                    $tourGoodsCalendars = TourGoodsManager::getTourGoodsCalendarsById($data['id']);
+                }
+                if(!$tourGoodsCalendars){
+                    $tourGoodsCalendars = new TourGoodsCalendar();
+                }
+                $tourGoodsCalendars = TourGoodsManager::setTourGoodsCalendars($tourGoodsCalendars,$data);
+                $result = $tourGoodsCalendars->save();
+                if($result){
+                    $return['result'] = true;
+                    $return['msg'] = '添加成功';
+                }else{
+                    $return['result'] = false;
+                    $return['msg'] = '添加失败';
+                }
+            }
+            else{
+                $add_count=0;
+                $count=self::diffBetweenTwoDays($data['date_end'],$data['date_start']);
+                for($i=1;$i<=$count;$i++){
+                    $data['date']=date("Y-m-d",strtotime("+".$i." day",strtotime($data['date_start'])));
+                    $tourGoodsCalendars = new TourGoodsCalendar();
+                    if(array_key_exists('id',$data)){
+                        $tourGoodsCalendars = TourGoodsManager::getTourGoodsCalendarsById($data['id']);
+                    }
+                    if(!$tourGoodsCalendars){
+                        $tourGoodsCalendars = new TourGoodsCalendar();
+                    }
+                    $tourGoodsCalendars = TourGoodsManager::setTourGoodsCalendars($tourGoodsCalendars,$data);
+                    $result = $tourGoodsCalendars->save();
+                    if($result){
+                        $add_count++;
+                    }
+                }
+                if($add_count==$count){
+                    $return['result'] = true;
+                    $return['msg'] = '添加成功';
+                }
+                else{
+                    $return['result'] = false;
+                    $return['msg'] = '部分信息添加失败';
+                }
+            }
+        }
+        else{
+            $return['result'] = false;
+            $return['msg'] = '参数错误';
+        }
+        return $return;
+    }
+
     //删除旅游产品路线
     public function delCalendars(Request $request,$id){
         $data = $request->all();
@@ -447,6 +521,26 @@ class TourGoodsController
             }
             return view('admin.product.tourGoods.ewm', ['admin' => $admin, 'filename' => $filename]);
         }
+
+    /*
+     * 判断两个日期相差的天数
+     *
+     * By zm
+     *
+     * 2018-05-31
+     */
+    public function diffBetweenTwoDays($day1, $day2)
+    {
+        $second1 = strtotime($day1);
+        $second2 = strtotime($day2);
+
+        if ($second1 < $second2) {
+            $tmp = $second2;
+            $second2 = $second1;
+            $second1 = $tmp;
+        }
+        return ($second1 - $second2) / 86400;
+    }
 
 
 

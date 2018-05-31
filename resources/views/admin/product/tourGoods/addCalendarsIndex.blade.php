@@ -16,6 +16,12 @@
                      <i class="Hui-iconfont">&#xe600;</i> 添加旅游产品日期价格
                  </a>
             </span>
+            <span class="ml-20">
+                 <a href="javascript:;" onclick="tourCalendars_add('批量添加旅游产品日期价格','{{URL::asset('/admin/product/tourGoods/editMoreCalendars')}}')"
+                    class="btn btn-primary radius">
+                     <i class="Hui-iconfont">&#xe600;</i> 批量添加旅游产品日期价格
+                 </a>
+            </span>
         </div>
         <div class="mt-20">
             <table class="table table-border table-bordered table-bg table-sort" id="table-sort">
