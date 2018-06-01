@@ -18,11 +18,23 @@
                 </div>
             </div>
             <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>默认原价：</label>
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>英文名称：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <input id="primecost" name="primecost" type="text" class="input-text" value="{{ isset($data['primecost']) ? $data['primecost'] : '' }}" placeholder="请输入默认原价">
+                    <input id="english_name" name="english_name" type="text" class="input-text" value="{{ isset($data['english_name']) ? $data['english_name'] : '' }}" placeholder="请输入联系方式">
                 </div>
             </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red"></span>标签：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input id="label" name="label" type="text" class="input-text" value="{{ isset($data['label']) ? $data['label'] : '' }}" placeholder="请输入联系方式">
+                </div>
+            </div>
+            {{--<div class="row cl">--}}
+                {{--<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>默认原价：</label>--}}
+                {{--<div class="formControls col-xs-8 col-sm-9">--}}
+                    {{--<input id="primecost" name="primecost" type="text" class="input-text" value="{{ isset($data['primecost']) ? $data['primecost'] : '' }}" placeholder="请输入默认原价">--}}
+                {{--</div>--}}
+            {{--</div>--}}
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>默认实际价格：</label>
                 <div class="formControls col-xs-8 col-sm-9">
@@ -38,68 +50,74 @@
                     </select>
                 </div>
             </div>
-            <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>单位：</label>
-                <div class="formControls col-xs-8 col-sm-9">
-                    <input id="unit" name="unit" type="text" class="input-text" value="{{ isset($data['unit']) ? $data['unit'] : '' }}" placeholder="请输入单位">
-                </div>
-            </div>
-            <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"><span class="c-red"></span>联系方式：</label>
-                <div class="formControls col-xs-8 col-sm-9">
-                    <input id="telephone" name="telephone" type="text" class="input-text" value="{{ isset($data['telephone']) ? $data['telephone'] : '' }}" placeholder="请输入联系方式">
-                </div>
-            </div>
-            <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>酒店设施：</label>
-                <div class="formControls col-xs-8 col-sm-9">
-                    <textarea id="facilities" name="facilities" class="textarea" placeholder="输入内容..." rows="" cols="" >{{ isset($data->facilities) ? $data->facilities : '' }}</textarea>
-                </div>
-            </div>
-            <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"></label>
-                <div class="formControls col-xs-8 col-sm-9">
-                    <p style="color: red;">以“_”分割</p>
-                </div>
-            </div>
-            <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>介绍：</label>
-                <div class="formControls col-xs-8 col-sm-9">
-                    <textarea id="content" name="content" class="textarea" placeholder="输入内容..." rows="" cols="" >{{ isset($data->content) ? $data->content : '' }}</textarea>
-                </div>
-            </div>
-            <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>政策：</label>
-                <div class="formControls col-xs-8 col-sm-9">
-                    <textarea id="policy" name="policy" class="textarea" placeholder="输入内容..." rows="" cols="" >{{ isset($data->policy) ? $data->policy : '' }}</textarea>
-                </div>
-            </div>
+            {{--<div class="row cl">--}}
+                {{--<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>单位：</label>--}}
+                {{--<div class="formControls col-xs-8 col-sm-9">--}}
+                    {{--<input id="unit" name="unit" type="text" class="input-text" value="{{ isset($data['unit']) ? $data['unit'] : '' }}" placeholder="请输入单位">--}}
+                {{--</div>--}}
+            {{--</div>--}}
+            {{--<div class="row cl">--}}
+                {{--<label class="form-label col-xs-4 col-sm-2"><span class="c-red"></span>联系方式：</label>--}}
+                {{--<div class="formControls col-xs-8 col-sm-9">--}}
+                    {{--<input id="telephone" name="telephone" type="text" class="input-text" value="{{ isset($data['telephone']) ? $data['telephone'] : '' }}" placeholder="请输入联系方式">--}}
+                {{--</div>--}}
+            {{--</div>--}}
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red"></span>酒店地点：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <input id="address" name="address" type="text" class="input-text" style="width:50%;" value="{{ isset($data['address']) ? $data['address'] : '' }}" placeholder="请输入旅行社地址">
-                    <button type="button" class="btn btn-primary" onclick="searchByStationName()">定位</button>
+                    <input id="address" name="address" type="text" class="input-text" value="{{ isset($data['address']) ? $data['address'] : '' }}" placeholder="请输入联系方式">
                 </div>
             </div>
-            <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"></label>
-                <div class="formControls col-xs-8 col-sm-9">
-                    经度：
-                    <input id="lon" name="lon" type="text" class="input-text" style="width:30%;" value="{{ isset($data['lon']) ? $data['lon'] : '' }}" placeholder="请输入经度">
-                    维度：
-                    <input id="lat" name="lat" type="text" class="input-text" style="width:30%;" value="{{ isset($data['lat']) ? $data['lat'] : '' }}" placeholder="请输入维度">
-                    <button type="button" class="btn btn-primary" onclick="initMap()">重新校验</button>
-                </div>
-            </div>
-            <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"></label>
-                <div class="formControls col-xs-8 col-sm-9">
-                    <!--百度地图容器-->
-                    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=9x6fsBvnCgvu8Kje8sSGq7ybQaQkZks9"></script>
-                    <div style="width:700px;height:250px;border:#ccc solid 1px;font-size:12px" id="map"></div>
-                    <p style="color:red;font-weight:600">该地图只为了参考定位经纬度，具体样式以小程序的实际样式为主</p>
-                </div>
-            </div>
+            {{--<div class="row cl">--}}
+                {{--<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>酒店设施：</label>--}}
+                {{--<div class="formControls col-xs-8 col-sm-9">--}}
+                    {{--<textarea id="facilities" name="facilities" class="textarea" placeholder="输入内容..." rows="" cols="" >{{ isset($data->facilities) ? $data->facilities : '' }}</textarea>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+            {{--<div class="row cl">--}}
+                {{--<label class="form-label col-xs-4 col-sm-2"></label>--}}
+                {{--<div class="formControls col-xs-8 col-sm-9">--}}
+                    {{--<p style="color: red;">以“_”分割</p>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+            {{--<div class="row cl">--}}
+                {{--<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>介绍：</label>--}}
+                {{--<div class="formControls col-xs-8 col-sm-9">--}}
+                    {{--<textarea id="content" name="content" class="textarea" placeholder="输入内容..." rows="" cols="" >{{ isset($data->content) ? $data->content : '' }}</textarea>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+            {{--<div class="row cl">--}}
+                {{--<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>政策：</label>--}}
+                {{--<div class="formControls col-xs-8 col-sm-9">--}}
+                    {{--<textarea id="policy" name="policy" class="textarea" placeholder="输入内容..." rows="" cols="" >{{ isset($data->policy) ? $data->policy : '' }}</textarea>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+            {{--<div class="row cl">--}}
+                {{--<label class="form-label col-xs-4 col-sm-2"><span class="c-red"></span>酒店地点：</label>--}}
+                {{--<div class="formControls col-xs-8 col-sm-9">--}}
+                    {{--<input id="address" name="address" type="text" class="input-text" style="width:50%;" value="{{ isset($data['address']) ? $data['address'] : '' }}" placeholder="请输入旅行社地址">--}}
+                    {{--<button type="button" class="btn btn-primary" onclick="searchByStationName()">定位</button>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+            {{--<div class="row cl">--}}
+                {{--<label class="form-label col-xs-4 col-sm-2"></label>--}}
+                {{--<div class="formControls col-xs-8 col-sm-9">--}}
+                    {{--经度：--}}
+                    {{--<input id="lon" name="lon" type="text" class="input-text" style="width:30%;" value="{{ isset($data['lon']) ? $data['lon'] : '' }}" placeholder="请输入经度">--}}
+                    {{--维度：--}}
+                    {{--<input id="lat" name="lat" type="text" class="input-text" style="width:30%;" value="{{ isset($data['lat']) ? $data['lat'] : '' }}" placeholder="请输入维度">--}}
+                    {{--<button type="button" class="btn btn-primary" onclick="initMap()">重新校验</button>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+            {{--<div class="row cl">--}}
+                {{--<label class="form-label col-xs-4 col-sm-2"></label>--}}
+                {{--<div class="formControls col-xs-8 col-sm-9">--}}
+                    {{--<!--百度地图容器-->--}}
+                    {{--<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=9x6fsBvnCgvu8Kje8sSGq7ybQaQkZks9"></script>--}}
+                    {{--<div style="width:700px;height:250px;border:#ccc solid 1px;font-size:12px" id="map"></div>--}}
+                    {{--<p style="color:red;font-weight:600">该地图只为了参考定位经纬度，具体样式以小程序的实际样式为主</p>--}}
+                {{--</div>--}}
+            {{--</div>--}}
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>酒店封面图片：</label>
                 <div class="formControls col-xs-8 col-sm-9">
@@ -135,8 +153,8 @@
     <script type="text/javascript">
         $(function () {
             //初始化地图
-            var map;
-            initMap();
+//            var map;
+//            initMap();
 
             //获取七牛token
             initQNUploader();
@@ -146,18 +164,6 @@
                     name: {
                         required: true,
                     },
-//                    address: {
-//                        required: true,
-//                    },
-//                    lon: {
-//                        required: true,
-//                    },
-//                    lat: {
-//                        required: true,
-//                    },
-//                    telephone: {
-//                        required: true,
-//                    },
                     image: {
                         required: true,
                     },
@@ -286,77 +292,77 @@
         }
 
 
-
-        //创建和初始化地图函数：
-        function initMap(){
-            var lon=$('#lon').val();
-            var lat=$('#lat').val();
-            createMap(lon,lat);//创建地图
-            setMapEvent();//设置地图事件
-            addMapControl();//向地图添加控件
-            addMapOverlay(lon,lat);//向地图添加覆盖物
-        }
-        function createMap(lon,lat){
-            map = new BMap.Map("map");
-            map.centerAndZoom(new BMap.Point(lon,lat),15);
-        }
-        function setMapEvent(){
-            map.enableScrollWheelZoom();
-            map.enableKeyboard();
-            map.enableDragging();
-            map.enableDoubleClickZoom()
-        }
-        function addClickHandler(target,window){
-            target.addEventListener("click",function(){
-                target.openInfoWindow(window);
-            });
-        }
-        function addMapOverlay(lon,lat){
-            var name=$('#name').val()?$('#name').val():"请填写酒店的名字";
-            var address=$('#address').val()?$('#address').val():"请填写酒店的地址";
-            var markers = [
-                {content:address,title:name,imageOffset: {width:-46,height:-21},position:{lat:lat,lng:lon}}
-            ];
-            for(var index = 0; index < markers.length; index++ ){
-                var point = new BMap.Point(markers[index].position.lng,markers[index].position.lat);
-                var marker = new BMap.Marker(point,{icon:new BMap.Icon("http://api.map.baidu.com/lbsapi/createmap/images/icon.png",new BMap.Size(20,25),{
-                        imageOffset: new BMap.Size(markers[index].imageOffset.width,markers[index].imageOffset.height)
-                    })});
-                var label = new BMap.Label(markers[index].title,{offset: new BMap.Size(25,5)});
-                var opts = {
-                    width: 200,
-                    title: markers[index].title,
-                    enableMessage: false
-                };
-                var infoWindow = new BMap.InfoWindow(markers[index].content,opts);
-                marker.setLabel(label);
-                addClickHandler(marker,infoWindow);
-                map.addOverlay(marker);
-            };
-        }
-        //向地图添加控件
-        function addMapControl(){
-            var scaleControl = new BMap.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_LEFT});
-            scaleControl.setUnit(BMAP_UNIT_IMPERIAL);
-            map.addControl(scaleControl);
-            var navControl = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_LARGE});
-            map.addControl(navControl);
-            var overviewControl = new BMap.OverviewMapControl({anchor:BMAP_ANCHOR_BOTTOM_RIGHT,isOpen:true});
-            map.addControl(overviewControl);
-        }
-        function searchByStationName(){
-            map.clearOverlays();//清空原来的标注
-            map = new BMap.Map("map");
-            var localSearch = new BMap.LocalSearch(map);
-            var keyword = $("#address").val();
-            localSearch.setSearchCompleteCallback(function (searchResult) {
-                var poi = searchResult.getPoi(0);
-                $('#lon').val(poi.point.lng);
-                $('#lat').val(poi.point.lat);
-                map.centerAndZoom(poi.point, 15);
-                initMap();
-            });
-            localSearch.search(keyword);
-        }
+//
+//        //创建和初始化地图函数：
+//        function initMap(){
+//            var lon=$('#lon').val();
+//            var lat=$('#lat').val();
+//            createMap(lon,lat);//创建地图
+//            setMapEvent();//设置地图事件
+//            addMapControl();//向地图添加控件
+//            addMapOverlay(lon,lat);//向地图添加覆盖物
+//        }
+//        function createMap(lon,lat){
+//            map = new BMap.Map("map");
+//            map.centerAndZoom(new BMap.Point(lon,lat),15);
+//        }
+//        function setMapEvent(){
+//            map.enableScrollWheelZoom();
+//            map.enableKeyboard();
+//            map.enableDragging();
+//            map.enableDoubleClickZoom()
+//        }
+//        function addClickHandler(target,window){
+//            target.addEventListener("click",function(){
+//                target.openInfoWindow(window);
+//            });
+//        }
+//        function addMapOverlay(lon,lat){
+//            var name=$('#name').val()?$('#name').val():"请填写酒店的名字";
+//            var address=$('#address').val()?$('#address').val():"请填写酒店的地址";
+//            var markers = [
+//                {content:address,title:name,imageOffset: {width:-46,height:-21},position:{lat:lat,lng:lon}}
+//            ];
+//            for(var index = 0; index < markers.length; index++ ){
+//                var point = new BMap.Point(markers[index].position.lng,markers[index].position.lat);
+//                var marker = new BMap.Marker(point,{icon:new BMap.Icon("http://api.map.baidu.com/lbsapi/createmap/images/icon.png",new BMap.Size(20,25),{
+//                        imageOffset: new BMap.Size(markers[index].imageOffset.width,markers[index].imageOffset.height)
+//                    })});
+//                var label = new BMap.Label(markers[index].title,{offset: new BMap.Size(25,5)});
+//                var opts = {
+//                    width: 200,
+//                    title: markers[index].title,
+//                    enableMessage: false
+//                };
+//                var infoWindow = new BMap.InfoWindow(markers[index].content,opts);
+//                marker.setLabel(label);
+//                addClickHandler(marker,infoWindow);
+//                map.addOverlay(marker);
+//            };
+//        }
+//        //向地图添加控件
+//        function addMapControl(){
+//            var scaleControl = new BMap.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_LEFT});
+//            scaleControl.setUnit(BMAP_UNIT_IMPERIAL);
+//            map.addControl(scaleControl);
+//            var navControl = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_LARGE});
+//            map.addControl(navControl);
+//            var overviewControl = new BMap.OverviewMapControl({anchor:BMAP_ANCHOR_BOTTOM_RIGHT,isOpen:true});
+//            map.addControl(overviewControl);
+//        }
+//        function searchByStationName(){
+//            map.clearOverlays();//清空原来的标注
+//            map = new BMap.Map("map");
+//            var localSearch = new BMap.LocalSearch(map);
+//            var keyword = $("#address").val();
+//            localSearch.setSearchCompleteCallback(function (searchResult) {
+//                var poi = searchResult.getPoi(0);
+//                $('#lon').val(poi.point.lng);
+//                $('#lat').val(poi.point.lat);
+//                map.centerAndZoom(poi.point, 15);
+//                initMap();
+//            });
+//            localSearch.search(keyword);
+//        }
     </script>
 @endsection

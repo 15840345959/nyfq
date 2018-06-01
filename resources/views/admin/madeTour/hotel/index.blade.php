@@ -24,19 +24,22 @@
         <table class="table table-border table-bordered table-bg table-hover table-sort" id="table-sort">
             <thead>
             <tr class="text-c">
-                <th width="80">名称</th>
+                <th width="80">中文名称</th>
                 <th width="80">封面图片</th>
-                <th width="60">默认原价</th>
+                {{--<th width="60">默认原价</th>--}}
                 <th width="60">默认实际价格</th>
                 <th width="60">是否显示特价</th>
-                <th width="60">单位</th>
+                {{--<th width="60">单位</th>--}}
                 <th width="90">地点</th>
-                <th width="60">经度</th>
-                <th width="60">纬度</th>
-                <th width="60">联系方式</th>
-                <th width="60">酒店设施</th>
-                <th width="60">介绍</th>
-                <th width="60">政策</th>
+                {{--<th width="60">经度</th>--}}
+                {{--<th width="60">纬度</th>--}}
+                {{--<th width="60">联系方式</th>--}}
+                {{--<th width="60">中文名称</th>--}}
+                <th width="60">英文名称</th>
+                <th width="60">标签</th>
+                {{--<th width="60">酒店设施</th>--}}
+                {{--<th width="60">介绍</th>--}}
+                {{--<th width="60">政策</th>--}}
                 <th width="100">操作</th>
             </tr>
             </thead>
@@ -45,21 +48,24 @@
                 <tr class="text-c">
                     <td>{{$data['name']}}</td>
                     <td><img width="210" class="picture-thumb" src="{{$data['image']}}"></td>
-                    <td class="text-l">{{$data['primecost']}}</td>
+{{--                    <td class="text-l">{{$data['primecost']}}</td>--}}
                     <td>{{$data['price']}}</td>
                     @if($data['sale']==0)
                         <td>否</td>
                     @elseif($data['sale']==1)
                         <td>是</td>
                     @endif
-                    <td>{{$data['unit']}}</td>
+{{--                    <td>{{$data['unit']}}</td>--}}
                     <td>{{$data['address']}}</td>
-                    <td>{{$data['lon']}}</td>
-                    <td>{{$data['lat']}}</td>
-                    <td>{{$data['telephone']}}</td>
-                    <td>{{$data['facilities']}}</td>
-                    <td>{{$data['content']}}</td>
-                    <td>{{$data['policy']}}</td>
+{{--                    <td>{{$data['lon']}}</td>--}}
+                    {{--<td>{{$data['lat']}}</td>--}}
+                    {{--<td>{{$data['telephone']}}</td>--}}
+{{--                    <td>{{$data['china_name']}}</td>--}}
+                    <td>{{$data['english_name']}}</td>
+                    <td>{{$data['label']}}</td>
+{{--                    <td>{{$data['facilities']}}</td>--}}
+{{--                    <td>{{$data['content']}}</td>--}}
+{{--                    <td>{{$data['policy']}}</td>--}}
                     <td class="td-manage">
                         <a title="添加酒店图片" href="javascript:;" onclick="hotel_addImage('添加酒店图片','{{URL::asset('/admin/madeTour/hotel/addImage')}}?id={{$data['id']}}',{{$data['id']}})"
                            class="ml-5" style="text-decoration:none">

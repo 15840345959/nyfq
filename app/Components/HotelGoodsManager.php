@@ -120,6 +120,12 @@ class HotelGoodsManager
         if (array_key_exists('policy', $data)) {
             $hotelGoods->policy = array_get($data, 'policy');
         }
+        if (array_key_exists('english_name', $data)) {
+            $hotelGoods->english_name = array_get($data, 'english_name');
+        }
+        if (array_key_exists('label', $data)) {
+            $hotelGoods->label = array_get($data, 'label');
+        }
         return $hotelGoods;
     }
 
