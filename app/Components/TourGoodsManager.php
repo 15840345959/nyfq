@@ -104,7 +104,7 @@ class TourGoodsManager
      */
     public static function getTourGoodsContents($id){
         $tour_goods_contents=TourGoodsDetail::where('tour_goods_id',$id)
-            ->orderBy('id','asc')->get();
+            ->orderBy('sort','asc')->get();
         return $tour_goods_contents;
     }
 
