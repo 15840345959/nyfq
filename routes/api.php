@@ -56,7 +56,7 @@ Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
     //获取旅游产品列表
     Route::get('tour/getTourGoodsLists', 'API\TourController@getTourGoodsLists')->middleware('CheckToken');
     //获取旅游产品的详细信息
-    Route::get('tour/getTourGoodsDetail', 'API\TourController@getTourGoodsDetail')->middleware('CheckToken');
+    Route::get('tour/getTourGoodsDetail', 'API\TourController@getTourGoodsDetail');
     //根据产品类型获取旅游产品
     Route::get('tour/getTourGoods', 'API\TourController@getTourGoods');
     //根据旅游产品id获取产品日期
@@ -66,7 +66,7 @@ Route::group(['prefix' => '', 'middleware' => ['BeforeRequest']], function () {
 
 
     //获取产品的评论详情
-    Route::get('comment/getGoodsCommentLists', 'API\CommentController@getGoodsCommentLists')->middleware('CheckToken');
+    Route::get('comment/getGoodsCommentLists', 'API\CommentController@getGoodsCommentLists');
     //获取所有评论的详情
     Route::get('comment/getAllCommentLists', 'API\CommentController@getAllCommentLists')->middleware('CheckToken');
     //用户对评论进行点赞
